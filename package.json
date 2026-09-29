@@ -1,0 +1,13 @@
+{
+  "name": "medguard-riskbac",
+  "version": "2.0.0",
+  "description": "MedGuard v2: RiskBAC and Audited Break-Glass Protocol",
+  "scripts": {
+    "test:contracts": "hardhat test",
+    "compile:contracts": "hardhat compile"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.2"
+  }
+}
