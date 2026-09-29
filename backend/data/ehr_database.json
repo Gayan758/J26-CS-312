@@ -3244,8 +3244,8 @@
     {
       "deviceId": "device-doc-1240",
       "doctorId": "doc-1240",
-      "doctorName": "Dr. Piyumantha Fernando",
-      "deviceName": "Dr. Piyumantha Fernando's Medical Device",
+      "doctorName": "Dr. Gayan Fernando",
+      "deviceName": "Dr. Gayan Fernando's Medical Device",
       "osmandProtocolId": "osmand-doc-1240",
       "consentGiven": true,
       "consentTimestamp": "2026-09-22T09:05:41.241Z",
@@ -4433,7 +4433,7 @@
     },
     {
       "doctorId": "0x130d19799c5ca42f059caec0a20a9e80ec48d4e6",
-      "fingerprint": "sha256:enrolled-workstation-piyumantha",
+      "fingerprint": "sha256:enrolled-workstation-gayan",
       "trusted": true,
       "enrolledAt": "2026-09-22T09:05:41.241Z"
     },
@@ -4716,15 +4716,15 @@
     },
     {
       "id": "doc-1240",
-      "username": "piyumantha",
+      "username": "gayan.fernando",
       "password": "SecurePass123!",
-      "name": "Dr. Piyumantha Fernando",
+      "name": "Dr. Gayan Fernando",
       "slmcNumber": "SLMC-78901",
       "specialty": "General Surgery",
       "ethereumAddress": "0x130d19799c5ca42f059caec0a20a9e80ec48d4e6",
       "baseCampus": "SLIIT Malabe Campus Health Center",
       "phone": "+94 77 123 4567",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-piyumantha",
+      "defaultDeviceFingerprint": "sha256:enrolled-workstation-gayan",
       "role": "Doctor",
       "registeredAt": "2026-09-22T09:05:41.240Z",
       "lastKnownLocation": {
@@ -4736,7 +4736,7 @@
         "campusName": "SLIIT Malabe Campus Health Center",
         "recordedAt": "2026-09-22T09:05:41.261Z"
       },
-      "email": "piyumantha@sliit.lk"
+      "email": "it23270374@my.sliit.lk"
     },
     {
       "id": "doc-3185",
