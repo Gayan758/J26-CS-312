@@ -21,7 +21,7 @@ export default function App() {
   // 1. Session State
   const [userRole, setUserRole] = useState("doctor"); // "doctor" | "patient"
   const [patientUser, setPatientUser] = useState(null);
-  const [doctor, setDoctor] = useState(MOCK_DOCTORS[0]); // default Dr. Sarah Jenkins
+  const [doctor, setDoctor] = useState(null); // Always start from LoginScreen
   const [patients, setPatients] = useState(INITIAL_PATIENTS);
   const [auditLogs, setAuditLogs] = useState(INITIAL_AUDIT_LOGS);
   const [activeTab, setActiveTab] = useState("queue"); // "queue" | "chart" | "audit" | "tracking"
@@ -228,6 +228,18 @@ export default function App() {
             cd.toLowerCase().includes(docName) || docName.includes(cd.toLowerCase())
         );
 
+      if (
+        targetDoctor.username?.includes("gayan") ||
+        targetDoctor.name?.includes("Gayan")
+      ) {
+        return (
+          p.id === "patient-123" ||
+          p.id === "patient-789" ||
+          matchId ||
+          matchAddr ||
+          matchName
+        );
+      }
       if (
         targetDoctor.username?.includes("sarah") ||
         targetDoctor.name?.includes("Sarah")

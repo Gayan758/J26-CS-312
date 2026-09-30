@@ -7,6 +7,18 @@ const router = express.Router();
 // Pre-seeded clinical demo accounts
 const DEMO_DOCTORS = [
   {
+    id: "doc-1240",
+    username: "gayan.fernando",
+    password: "Password123!",
+    name: "Dr. Gayan Fernando, MD",
+    email: "it23270374@my.sliit.lk",
+    specialty: "Lead Clinician & Access Architect",
+    ethereumAddress: "0x130d19799c5ca42f059caec0a20a9e80ec48d4e6",
+    baseCampus: "SLIIT Malabe Campus Health Center",
+    defaultDeviceFingerprint: "sha256:enrolled-workstation-gayan",
+    role: "Doctor"
+  },
+  {
     id: "doc-001",
     username: "alice.vance",
     password: "Password123!",
