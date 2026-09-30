@@ -528,7 +528,7 @@ export default function AppShell({
                   </div>
 
                   <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-[11px] text-text-subtle">
-                    <span>Engine: RiskBAC OPA Policy Gate</span>
+                    <span>Access Policy: Context Evaluated</span>
                     <button
                       type="button"
                       onClick={() => setSecurityPopoverOpen(false)}
@@ -541,7 +541,7 @@ export default function AppShell({
               )}
             </div>
 
-            {/* Action / Mode Status: Admin Console vs ER Break-Glass */}
+            {/* Action / Mode Status: Admin Console vs Emergency Break-Glass */}
             {isAdmin ? (
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 border border-purple-200 text-xs font-semibold">
                 <Shield className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
@@ -553,19 +553,19 @@ export default function AppShell({
                 {breakGlassSession && (
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-critical-bg border border-critical text-critical text-xs font-mono font-bold animate-pulse">
                     <AlertOctagon className="w-3.5 h-3.5" />
-                    <span>RAP Active: {formatTimer(breakGlassSession.timeLeft)}</span>
+                    <span>Emergency Access: {formatTimer(breakGlassSession.timeLeft)}</span>
                   </div>
                 )}
 
-                {/* ER Break-Glass (RAP) Button — ONLY Solid Red Element in the entire system */}
+                {/* Emergency Break-Glass Button */}
                 <Button
                   variant="critical"
                   size="md"
                   icon={AlertOctagon}
                   onClick={onOpenBreakGlass}
-                  title="Red Alert Protocol: Emergency medical record access with immutable audit logging"
+                  title="Emergency medical record access override with verified audit logging"
                 >
-                  ER Break-Glass (RAP)
+                  Emergency Break-Glass
                 </Button>
               </>
             )}
@@ -579,19 +579,17 @@ export default function AppShell({
           </div>
         </main>
 
-        {/* 40px ENTERPRISE CLINICAL FOOTER */}
+        {/* ENTERPRISE CLINICAL FOOTER */}
         <footer className="h-10 bg-surface border-t border-border px-6 flex items-center justify-between text-[11px] text-text-subtle shrink-0">
           <div className="flex items-center gap-3">
-            <span>MedGuard EHR v2.4-enterprise</span>
+            <span>MedGuard EHR</span>
             <span>·</span>
-            <span className="font-mono">Smart Contract: 0x5FbD...aa</span>
-            <span>·</span>
-            <span className="font-mono">Node #04 (SLIIT Perimeter)</span>
+            <span>Clinical Information System</span>
           </div>
 
           <div className="hidden md:flex items-center gap-1.5 text-text-muted">
             <Lock className="w-3 h-3 text-text-subtle" />
-            <span>All clinical records audited under SLMC &amp; HIPAA data governance protocols.</span>
+            <span>Protected Health Information System</span>
           </div>
         </footer>
       </div>

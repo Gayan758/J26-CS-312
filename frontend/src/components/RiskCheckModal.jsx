@@ -17,12 +17,8 @@ import {
   Terminal,
   AlertOctagon,
   Mail,
-  Eye,
-  RefreshCw,
-  Inbox,
-  Check
+  RefreshCw
 } from "lucide-react";
-import { evaluateRiskBAC } from "../services/mockRiskEngine";
 import Button from "./ui/Button";
 import StatusBadge from "./ui/StatusBadge";
 
@@ -45,8 +41,6 @@ export default function RiskCheckModal({
   const [mfaError, setMfaError] = useState("");
   const [otpDispatchedInfo, setOtpDispatchedInfo] = useState(null);
   const [resendCooldown, setResendCooldown] = useState(0);
-  const [showEmailInspector, setShowEmailInspector] = useState(false);
-  const [latestDispatchedEmail, setLatestDispatchedEmail] = useState(null);
   const [verifyingMfa, setVerifyingMfa] = useState(false);
 
   useEffect(() => {
@@ -54,17 +48,15 @@ export default function RiskCheckModal({
     setEvaluating(true);
 
     async function evaluateAccess() {
-      const doctorAddress =
-        doctor.ethereumAddress || "0x70997970C51812dc3A010C7d01b50e0d17dc79C8";
-      const clientIp = contextStatus?.detectedIp || "172.20.10.8";
+      const doctorAddress = doctor?.ethereumAddress || doctor?.id || "";
 
       try {
         const headers = {
-          "x-doctor-address": doctorAddress,
-          "x-device-fingerprint":
-            deviceFingerprint || "sha256:alice-workstation-secure-enclave",
-          "x-simulated-ip": clientIp
+          "x-doctor-address": doctorAddress
         };
+        if (deviceFingerprint) {
+          headers["x-device-fingerprint"] = deviceFingerprint;
+        }
         if (doctorLocation && doctorLocation.latitude != null) {
           headers["x-device-latitude"] = String(doctorLocation.latitude);
           headers["x-device-longitude"] = String(doctorLocation.longitude);
@@ -106,12 +98,7 @@ export default function RiskCheckModal({
               consentedDoctors: patient.consentedDoctors || []
             },
             record: data.record || null,
-            txHash:
-              data.txHash ||
-              "0x" +
-                Array.from({ length: 64 }, () =>
-                  Math.floor(Math.random() * 16).toString(16)
-                ).join("")
+            txHash: data.txHash || null
           };
 
           setEvaluationResult(result);
@@ -124,37 +111,55 @@ export default function RiskCheckModal({
               doctor: result.doctorName,
               patientPhn: result.patientPhn,
               decision: result.decision,
-              riskScore: result.calculation.compositeScore.toString(),
+              riskScore: result.calculation?.compositeScore?.toString() || "0.0",
               txHash: result.txHash,
-              details: `${result.decisionReason} · Score: ${result.calculation.compositeScore}`,
+              details: `${result.decisionReason} · Score: ${result.calculation?.compositeScore || "0"}`,
               isBreakGlass: false
             });
           }
         }
       } catch (err) {
-        // Fallback to local high-fidelity RiskBAC engine
         if (isMounted) {
-          const result = evaluateRiskBAC({
-            doctor,
-            patient,
-            contextStatus,
-            deviceFingerprint,
-            isDeviceTrusted,
-            doctorLocation
-          });
-          setEvaluationResult(result);
+          const failClosedResult = {
+            patientId: patient.id,
+            patientPhn: patient.phn,
+            patientName: patient.name,
+            doctorName: doctor?.name || "Clinician",
+            timestamp:
+              contextStatus?.slstTime ||
+              new Date().toLocaleTimeString("en-US", { hour12: true }) + " (SLST)",
+            decision: "BLOCK",
+            riskLevel: "HIGH",
+            decisionReason: "Policy evaluation service unavailable. Access denied (fail-closed).",
+            signals: [],
+            calculation: {
+              formula: "R = 0.7 * (Σ w_i · R_i) + 0.3 * max(R_i)",
+              weightedSum: 1.0,
+              weightedComponent: 0.7,
+              maxSignal: 1.0,
+              maxComponent: 0.3,
+              compositeScore: 1.0
+            },
+            consent: {
+              valid: false,
+              consentedDoctors: []
+            },
+            record: null,
+            txHash: null
+          };
+          setEvaluationResult(failClosedResult);
           setEvaluating(false);
 
           if (onLogDecision) {
             onLogDecision({
               id: `log-${Date.now()}`,
-              timestamp: result.timestamp,
-              doctor: result.doctorName,
-              patientPhn: result.patientPhn,
-              decision: result.decision,
-              riskScore: result.calculation.compositeScore.toString(),
-              txHash: result.txHash,
-              details: `${result.decisionReason} · Score: ${result.calculation.compositeScore}`,
+              timestamp: failClosedResult.timestamp,
+              doctor: failClosedResult.doctorName,
+              patientPhn: failClosedResult.patientPhn,
+              decision: failClosedResult.decision,
+              riskScore: "1.0",
+              txHash: null,
+              details: failClosedResult.decisionReason,
               isBreakGlass: false
             });
           }
@@ -211,9 +216,6 @@ export default function RiskCheckModal({
       if (res.ok) {
         const data = await res.json();
         setOtpDispatchedInfo(data);
-        if (data.latestEmail) {
-          setLatestDispatchedEmail(data.latestEmail);
-        }
       }
     } catch (e) {
       console.warn("[RiskCheckModal] Error dispatching 2FA email:", e);
@@ -355,7 +357,7 @@ export default function RiskCheckModal({
 
                       {sig.id === "location" && doctorLocation?.latitude && (
                         <div className="text-[10px] font-mono text-text-subtle">
-                          GPS: {Number(doctorLocation.latitude).toFixed(4)}°, {Number(doctorLocation.longitude).toFixed(4)}° · Subnet: 172.20.10.8
+                          GPS: {Number(doctorLocation.latitude).toFixed(4)}°, {Number(doctorLocation.longitude).toFixed(4)}°
                         </div>
                       )}
 
@@ -485,15 +487,6 @@ export default function RiskCheckModal({
                       >
                         {resendCooldown > 0 ? `Resend (${resendCooldown}s)` : "Resend OTP"}
                       </button>
-
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        icon={Eye}
-                        onClick={() => setShowEmailInspector(true)}
-                      >
-                        Inspect Email
-                      </Button>
                     </div>
                   </div>
 
@@ -567,85 +560,20 @@ export default function RiskCheckModal({
               )}
 
               {/* 6. Blockchain Tx Hash note */}
-              <div className="p-2.5 rounded border border-border bg-surface-muted flex items-center justify-between text-[11px] font-mono text-text-subtle">
-                <div className="flex items-center gap-1.5 truncate">
-                  <Database className="w-3.5 h-3.5 text-primary shrink-0" />
-                  <span>Audit Sealed:</span>
-                  <span className="truncate">{evaluationResult.txHash}</span>
+              {evaluationResult.txHash && (
+                <div className="p-2.5 rounded border border-border bg-surface-muted flex items-center justify-between text-[11px] font-mono text-text-subtle">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <Database className="w-3.5 h-3.5 text-primary shrink-0" />
+                    <span>Audit Sealed:</span>
+                    <span className="truncate">{evaluationResult.txHash}</span>
+                  </div>
+                  <StatusBadge variant="success" label="Sealed" size="xs" />
                 </div>
-                <StatusBadge variant="success" label="Sealed" size="xs" />
-              </div>
+              )}
             </div>
           )}
         </div>
       </div>
-
-      {/* Examiner Live 2FA Email Inspector Dialog */}
-      {showEmailInspector && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-[70] animate-in fade-in duration-100">
-          <div className="bg-surface w-full max-w-lg rounded-lg border border-border shadow-2xl overflow-hidden flex flex-col text-xs">
-            <div className="bg-surface-muted border-b border-border px-5 py-3.5 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-primary" />
-                <div>
-                  <h3 className="text-xs font-semibold text-text-primary">
-                    2FA Email Transmission Inspector
-                  </h3>
-                  <p className="text-[10px] text-text-subtle font-mono">
-                    Dispatched to: {otpDispatchedInfo?.email || doctor.email}
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowEmailInspector(false)}
-                className="p-1 rounded text-text-subtle hover:text-text-primary"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="p-5 space-y-3 max-h-[70vh] overflow-y-auto">
-              <div className="p-3 bg-surface-muted border border-border rounded font-mono text-[11px] space-y-1">
-                <div><span className="text-text-subtle">From:</span> MedGuard Clinical Security &lt;security@medguard.sliit.lk&gt;</div>
-                <div><span className="text-text-subtle">To:</span> {otpDispatchedInfo?.email || doctor.email}</div>
-                <div><span className="text-text-subtle">Subject:</span> [MedGuard EHR Security] 2FA OTP Code</div>
-              </div>
-
-              <div className="p-4 border-2 border-dashed border-primary/40 rounded-lg text-center bg-primary-subtle flex flex-col items-center gap-1.5">
-                <span className="text-[11px] font-semibold text-primary uppercase">
-                  Dispatched 6-Digit One-Time Password
-                </span>
-                <span className="text-3xl font-bold font-mono tracking-widest text-primary bg-surface px-4 py-1 rounded border border-border">
-                  {otpDispatchedInfo?.previewOtp || latestDispatchedEmail?.otp || "123456"}
-                </span>
-                <span className="text-[10px] text-text-subtle mt-0.5">
-                  Valid for 5 minutes · Single-use clinical session verification
-                </span>
-
-                <Button
-                  variant="primary"
-                  size="sm"
-                  icon={Check}
-                  className="mt-2"
-                  onClick={() => {
-                    setMfaCode(otpDispatchedInfo?.previewOtp || latestDispatchedEmail?.otp || "123456");
-                    setShowEmailInspector(false);
-                  }}
-                >
-                  Auto-Fill OTP Code
-                </Button>
-              </div>
-            </div>
-
-            <div className="px-5 py-3 border-t border-border bg-surface-muted flex justify-end">
-              <Button variant="secondary" size="sm" onClick={() => setShowEmailInspector(false)}>
-                Close Inspector
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

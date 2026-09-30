@@ -51,13 +51,13 @@ export default function PatientChart({
   const [rxDrug, setRxDrug] = useState("");
   const [rxDosage, setRxDosage] = useState("");
   const [rxFrequency, setRxFrequency] = useState("");
-  const [rxDuration, setRxDuration] = useState("30 days");
+  const [rxDuration, setRxDuration] = useState("");
 
-  // Vitals form state
-  const [vitalsBp, setVitalsBp] = useState("120/80");
-  const [vitalsHr, setVitalsHr] = useState("72");
-  const [vitalsSpo2, setVitalsSpo2] = useState("98");
-  const [vitalsTemp, setVitalsTemp] = useState("36.8°C");
+  // Vitals form state (empty by default)
+  const [vitalsBp, setVitalsBp] = useState("");
+  const [vitalsHr, setVitalsHr] = useState("");
+  const [vitalsSpo2, setVitalsSpo2] = useState("");
+  const [vitalsTemp, setVitalsTemp] = useState("");
 
   if (!patient) {
     return (
@@ -65,7 +65,7 @@ export default function PatientChart({
         <FileText className="w-10 h-10 text-text-subtle" />
         <h3 className="text-sm font-semibold text-text-primary">No Patient Chart Selected</h3>
         <p className="text-xs text-text-muted max-w-sm">
-          Please select a patient from the Clinic Queue &amp; Triage worklist to evaluate RiskBAC and decrypt the medical record.
+          Please select a patient from the Clinic Queue &amp; Triage worklist to evaluate access authorization and decrypt the medical record.
         </p>
         <Button variant="primary" size="md" onClick={onBackToQueue} className="mt-2">
           Return to Clinic Queue
@@ -105,19 +105,35 @@ export default function PatientChart({
     }
   };
 
-  const handleSaveSoap = (e) => {
+  const handleSaveSoap = async (e) => {
     e.preventDefault();
     if (!chiefComplaint || !soapS) return;
+
+    try {
+      await fetch(`/api/patients/${patient.id}/soap`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chiefComplaint,
+          subjective: soapS,
+          objective: soapO,
+          assessment: soapA,
+          plan: soapP,
+          doctorName: doctor?.name,
+          doctorSlmc: doctor?.slmcNumber
+        })
+      });
+    } catch (_) {}
 
     const newEncounter = {
       id: `enc-${Date.now()}`,
       date: new Date().toISOString().split("T")[0],
       doctor: doctor.name,
-      doctorSlmc: doctor.slmcNumber || "SLMC-38491",
+      doctorSlmc: doctor.slmcNumber,
       chiefComplaint,
       soap: {
         subjective: soapS,
-        objective: soapO || "Physical clinical examination documented.",
+        objective: soapO || "Clinical examination documented.",
         assessment: soapA || "Clinical diagnosis confirmed.",
         plan: soapP || "Plan recorded."
       }
@@ -138,16 +154,32 @@ export default function PatientChart({
     setSoapP("");
   };
 
-  const handleSaveRx = (e) => {
+  const handleSaveRx = async (e) => {
     e.preventDefault();
     if (!rxDrug || !rxDosage) return;
+
+    try {
+      await fetch(`/api/patients/${patient.id}/prescriptions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          drugName: rxDrug,
+          dosage: rxDosage,
+          route: "Oral",
+          frequency: rxFrequency || "Once daily",
+          duration: rxDuration || "14 days",
+          refills: 1,
+          prescribedBy: doctor.name
+        })
+      });
+    } catch (_) {}
 
     const newRx = {
       id: `rx-${Date.now()}`,
       drug: rxDrug,
       dosage: rxDosage,
       frequency: rxFrequency || "Once daily",
-      duration: rxDuration,
+      duration: rxDuration || "14 days",
       prescribedBy: doctor.name,
       refills: 1,
       status: "Active"
@@ -164,23 +196,43 @@ export default function PatientChart({
     setRxDrug("");
     setRxDosage("");
     setRxFrequency("");
+    setRxDuration("");
   };
 
-  const handleSaveVitals = (e) => {
+  const handleSaveVitals = async (e) => {
     e.preventDefault();
+
+    try {
+      await fetch(`/api/patients/${patient.id}/vitals`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bp: vitalsBp,
+          hr: vitalsHr ? parseInt(vitalsHr, 10) : undefined,
+          spo2: vitalsSpo2 ? parseInt(vitalsSpo2, 10) : undefined,
+          temp: vitalsTemp,
+          recordedBy: doctor?.name
+        })
+      });
+    } catch (_) {}
+
     const updated = {
       ...patient,
       vitals: {
         bp: vitalsBp,
-        hr: parseInt(vitalsHr, 10),
-        spo2: parseInt(vitalsSpo2, 10),
-        temp: vitalsTemp,
+        hr: parseInt(vitalsHr, 10) || "--",
+        spo2: parseInt(vitalsSpo2, 10) || "--",
+        temp: vitalsTemp || "--",
         rr: 16,
         recordedAt: "Just now (" + doctor.name + ")"
       }
     };
     if (onUpdatePatient) onUpdatePatient(updated);
     setShowAddVitals(false);
+    setVitalsBp("");
+    setVitalsHr("");
+    setVitalsSpo2("");
+    setVitalsTemp("");
   };
 
   // Compute patient age

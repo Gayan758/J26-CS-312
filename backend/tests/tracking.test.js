@@ -36,8 +36,14 @@ describe("Staff Safety & Real-Time Tracking Integration Tests", function () {
 
   it("should trigger geofence exit evaluation when doctor departs Malabe to Kaduwela", async function () {
     const res = await request(app)
-      .post("/api/tracking/simulate-exit")
-      .send({ doctorId: "doc-001" });
+      .post("/api/tracking/geofence-webhook")
+      .send({
+        id: "alice_vance_mobile",
+        lat: 6.9312,
+        lon: 79.9821,
+        distanceKm: 2.5,
+        type: "geofenceExit"
+      });
 
     expect(res.status).to.equal(200);
     expect(res.body.status).to.equal("SUCCESS");

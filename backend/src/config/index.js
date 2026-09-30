@@ -8,7 +8,7 @@ module.exports = {
   opaUrl: process.env.OPA_URL || "http://127.0.0.1:8181/v1/data/medguard/access",
 
   ethRpcUrl: process.env.ETH_RPC_URL || "http://127.0.0.1:8545",
-  ethSignerKey: process.env.ETH_SIGNER_PRIVATE_KEY || "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+  ethSignerKey: process.env.ETH_SIGNER_PRIVATE_KEY || "",
 
   consentRegistryAddress: process.env.CONSENT_REGISTRY_ADDRESS || "",
   accessAuditLogAddress: process.env.ACCESS_AUDIT_LOG_ADDRESS || "",

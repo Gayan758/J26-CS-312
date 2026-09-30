@@ -154,10 +154,10 @@ export default function ClinicQueue({
         return (
           <div className="flex flex-col text-xs">
             <span className={`font-medium ${isEmergency ? "text-critical" : "text-text-primary"}`}>
-              {row.department || "General OPD"}
+              {row.department || "Outpatient"}
             </span>
-            <span className="text-[11px] text-text-subtle">
-              {isEmergency ? "Resus Bay 1" : "Exam Room 2"}
+            <span className="text-[11px] text-text-subtle font-mono">
+              {row.room || "--"}
             </span>
           </div>
         );
@@ -167,7 +167,7 @@ export default function ClinicQueue({
       header: "Chief Complaint / Diagnosis",
       accessor: "conditions",
       render: (row) => {
-        const conditions = row.chronicConditions?.join(", ") || row.criticalAlert || "Routine check";
+        const conditions = row.criticalAlert || row.chronicConditions?.join(", ") || row.chiefComplaint || "--";
         return (
           <div className="max-w-xs truncate text-xs text-text-muted" title={conditions}>
             {row.criticalAlert ? (
@@ -184,26 +184,38 @@ export default function ClinicQueue({
       accessor: "vitals",
       cellClassName: "tabular-nums font-mono text-xs",
       render: (row) => {
-        const bp = row.vitals?.bp || "120/80";
-        const hr = parseInt(row.vitals?.hr || "72", 10);
-        const spo2 = parseInt(row.vitals?.spo2 || "98", 10);
+        if (!row.vitals || (!row.vitals.bp && !row.vitals.hr)) {
+          return <span className="text-text-subtle">--</span>;
+        }
 
-        const isHrAbnormal = hr > 115 || hr < 50;
-        const isSpo2Abnormal = spo2 < 93;
+        const bp = row.vitals.bp || "--";
+        const hr = row.vitals.hr ? parseInt(row.vitals.hr, 10) : null;
+        const spo2 = row.vitals.spo2 ? parseInt(row.vitals.spo2, 10) : null;
+
+        const isHrAbnormal = hr && (hr > 115 || hr < 50);
+        const isSpo2Abnormal = spo2 && spo2 < 93;
 
         return (
           <div className="flex items-center gap-2 text-[11px]">
             <span className="text-text-muted">BP {bp}</span>
-            <span>·</span>
-            <span className={`inline-flex items-center gap-1 ${isHrAbnormal ? "text-critical font-semibold" : "text-text-muted"}`}>
-              {isHrAbnormal && <span className="w-1.5 h-1.5 rounded-full bg-critical shrink-0" />}
-              <span>HR {hr}</span>
-            </span>
-            <span>·</span>
-            <span className={`inline-flex items-center gap-1 ${isSpo2Abnormal ? "text-critical font-semibold" : "text-text-muted"}`}>
-              {isSpo2Abnormal && <span className="w-1.5 h-1.5 rounded-full bg-critical shrink-0" />}
-              <span>{spo2}%</span>
-            </span>
+            {hr && (
+              <>
+                <span>·</span>
+                <span className={`inline-flex items-center gap-1 ${isHrAbnormal ? "text-critical font-semibold" : "text-text-muted"}`}>
+                  {isHrAbnormal && <span className="w-1.5 h-1.5 rounded-full bg-critical shrink-0" />}
+                  <span>HR {hr}</span>
+                </span>
+              </>
+            )}
+            {spo2 && (
+              <>
+                <span>·</span>
+                <span className={`inline-flex items-center gap-1 ${isSpo2Abnormal ? "text-critical font-semibold" : "text-text-muted"}`}>
+                  {isSpo2Abnormal && <span className="w-1.5 h-1.5 rounded-full bg-critical shrink-0" />}
+                  <span>{spo2}%</span>
+                </span>
+              </>
+            )}
           </div>
         );
       }

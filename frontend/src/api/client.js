@@ -34,27 +34,16 @@ export function logout() {
   localStorage.removeItem("medguard_doctor_profile");
 }
 
-export async function getDemoAccounts() {
+export async function getNetworkStatus() {
   try {
-    const res = await fetch(`${BASE_URL}/auth/demo-accounts`);
-    if (res.ok) return await res.json();
-  } catch {}
-  return [];
-}
-
-export async function getNetworkStatus(simulatedIp) {
-  try {
-    const url = simulatedIp 
-      ? `${BASE_URL}/auth/network-status?simulated_ip=${encodeURIComponent(simulatedIp)}`
-      : `${BASE_URL}/auth/network-status`;
-    const res = await fetch(url);
+    const res = await fetch(`${BASE_URL}/auth/network-status`);
     if (res.ok) return await res.json();
   } catch {}
   return {
-    campusName: "SLIIT Malabe Campus Health Center",
-    location: "Malabe, Sri Lanka",
+    campusName: "Hospital Network",
+    location: "Hospital Clinical Facility",
     isInternal: true,
-    networkType: "Secure Campus Medical LAN"
+    networkType: "Internal Medical LAN"
   };
 }
 
@@ -143,14 +132,9 @@ export async function fetchPatientsQueue() {
   return data.patients || [];
 }
 
-export async function getPatientChart(patientId, options = {}) {
+export async function getPatientChart(patientId) {
   const token = localStorage.getItem("medguard_doctor_token");
-  const query = new URLSearchParams();
-  if (options.doctor_address) query.append("doctor_address", options.doctor_address);
-  if (options.ip_address) query.append("ip_address", options.ip_address);
-  if (options.device_fingerprint) query.append("device_fingerprint", options.device_fingerprint);
-
-  const res = await fetch(`${BASE_URL}/patients/${patientId}?${query.toString()}`, {
+  const res = await fetch(`${BASE_URL}/patients/${patientId}`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {}
   });
   const data = await res.json();

@@ -3,6 +3,10 @@
   "version": "2.0.0",
   "description": "MedGuard v2: RiskBAC and Audited Break-Glass Protocol",
   "scripts": {
+    "check:clean": "node scripts/check-production-clean.js",
+    "seed:dev": "node scripts/dev/seed.js",
+    "admin:create": "node scripts/admin-create.js",
+    "cleanup:legacy": "node scripts/ops/cleanup-legacy.js",
     "test:contracts": "hardhat test",
     "compile:contracts": "hardhat compile"
   },

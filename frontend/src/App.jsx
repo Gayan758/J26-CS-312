@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import {
-  MOCK_DOCTORS,
-  INITIAL_PATIENTS,
-  INITIAL_AUDIT_LOGS
-} from "./data/mockData";
 import AppShell from "./components/layout/AppShell";
 import ClinicQueue from "./components/ClinicQueue";
 import PatientChart from "./components/PatientChart";
@@ -23,8 +18,8 @@ export default function App() {
   const [userRole, setUserRole] = useState("doctor"); // "doctor" | "patient"
   const [patientUser, setPatientUser] = useState(null);
   const [doctor, setDoctor] = useState(null); // Always start from LoginScreen
-  const [patients, setPatients] = useState(INITIAL_PATIENTS);
-  const [auditLogs, setAuditLogs] = useState(INITIAL_AUDIT_LOGS);
+  const [patients, setPatients] = useState([]);
+  const [auditLogs, setAuditLogs] = useState([]);
   const [activeTab, setActiveTab] = useState("queue"); // "queue" | "chart" | "audit" | "tracking"
   const [activePatient, setActivePatient] = useState(null);
   const [theme, setTheme] = useState("light");
@@ -34,23 +29,26 @@ export default function App() {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
+  // Sync tab title with document title
+  useEffect(() => {
+    const titles = {
+      queue: "Clinic Queue · MedGuard EHR",
+      chart: "Patient Chart · MedGuard EHR",
+      audit: "Compliance & Audit · MedGuard EHR",
+      tracking: "Staff Safety · MedGuard EHR",
+      users: "User Management · MedGuard EHR"
+    };
+    document.title = titles[activeTab] || "MedGuard EHR";
+  }, [activeTab]);
+
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   // 2. Real Automated Context Signals
-  const [deviceFingerprint, setDeviceFingerprint] = useState(
-    "sha256:enrolled-workstation-sarah-macbook"
-  );
-  const [isDeviceTrusted, setIsDeviceTrusted] = useState(true);
-  const [doctorLocation, setDoctorLocation] = useState({
-    latitude: 6.9147,
-    longitude: 79.9733,
-    accuracy: 8,
-    distanceKm: 0.0,
-    isInsideCampus: true,
-    campusName: "SLIIT Malabe Campus Health Center"
-  });
+  const [deviceFingerprint, setDeviceFingerprint] = useState("");
+  const [isDeviceTrusted, setIsDeviceTrusted] = useState(false);
+  const [doctorLocation, setDoctorLocation] = useState(null);
   const [contextStatus, setContextStatus] = useState({
     serverTime: new Date().toISOString(),
     slstTime:
@@ -162,21 +160,12 @@ export default function App() {
         if (res.ok) {
           const data = await res.json();
           if (isMounted) {
-            setIsDeviceTrusted(
-              !!data.trusted ||
-                deviceFingerprint.includes("enrolled") ||
-                deviceFingerprint.includes("alice") ||
-                deviceFingerprint.includes("secure")
-            );
+            setIsDeviceTrusted(!!data.trusted);
           }
         }
       } catch (e) {
         if (isMounted) {
-          setIsDeviceTrusted(
-            deviceFingerprint.includes("enrolled") ||
-              deviceFingerprint.includes("alice") ||
-              deviceFingerprint.includes("secure")
-          );
+          setIsDeviceTrusted(false);
         }
       }
     }
@@ -204,79 +193,25 @@ export default function App() {
           return;
         }
       }
+      setPatients([]);
     } catch (err) {
-      console.warn("Could not sync doctor queue from backend:", err.message);
+      setPatients([]);
     }
-
-    // Local fallback
-    const filtered = INITIAL_PATIENTS.filter((p) => {
-      const assignedIds = (p.assignedDoctorIds || []).map((id) =>
-        String(id).toLowerCase()
-      );
-      const assignedAddrs = (p.assignedDoctorAddresses || []).map((a) =>
-        String(a).toLowerCase()
-      );
-      const docId = (targetDoctor.id || "").toLowerCase();
-      const docAddr = (targetDoctor.ethereumAddress || "").toLowerCase();
-      const docName = (targetDoctor.name || "").toLowerCase();
-
-      const matchId = docId && assignedIds.includes(docId);
-      const matchAddr = docAddr && assignedAddrs.includes(docAddr);
-      const matchName =
-        p.consentedDoctors &&
-        p.consentedDoctors.some(
-          (cd) =>
-            cd.toLowerCase().includes(docName) || docName.includes(cd.toLowerCase())
-        );
-
-      if (
-        targetDoctor.username?.includes("gayan") ||
-        targetDoctor.name?.includes("Gayan")
-      ) {
-        return (
-          p.id === "patient-123" ||
-          p.id === "patient-789" ||
-          matchId ||
-          matchAddr ||
-          matchName
-        );
-      }
-      if (
-        targetDoctor.username?.includes("sarah") ||
-        targetDoctor.name?.includes("Sarah")
-      ) {
-        return p.id === "patient-789" || matchId || matchAddr || matchName;
-      }
-      if (
-        targetDoctor.username?.includes("alice") ||
-        targetDoctor.name?.includes("Alice")
-      ) {
-        return (
-          p.id === "patient-123" ||
-          p.id === "patient-321" ||
-          matchId ||
-          matchAddr ||
-          matchName
-        );
-      }
-      if (
-        targetDoctor.username?.includes("kasun") ||
-        targetDoctor.name?.includes("Kasun")
-      ) {
-        return (
-          p.id === "patient-456" ||
-          p.id === "patient-123" ||
-          matchId ||
-          matchAddr ||
-          matchName
-        );
-      }
-
-      return matchId || matchAddr || matchName;
-    });
-
-    setPatients(filtered.length > 0 ? filtered : INITIAL_PATIENTS.slice(0, 2));
   };
+
+  // Synchronize audit ledger records when audit tab is selected
+  useEffect(() => {
+    if (activeTab === "audit") {
+      fetch("/api/audit-logs")
+        .then((res) => (res.ok ? res.json() : []))
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setAuditLogs(data);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     if (doctor) {

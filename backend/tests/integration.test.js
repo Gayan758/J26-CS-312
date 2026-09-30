@@ -3,6 +3,7 @@ const { expect } = require("chai");
 const app = require("../src/server");
 const consentService = require("../src/services/consentService");
 const auditService = require("../src/services/auditService");
+const emailService = require("../src/services/emailService");
 
 describe("MedGuard Backend Integration Tests", function () {
   const doctorAddress = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8";
@@ -45,6 +46,7 @@ describe("MedGuard Backend Integration Tests", function () {
         .post("/api/auth/register")
         .send({
           name: "Dr. Nuwan Senanayake, MD",
+          email: "nuwan.senanayake@hospital.lk",
           slmcNumber: "SLMC-88214",
           specialty: "Consultant Neurologist",
           username: `nuwan_${Date.now()}`,
@@ -97,12 +99,13 @@ describe("MedGuard Backend Integration Tests", function () {
       expect(outsideRes.status).to.equal(200);
       expect(outsideRes.body.locationInfo.isInsideCampus).to.be.false;
       expect(outsideRes.body.locationInfo.distanceKm).to.be.greaterThan(10.0);
-      expect(outsideRes.body.locationInfo.campusName).to.include("Outside SLIIT Malabe");
+      expect(outsideRes.body.locationInfo.campusName).to.include("Outside Hospital Perimeter");
     });
 
     it("should auto-detect SLIIT Malabe Campus IP range", async function () {
       const res = await request(app)
-        .get("/api/auth/network-status?simulated_ip=10.100.5.22");
+        .get("/api/auth/network-status")
+        .set("x-forwarded-for", "10.100.5.22");
 
       expect(res.status).to.equal(200);
       expect(res.body.campusKey).to.equal("SLIIT_MALABE");
@@ -112,7 +115,8 @@ describe("MedGuard Backend Integration Tests", function () {
 
     it("should auto-detect Seylan Tower 1 Clinic IP range", async function () {
       const res = await request(app)
-        .get("/api/auth/network-status?simulated_ip=192.168.10.45");
+        .get("/api/auth/network-status")
+        .set("x-forwarded-for", "192.168.10.45");
 
       expect(res.status).to.equal(200);
       expect(res.body.campusKey).to.equal("SEYLAN_TOWER_1");
@@ -152,12 +156,12 @@ describe("MedGuard Backend Integration Tests", function () {
     it("should return MFA_REQUIRED challenge when context signals yield medium risk, then verify & decrypt", async function () {
       const res1 = await request(app)
         .post("/api/access-request")
+        .set("x-forwarded-for", "203.0.113.19")
         .send({
           doctor_address: doctorAddress,
           patient_id: patientId,
           requested_record_id: "record-001",
           requested_record_sensitivity: "medium",
-          ip_address: "203.0.113.19", // External IP (R_l ~ 0.60)
           device_fingerprint: "sha256:alice-workstation-secure-enclave",
           timestamp: "2026-09-15T09:30:00Z"
         });
@@ -210,12 +214,12 @@ describe("MedGuard Backend Integration Tests", function () {
       // Deep night (3:00 AM SLST) + rogue IP + unregistered phone + restricted data
       const res = await request(app)
         .post("/api/access-request")
+        .set("x-forwarded-for", "198.51.100.99")
         .send({
           doctor_address: doctorAddress,
           patient_id: patientId,
           requested_record_id: "record-001",
           requested_record_sensitivity: "restricted",
-          ip_address: "198.51.100.99",
           device_fingerprint: "sha256:rogue-unregistered-phone",
           timestamp: "2026-09-15T21:30:00Z" // 03:00 SLST next day
         });
@@ -273,7 +277,10 @@ describe("MedGuard Backend Integration Tests", function () {
 
     it("should silently evaluate RiskBAC and decrypt full EMR chart for in-hospital doctor", async function () {
       const res = await request(app)
-        .get(`/api/patients/${patientId}?doctor_address=${doctorAddress}&ip_address=10.100.1.25`);
+        .get(`/api/patients/${patientId}`)
+        .set("x-doctor-address", doctorAddress)
+        .set("x-device-fingerprint", "sha256:alice-workstation-secure-enclave")
+        .set("x-forwarded-for", "10.100.1.25");
 
       expect(res.status).to.equal(200);
       expect(res.body.status).to.equal("ALLOW");
@@ -409,22 +416,16 @@ describe("MedGuard Backend Integration Tests", function () {
       expect(res.status).to.equal(200);
       expect(res.body.success).to.be.true;
       expect(res.body).to.have.property("maskedEmail");
-      expect(res.body).to.have.property("previewOtp");
-      expect(res.body.previewOtp).to.match(/^[0-9]{6}$/);
+      // Security check: previewOtp is never leaked in the API response
+      expect(res.body).to.not.have.property("previewOtp");
 
-      // Verify latest-email endpoint returns dispatched transmission
-      const emailRes = await request(app)
-        .get(`/api/auth/latest-email?doctorId=${registeredDoctor.id}`);
-
-      expect(emailRes.status).to.equal(200);
-      expect(emailRes.body.recipientEmail).to.equal(testDocEmail);
-      expect(emailRes.body.otp).to.equal(res.body.previewOtp);
+      const storedOtp = emailService.getStoredOtpForTest(registeredDoctor.id);
+      expect(storedOtp).to.match(/^[0-9]{6}$/);
     });
 
     it("should reject an invalid OTP and verify device when correct dynamic OTP is provided", async function () {
-      const emailRes = await request(app)
-        .get(`/api/auth/latest-email?doctorId=${registeredDoctor.id}`);
-      const validOtp = emailRes.body.otp;
+      const validOtp = emailService.getStoredOtpForTest(registeredDoctor.id);
+      expect(validOtp).to.exist;
 
       // 1. Invalid OTP
       const failRes = await request(app)

@@ -51,21 +51,27 @@ router.get("/audit-logs", (req, res) => {
 router.post("/geofence-webhook", async (req, res) => {
   try {
     const body = req.body || {};
-    // Supports Traccar native webhook payload or standard JSON
     const eventType = body.type || body.event || "geofenceExit";
-    const deviceUniqueId = body.device?.uniqueId || body.deviceId || body.id || "alice_vance_mobile";
-    const geofenceName = body.geofence?.name || body.geofenceName || "SLIIT Malabe Campus (Main Perimeter)";
-    const geofenceId = body.geofence?.id || body.geofenceId || "sliit-malabe";
+    const deviceUniqueId = body.device?.uniqueId || body.deviceId || body.id;
+    if (!deviceUniqueId) {
+      return res.status(400).json({ error: "Device identifier is required." });
+    }
 
-    const lat = body.position?.latitude || body.latitude || body.lat || 6.9421;
-    const lon = body.position?.longitude || body.longitude || body.lon || 79.9912;
+    const geofenceName = body.geofence?.name || body.geofenceName || "Hospital Campus Perimeter";
+    const geofenceId = body.geofence?.id || body.geofenceId || "hospital-perimeter";
+
+    const lat = body.position?.latitude || body.latitude || body.lat;
+    const lon = body.position?.longitude || body.longitude || body.lon;
+    if (lat === undefined || lon === undefined) {
+      return res.status(400).json({ error: "Valid latitude and longitude coordinates are required." });
+    }
+
     const timestamp = body.position?.serverTime || body.timestamp || new Date().toISOString();
 
-    const device = ehrDatabase.getStaffDeviceById(deviceUniqueId) || {
-      deviceId: deviceUniqueId,
-      doctorId: "doc-001",
-      doctorName: "Dr. Alice Vance, MD"
-    };
+    const device = ehrDatabase.getStaffDeviceById(deviceUniqueId);
+    if (!device) {
+      return res.status(404).json({ error: `No registered staff device found for ID: ${deviceUniqueId}` });
+    }
 
     const evaluation = await staffTrackingService.evaluateGeofenceExit({
       deviceId: device.deviceId,
@@ -81,11 +87,10 @@ router.post("/geofence-webhook", async (req, res) => {
 
     return res.status(200).json({
       status: "SUCCESS",
-      message: `Geofence exit processed for ${device.doctorName}. Risk evaluated: ${evaluation.risk_level}.`,
+      message: `Geofence event processed for ${device.doctorName}. Risk evaluated: ${evaluation.risk_level}.`,
       evaluation
     });
   } catch (err) {
-    console.error("[TrackingWebhook] Error processing geofence webhook:", err);
     return res.status(500).json({ error: err.message });
   }
 });
@@ -177,61 +182,6 @@ router.post("/sos/cancel", (req, res) => {
     const result = staffTrackingService.cancelSOS(doctorId);
     return res.status(200).json(result);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-});
-
-/**
- * POST /api/tracking/simulate-exit
- * Developer / Viva Presentation Helper: Simulates Dr. Alice Vance moving outside Malabe to Kaduwela
- * Triggers automated geofence webhook, calls Python Risk Engine, and flags security dispatch
- */
-router.post("/simulate-exit", async (req, res) => {
-  try {
-    const doctorId = req.body.doctorId || "doc-001";
-    const doctor = ehrDatabase.getStaffDeviceById(doctorId);
-    const targetName = doctor ? doctor.doctorName : "Dr. Alice Vance, MD";
-
-    // Kaduwela Junction coordinates: ~ 4.2 km outside SLIIT Malabe Campus
-    const kaduwelaLat = 6.9421;
-    const kaduwelaLon = 79.9912;
-    const now = new Date().toISOString();
-
-    // 1. Update position in database
-    ehrDatabase.updateDevicePosition(doctor ? doctor.deviceId : "dev-alice-01", {
-      lat: kaduwelaLat,
-      lon: kaduwelaLon,
-      speed: 38.5,
-      altitude: 16.0,
-      accuracy: 6.0,
-      timestamp: now,
-      batteryLevel: 78
-    });
-
-    // 2. Trigger automated geofence exit pipeline
-    const evaluation = await staffTrackingService.evaluateGeofenceExit({
-      deviceId: doctor ? doctor.deviceId : "dev-alice-01",
-      doctorId,
-      doctorName: targetName,
-      geofenceId: "sliit-malabe",
-      geofenceName: "SLIIT Malabe Campus (Main Perimeter)",
-      latitude: kaduwelaLat,
-      longitude: kaduwelaLon,
-      timestamp: now
-    });
-
-    return res.status(200).json({
-      status: "SUCCESS",
-      simulatedLocation: {
-        name: "Kaduwela Junction (Outer Ring)",
-        lat: kaduwelaLat,
-        lon: kaduwelaLon,
-        distanceFromCampusKm: evaluation.event.distanceFromBaseKm
-      },
-      evaluation
-    });
-  } catch (err) {
-    console.error("[SimulateExit] Error:", err);
     return res.status(500).json({ error: err.message });
   }
 });

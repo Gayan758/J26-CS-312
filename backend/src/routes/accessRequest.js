@@ -23,8 +23,7 @@ router.post("/access-request", accessRequestLimiter, validateDoctorIdentity, asy
       patient_id,
       requested_record_id,
       requested_record_sensitivity = "medium",
-      device_fingerprint = "sha256:default-enrolled-device",
-      ip_address,
+      device_fingerprint = req.headers["x-device-fingerprint"] || "",
       timestamp
     } = req.body;
 
@@ -33,7 +32,8 @@ router.post("/access-request", accessRequestLimiter, validateDoctorIdentity, asy
     }
 
     const accessDecisionId = "0x" + crypto.randomBytes(32).toString("hex");
-    const clientIp = ip_address || req.ip || req.headers["x-forwarded-for"] || "10.0.1.10";
+    const forwarded = req.headers["x-forwarded-for"];
+    const clientIp = (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket?.remoteAddress || req.ip || "127.0.0.1";
     const requestTime = timestamp || new Date().toISOString();
 
     // 2. Parallel: Check Consent (on-chain) AND gather context signals
@@ -93,8 +93,15 @@ router.post("/access-request", accessRequestLimiter, validateDoctorIdentity, asy
     if (decision === "MFA_REQUIRED") {
       const emailService = require("../services/emailService");
       const ehrDatabase = require("../services/ehrDatabase");
-      const doctor = ehrDatabase.getDoctorById(doctor_address);
-      const doctorEmail = (doctor && doctor.email) ? doctor.email : "alice.vance@sliit.lk";
+      const doctor = ehrDatabase.getDoctorById(doctor_address) || ehrDatabase.getDoctorByUsername(doctor_address);
+      const doctorEmail = (doctor && doctor.email) ? doctor.email : "";
+
+      if (!doctorEmail) {
+        return res.status(403).json({
+          error: "Step-Up Authentication Required",
+          message: "Account lacks registered 2FA notification email. Please contact Hospital Administration."
+        });
+      }
 
       // Dispatch 2FA OTP email
       let emailDispatch = null;
@@ -105,12 +112,12 @@ router.post("/access-request", accessRequestLimiter, validateDoctorIdentity, asy
           doctor ? doctor.name : "Attending Physician",
           {
             reason: `RiskBAC Medium Risk Step-Up (Score: ${risk_score})`,
-            network: ip_address || "External Network",
+            network: clientIp,
             fingerprint: device_fingerprint || "Workstation Enclave"
           }
         );
       } catch (err) {
-        console.warn("[AccessRequest] Error dispatching 2FA email:", err.message);
+        // Handled silently
       }
 
       // Return step-up challenge token

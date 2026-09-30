@@ -191,18 +191,15 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
         <div>
           <h2 className="text-sm font-semibold text-text-primary flex items-center gap-2">
             <Database className="w-4 h-4 text-primary" />
-            <span>Hospital Compliance &amp; Blockchain Audit Ledger</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded border border-border bg-surface-muted text-text-subtle">
-              AccessAuditLog.sol
-            </span>
+            <span>Hospital Compliance &amp; Audit Ledger</span>
           </h2>
           <p className="text-xs text-text-muted mt-0.5">
-            Cryptographically sealed access decisions from RiskBAC dynamic evaluation gate
+            Cryptographically verified access decisions and clinical governance event log
           </p>
         </div>
 
-        <div className="text-xs font-mono text-text-subtle">
-          Contract: <span className="font-semibold text-text-primary">0x5FbDB2315678afecb367f032d93F642f64180aa3</span>
+        <div className="text-xs text-text-subtle">
+          Ledger Status: <span className="font-semibold text-emerald-600">Verified Append-Only</span>
         </div>
       </div>
 
@@ -376,24 +373,24 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
             <div className="space-y-1.5">
               <div className="font-semibold text-text-primary text-xs flex items-center gap-1.5">
                 <FileCode className="w-3.5 h-3.5 text-primary" />
-                <span>Ethereum Audit Trail</span>
+                <span>Cryptographic Audit Trail</span>
               </div>
               <div className="p-3 rounded-lg border border-border bg-surface font-mono text-[11px] space-y-2">
                 <div>
-                  <span className="text-text-subtle block">Transaction Hash</span>
+                  <span className="text-text-subtle block">Transaction / Block Hash</span>
                   <div className="text-text-primary break-all select-all font-mono text-[10px] mt-0.5">
-                    {selectedLog.txHash || "0x7a3f8921e90b4ca192384a8bc39218ab23910cda819238719283719283719283"}
+                    {selectedLog.txHash || "Off-chain / Local Hash Chain"}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border text-[10px]">
                   <div>
-                    <span className="text-text-subtle block">Smart Contract</span>
-                    <span className="text-text-muted">AccessAuditLog.sol</span>
+                    <span className="text-text-subtle block">Audit Verification</span>
+                    <span className="text-text-muted">Cryptographic Chain</span>
                   </div>
                   <div>
-                    <span className="text-text-subtle block">IPFS Record CID</span>
-                    <span className="text-text-muted truncate block">QmZ8xP9...42kL</span>
+                    <span className="text-text-subtle block">Record Digest</span>
+                    <span className="text-text-muted truncate block">{selectedLog.fileHash || selectedLog.patientIdHash || "N/A"}</span>
                   </div>
                 </div>
               </div>

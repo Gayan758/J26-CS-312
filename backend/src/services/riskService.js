@@ -66,7 +66,9 @@ class RiskService {
 
     // Geolocation Risk: Real GPS coordinates against SLIIT Malabe Campus (6.9147, 79.9733, radius 0.4km)
     let r_l = 0.85;
-    const ip = (payload.ip_address || "").trim();
+    let ip = (payload.ip_address || "").trim();
+    if (ip === "::1" || ip === "::ffff:127.0.0.1") ip = "127.0.0.1";
+    if (ip.startsWith("::ffff:")) ip = ip.substring(7);
     const isInternalIp =
       ip.startsWith("172.20.10.") ||
       ip.startsWith("10.100.") ||

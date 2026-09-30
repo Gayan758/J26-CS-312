@@ -21,14 +21,11 @@ class EmailService {
           pass: config.smtpPass
         }
       });
-      console.log(`[EmailService] Configured live SMTP transport via ${config.smtpHost}:${config.smtpPort}`);
     } else {
-      // In-memory JSON/Stream transport with full Ethereal preview simulation
       this.transporter = nodemailer.createTransport({
         streamTransport: true,
         buffer: true
       });
-      console.log("[EmailService] Configured simulated clinical email dispatcher (Zero-Config Viva Mode)");
     }
   }
 
@@ -163,17 +160,13 @@ class EmailService {
     this.dispatchedEmails.unshift(emailRecord);
     if (this.dispatchedEmails.length > 50) this.dispatchedEmails.pop();
 
-    console.log(`[EmailService] 2FA OTP [${otp}] dispatched to ${masked} for ${doctorName}`);
-
     return {
       success: true,
       message: `2FA verification code dispatched to ${masked}`,
       email,
       maskedEmail: masked,
       expiresAt: new Date(expiresAt).toISOString(),
-      messageId: dispatchResult.messageId,
-      previewOtp: otp,
-      latestEmail: emailRecord
+      messageId: dispatchResult.messageId
     };
   }
 
@@ -226,18 +219,13 @@ class EmailService {
     return { valid: true, email: matchedEntry.email, doctorName: matchedEntry.doctorName };
   }
 
-  getLatestEmail(recipientEmailOrId) {
-    if (!recipientEmailOrId) {
-      return this.dispatchedEmails[0] || null;
+  getStoredOtpForTest(doctorId) {
+    if (process.env.NODE_ENV !== "production") {
+      const cleanId = String(doctorId || "").toLowerCase();
+      const entry = this.activeOtps.get(cleanId);
+      return entry ? entry.otp : null;
     }
-    const clean = String(recipientEmailOrId).trim().toLowerCase();
-    return this.dispatchedEmails.find(
-      (e) => e.recipientEmail.toLowerCase() === clean || e.doctorId.toLowerCase() === clean
-    ) || this.dispatchedEmails[0] || null;
-  }
-
-  getDispatchedEmails() {
-    return this.dispatchedEmails;
+    return null;
   }
 }
 

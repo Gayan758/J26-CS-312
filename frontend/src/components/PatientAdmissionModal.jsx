@@ -7,7 +7,7 @@ export default function PatientAdmissionModal({ doctor, onClose, onAdmitted }) {
   const [name, setName] = useState("");
   const [nic, setNic] = useState("");
   const [gender, setGender] = useState("Male");
-  const [dob, setDob] = useState("1992-06-15");
+  const [dob, setDob] = useState("");
   const [bloodGroup, setBloodGroup] = useState("O+");
   const [department, setDepartment] = useState("Outpatient General OPD");
   const [conditions, setConditions] = useState("");
@@ -23,19 +23,19 @@ export default function PatientAdmissionModal({ doctor, onClose, onAdmitted }) {
     const newPatient = {
       id: `patient-${Date.now()}`,
       phn: `PHN-${randomPhnNumber}`,
-      nic: nic.trim() || `${Math.floor(1960 + Math.random() * 45)}${randomPhnNumber}`,
+      nic: nic.trim(),
       name: name.trim(),
       gender,
       dob,
       bloodGroup,
       department,
       statusType: department.includes("Trauma") ? "emergency" : "routine",
-      assignedDoctorIds: [doctor.id],
-      assignedDoctorAddresses: [doctor.ethereumAddress || "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"],
-      consentedDoctors: [doctor.name],
-      admittingDoctorId: doctor.id,
-      admittingDoctorAddress: doctor.ethereumAddress,
-      admittingDoctorName: doctor.name,
+      assignedDoctorIds: doctor?.id ? [doctor.id] : [],
+      assignedDoctorAddresses: doctor?.ethereumAddress ? [doctor.ethereumAddress] : [],
+      consentedDoctors: doctor?.name ? [doctor.name] : [],
+      admittingDoctorId: doctor?.id || "",
+      admittingDoctorAddress: doctor?.ethereumAddress || "",
+      admittingDoctorName: doctor?.name || "",
       granularPermissions: {
         vitals: { view: true, modify: true },
         soap: { view: true, modify: true },
@@ -49,12 +49,12 @@ export default function PatientAdmissionModal({ doctor, onClose, onAdmitted }) {
         ? "CRITICAL ALLERGY ALERT: Anaphylactic reaction to Penicillin documented."
         : "",
       vitals: {
-        bp: "120/80",
-        hr: 72,
-        rr: 16,
-        spo2: 98,
-        temp: "36.8°C",
-        glucose: "95 mg/dL",
+        bp: "--/--",
+        hr: null,
+        rr: null,
+        spo2: null,
+        temp: "--",
+        glucose: "--",
         recordedAt: "Admitted Today"
       },
       notesCount: 0,

@@ -14,26 +14,30 @@ const CONSENT_REGISTRY_ABI = [
 class ConsentService {
   constructor() {
     this.provider = new ethers.JsonRpcProvider(config.ethRpcUrl);
-    this.signer = new ethers.Wallet(config.ethSignerKey, this.provider);
+    this.signer = null;
     this.contract = null;
 
-    if (config.consentRegistryAddress && ethers.isAddress(config.consentRegistryAddress)) {
+    if (config.ethSignerKey) {
+      try {
+        this.signer = new ethers.Wallet(config.ethSignerKey, this.provider);
+      } catch (e) {
+        this.signer = null;
+      }
+    }
+
+    if (this.signer && config.consentRegistryAddress && ethers.isAddress(config.consentRegistryAddress)) {
       this.contract = new ethers.Contract(config.consentRegistryAddress, CONSENT_REGISTRY_ABI, this.signer);
     }
 
-    // In-memory mock store for local/unit testing when contract is not deployed
+    // In-memory store when contract is not deployed
     this.mockConsents = new Map();
     this.mockKeys = new Map();
-
-    // Seed test patients with deterministic 32-byte AES keys matching IpfsService
-    const testKey1 = crypto.createHash("sha256").update("patient-123-key").digest();
-    const testKey2 = crypto.createHash("sha256").update("patient-456-key").digest();
-    this.mockKeys.set("patient-123", testKey1);
-    this.mockKeys.set("patient-456", testKey2);
   }
 
   setContractAddress(address) {
-    this.contract = new ethers.Contract(address, CONSENT_REGISTRY_ABI, this.signer);
+    if (this.signer && address && ethers.isAddress(address)) {
+      this.contract = new ethers.Contract(address, CONSENT_REGISTRY_ABI, this.signer);
+    }
   }
 
   setMockConsent(doctor, patientId, isValid) {
@@ -46,6 +50,7 @@ class ConsentService {
   }
 
   async checkConsent(doctorAddress, patientId) {
+    if (!doctorAddress) return false;
     const key = `${doctorAddress.toLowerCase()}:${patientId}`;
     if (this.mockConsents.has(key)) {
       return this.mockConsents.get(key);
@@ -57,10 +62,10 @@ class ConsentService {
         return await this.contract.hasValidConsent(doctorAddress, patientIdBytes32);
       }
     } catch (err) {
-      console.warn("[ConsentService] On-chain checkConsent failed, falling back to mock:", err.message);
+      // On-chain check failed
     }
 
-    return true;
+    return false;
   }
 
   async setConsent(doctorAddress, patientId, isValid) {

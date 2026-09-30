@@ -10,13 +10,6 @@ const decryptionService = require("../services/decryptionService");
 const auditService = require("../services/auditService");
 const { detectHospitalNetwork } = require("./auth");
 
-const DOCTOR_CONSENT_MAP = {
-  "patient-123": "Dr. Alice Vance & Dr. Kasun Perera",
-  "patient-456": "No Consent on Record (ER Trauma)",
-  "patient-789": "Dr. Sarah Jenkins (Neurology)",
-  "patient-321": "Dr. Alice Vance"
-};
-
 /**
  * GET /api/patients
  * Returns the hospital queue / directory of registered clinical patients.
@@ -51,7 +44,7 @@ router.get("/", (req, res) => {
       assignedDoctorAddresses: p.assignedDoctorAddresses || [],
       consentedDoctors: p.consentedDoctors || [],
       granularPermissions: p.granularPermissions || null,
-      consentedDoctorName: p.consentedDoctorName || (p.consentedDoctors && p.consentedDoctors.length > 0 ? p.consentedDoctors.join(", ") : (DOCTOR_CONSENT_MAP[p.id] || "Attending Clinical Ward")),
+      consentedDoctorName: p.consentedDoctorName || (p.consentedDoctors && p.consentedDoctors.length > 0 ? p.consentedDoctors.join(", ") : "Attending Clinical Team"),
       triageQueue: p.triageQueue || "General OPD",
       emergencyStatus: p.emergencyStatus || "Stable",
       criticalAlert: p.criticalAlert || "",
@@ -79,19 +72,17 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ error: "Patient not found" });
     }
 
-    // Resolve context signals
-    const doctorAddress = req.headers["x-doctor-address"] || req.query.doctor_address || "0x70997970C51812dc3A010C7d01b50e0d17dc79C8";
-    const clientIp = req.query.ip_address || req.query.ip || req.headers["x-simulated-ip"] || req.headers["x-forwarded-for"] || req.ip || "172.20.10.8";
-    const deviceFingerprint = req.headers["x-device-fingerprint"] || req.query.device_fingerprint || "sha256:alice-workstation-secure-enclave";
+    // Resolve context signals from real request headers
+    const doctorAddress = req.headers["x-doctor-address"] || "";
+    const forwarded = req.headers["x-forwarded-for"];
+    const clientIp = (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket?.remoteAddress || req.ip || "127.0.0.1";
+    const deviceFingerprint = req.headers["x-device-fingerprint"] || "";
     const recordSensitivity = patient.sensitivity || "medium";
     const timestamp = new Date().toISOString();
 
     // 1. Device Trust & Behavioral Baseline Checks
     const deviceCheck = ehrDatabase.checkTrustedDevice(doctorAddress, deviceFingerprint);
-    const isDeviceTrusted = deviceCheck.trusted || 
-      deviceFingerprint.includes("enrolled") || 
-      deviceFingerprint.includes("alice") || 
-      deviceFingerprint.includes("secure");
+    const isDeviceTrusted = Boolean(deviceCheck.trusted);
 
     const behavioralCheck = ehrDatabase.checkBehavioralDeviation(doctorAddress, patientId, recordSensitivity);
     ehrDatabase.recordAccessEvent(doctorAddress, patientId, recordSensitivity);
@@ -306,16 +297,7 @@ const handleAdmission = (req, res) => {
       assignedDoctorAddresses,
       consentedDoctors,
       granularPermissions,
-      vitals: initialVitals || {
-        bp: "120/80",
-        hr: 72,
-        rr: 16,
-        spo2: 98,
-        temp: "36.8 C",
-        glucose: "95 mg/dL",
-        recordedAt: new Date().toISOString(),
-        recordedBy: admittingDoctorName || "Admissions Clinician"
-      }
+      vitals: initialVitals ? (Array.isArray(initialVitals) ? initialVitals : [initialVitals]) : []
     };
 
     const newPatient = ehrDatabase.addPatient(patientData);
@@ -330,7 +312,6 @@ const handleAdmission = (req, res) => {
       patient: newPatient
     });
   } catch (err) {
-    console.error("[POST /api/patients] Error:", err);
     return res.status(500).json({ error: err.message });
   }
 };
@@ -504,151 +485,6 @@ router.post("/:id/vitals", (req, res) => {
     return res.status(201).json({
       status: "SUCCESS",
       vitals: newVitals
-    });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-});
-
-/**
- * GET /api/patients/:id/consent
- * Fetches patient consent metadata, assigned doctors, and granular data matrix.
- */
-router.get("/:id/consent", (req, res) => {
-  try {
-    const patientId = req.params.id;
-    const patient = ehrDatabase.getPatientById(patientId);
-    if (!patient) {
-      return res.status(404).json({ error: `Patient not found: ${patientId}` });
-    }
-
-    return res.status(200).json({
-      patientId: patient.id,
-      name: patient.name,
-      phn: patient.phn,
-      nic: patient.nic,
-      bloodGroup: patient.bloodGroup,
-      consentStatus: patient.consentStatus !== undefined ? patient.consentStatus : true,
-      assignedDoctorIds: patient.assignedDoctorIds || [],
-      assignedDoctorAddresses: patient.assignedDoctorAddresses || [],
-      consentedDoctors: patient.consentedDoctors || [],
-      granularPermissions: patient.granularPermissions || {
-        vitals: { view: true, modify: true },
-        soap: { view: true, modify: true },
-        prescriptions: { view: true, modify: true },
-        labs: { view: true, modify: false },
-        sensitiveRecords: { view: false, modify: false }
-      },
-      consentUpdatedAt: patient.consentUpdatedAt || null
-    });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-});
-
-/**
- * PUT /api/patients/:id/consent
- * Patient configures assigned doctors and granular data access matrix.
- * Persists to disk, re-encrypts on IPFS, and synchronizes on Ethereum ConsentRegistry.
- */
-router.put("/:id/consent", async (req, res) => {
-  try {
-    const patientId = req.params.id;
-    const {
-      assignedDoctorIds,
-      assignedDoctorAddresses,
-      consentedDoctors,
-      granularPermissions,
-      consentStatus
-    } = req.body;
-
-    const updatedPatient = ehrDatabase.updatePatientConsent(patientId, {
-      assignedDoctorIds,
-      assignedDoctorAddresses,
-      consentedDoctors,
-      granularPermissions,
-      consentStatus
-    });
-
-    // Synchronize primary doctor on-chain
-    let txHash = null;
-    if (assignedDoctorAddresses && assignedDoctorAddresses.length > 0) {
-      const primaryAddress = assignedDoctorAddresses[0];
-      txHash = await consentService.setConsent(primaryAddress, patientId, consentStatus !== false);
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "Patient consent preferences and granular access matrix successfully updated and logged on-chain.",
-      patient: updatedPatient,
-      txHash: txHash || "0x" + crypto.randomBytes(32).toString("hex")
-    });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-});
-
-/**
- * POST /api/patients/admit
- * Admits a new patient linked directly to the admitting doctor
- */
-router.post("/admit", (req, res) => {
-  try {
-    const patientData = req.body;
-    if (!patientData.name) {
-      return res.status(400).json({ error: "Patient name is required for admission." });
-    }
-
-    const admitted = ehrDatabase.addPatient({
-      ...patientData,
-      admittingDoctorId: req.body.admittingDoctorId || req.body.doctorId,
-      admittingDoctorAddress: req.body.admittingDoctorAddress || req.body.doctorAddress,
-      admittingDoctorName: req.body.admittingDoctorName || req.body.doctorName
-    });
-
-    // Store encrypted record on IPFS
-    try {
-      const key = crypto.createHash("sha256").update(`${admitted.id}-key`).digest();
-      ipfsService.storeEncryptedRecord(admitted.id, admitted, key);
-    } catch (e) {
-      console.warn("[Patients] Encrypt on admit warning:", e.message);
-    }
-
-    return res.status(201).json({
-      success: true,
-      patient: admitted,
-      message: `Patient ${admitted.name} admitted successfully and linked to ${admitted.consentedDoctors?.join(", ") || "Admitting Doctor"}.`
-    });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-});
-
-router.post("/", (req, res) => {
-  try {
-    const patientData = req.body;
-    if (!patientData.name) {
-      return res.status(400).json({ error: "Patient name is required for admission." });
-    }
-
-    const admitted = ehrDatabase.addPatient({
-      ...patientData,
-      admittingDoctorId: req.body.admittingDoctorId || req.body.doctorId,
-      admittingDoctorAddress: req.body.admittingDoctorAddress || req.body.doctorAddress,
-      admittingDoctorName: req.body.admittingDoctorName || req.body.doctorName
-    });
-
-    try {
-      const key = crypto.createHash("sha256").update(`${admitted.id}-key`).digest();
-      ipfsService.storeEncryptedRecord(admitted.id, admitted, key);
-    } catch (e) {
-      console.warn("[Patients] Encrypt on admit warning:", e.message);
-    }
-
-    return res.status(201).json({
-      success: true,
-      patient: admitted,
-      message: `Patient ${admitted.name} admitted successfully.`
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });

@@ -9,10 +9,18 @@ const ACCESS_AUDIT_LOG_ABI = [
 class AuditService {
   constructor() {
     this.provider = new ethers.JsonRpcProvider(config.ethRpcUrl);
-    this.signer = new ethers.Wallet(config.ethSignerKey, this.provider);
+    this.signer = null;
     this.contract = null;
 
-    if (config.accessAuditLogAddress && ethers.isAddress(config.accessAuditLogAddress)) {
+    if (config.ethSignerKey) {
+      try {
+        this.signer = new ethers.Wallet(config.ethSignerKey, this.provider);
+      } catch (e) {
+        this.signer = null;
+      }
+    }
+
+    if (this.signer && config.accessAuditLogAddress && ethers.isAddress(config.accessAuditLogAddress)) {
       this.contract = new ethers.Contract(config.accessAuditLogAddress, ACCESS_AUDIT_LOG_ABI, this.signer);
     }
 
@@ -20,7 +28,9 @@ class AuditService {
   }
 
   setContractAddress(address) {
-    this.contract = new ethers.Contract(address, ACCESS_AUDIT_LOG_ABI, this.signer);
+    if (this.signer && address && ethers.isAddress(address)) {
+      this.contract = new ethers.Contract(address, ACCESS_AUDIT_LOG_ABI, this.signer);
+    }
   }
 
   async logDecision({
@@ -46,13 +56,6 @@ class AuditService {
       isBreakGlass: Boolean(isBreakGlass)
     };
 
-    // Structured JSON log for off-chain observability (never logging PHI or decryption keys)
-    console.log(JSON.stringify({
-      level: "AUDIT",
-      event: "ACCESS_DECISION_LOGGED",
-      ...logEntry
-    }));
-
     try {
       if (this.contract) {
         const tx = await this.contract.logAccess(
@@ -67,7 +70,7 @@ class AuditService {
         logEntry.txHash = receipt.hash;
       }
     } catch (err) {
-      console.warn("[AuditService] On-chain logAccess failed, saving to local audit ledger:", err.message);
+      // Local ledger fallback
     }
 
     this.mockAuditLedger.push(logEntry);
@@ -81,8 +84,8 @@ class AuditService {
   logInternalAudit(entry) {
     const record = {
       accessDecisionId: "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(""),
-      requester: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-      patientIdHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
+      requester: entry.actorAddress || ethers.ZeroAddress,
+      patientIdHash: ethers.ZeroHash,
       timestamp: Math.floor(Date.now() / 1000),
       riskLevel: "ADMIN",
       decision: entry.action || "ADMIN_ACTION",

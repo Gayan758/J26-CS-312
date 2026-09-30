@@ -4,58 +4,6 @@ const config = require("../config");
 
 const router = express.Router();
 
-// Pre-seeded clinical demo accounts
-const DEMO_DOCTORS = [
-  {
-    id: "doc-1240",
-    username: "gayan.fernando",
-    password: "Password123!",
-    name: "Dr. Gayan Fernando, MD",
-    email: "it23270374@my.sliit.lk",
-    specialty: "Lead Clinician & Access Architect",
-    ethereumAddress: "0x130d19799c5ca42f059caec0a20a9e80ec48d4e6",
-    baseCampus: "SLIIT Malabe Campus Health Center",
-    defaultDeviceFingerprint: "sha256:enrolled-workstation-gayan",
-    role: "Doctor"
-  },
-  {
-    id: "doc-001",
-    username: "alice.vance",
-    password: "Password123!",
-    name: "Dr. Alice Vance, MD",
-    email: "alice.vance@sliit.lk",
-    specialty: "Consultant Cardiologist",
-    ethereumAddress: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-    baseCampus: "SLIIT Malabe Campus Health Center",
-    defaultDeviceFingerprint: "sha256:alice-workstation-secure-enclave",
-    role: "Doctor"
-  },
-  {
-    id: "doc-002",
-    username: "kasun.perera",
-    password: "Password123!",
-    name: "Dr. Kasun Perera, MBBS",
-    email: "kasun.perera@seylan.lk",
-    specialty: "Emergency Medicine Specialist",
-    ethereumAddress: "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-    baseCampus: "Seylan Tower 1 Medical Clinic (Kollupitiya)",
-    defaultDeviceFingerprint: "sha256:kasun-mdm-tablet",
-    role: "Doctor"
-  },
-  {
-    id: "doc-003",
-    username: "sarah.jenkins",
-    password: "Password123!",
-    name: "Dr. Sarah Jenkins, MD",
-    email: "sarah.jenkins@hospital.lk",
-    specialty: "Visiting Neurologist",
-    ethereumAddress: "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
-    baseCampus: "External Specialist / On-Call",
-    defaultDeviceFingerprint: "sha256:sarah-laptop",
-    role: "Doctor"
-  }
-];
-
 // Trusted Shift Hours (08:30–17:00, Asia/Colombo timezone)
 function isWithinTrustedShift(serverTimestamp = new Date()) {
   const hospitalTime = new Date(serverTimestamp.toLocaleString('en-US', { timeZone: 'Asia/Colombo' }));
@@ -148,8 +96,8 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ error: "Doctor Name, Username, and Password are required." });
   }
 
-  const cleanEmail = (email || "").trim().toLowerCase() || `${username.trim().toLowerCase()}@sliit.lk`;
-  if (!cleanEmail.includes("@") || !cleanEmail.includes(".")) {
+  const cleanEmail = (email || "").trim().toLowerCase();
+  if (!cleanEmail || !cleanEmail.includes("@") || !cleanEmail.includes(".")) {
     return res.status(400).json({ error: "Please provide a valid registered email address for 2FA OTP delivery." });
   }
 
@@ -178,12 +126,12 @@ router.post("/register", async (req, res) => {
         newDoctor.name,
         {
           reason: "Physician Clinical Account Registration & 2FA Enrollment",
-          network: baseCampus || "SLIIT Malabe Hospital",
+          network: baseCampus || "Hospital Network",
           fingerprint: deviceFingerprint || "Enrolled Clinical Workstation"
         }
       );
     } catch (e) {
-      console.warn("[Auth] Email dispatch on register warning:", e.message);
+      // Non-fatal email dispatch failure on registration
     }
 
     return res.status(201).json({
@@ -208,35 +156,10 @@ router.post("/login", (req, res) => {
   }
 
   const ehrDatabase = require("../services/ehrDatabase");
-  let doctor = ehrDatabase.getDoctorByUsername(username);
+  const doctor = ehrDatabase.getDoctorByUsername(username);
 
-  if (!doctor) {
-    // Check pre-seeded DEMO_DOCTORS
-    doctor = DEMO_DOCTORS.find(
-      (d) => d.username.toLowerCase() === username.trim().toLowerCase() && d.password === password
-    );
-  } else if (doctor.password !== password) {
-    doctor = null;
-  }
-
-  // Support root administrator credentials
-  if (!doctor && username.trim().toLowerCase() === "admin" && password === "Admin123!") {
-    doctor = {
-      id: "admin-001",
-      username: "admin",
-      name: "Hospital IT & Compliance Admin",
-      role: "Admin",
-      specialty: "Hospital Security & Governance",
-      email: "admin.compliance@sliit.lk",
-      baseCampus: "SLIIT Malabe Campus Health Center",
-      ethereumAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-      defaultDeviceFingerprint: "sha256:enrolled-workstation-admin",
-      status: "active"
-    };
-  }
-
-  if (!doctor) {
-    return res.status(401).json({ error: "Invalid username or password. Please verify your clinical credentials." });
+  if (!doctor || doctor.password !== password) {
+    return res.status(401).json({ error: "Invalid username or password. Please verify your credentials." });
   }
 
   // Enforce administrative suspension
@@ -246,15 +169,17 @@ router.post("/login", (req, res) => {
     });
   }
 
-  // Real location calculation
+  // Location calculation from real client GPS
   let locationInfo = {
-    latitude: 6.9147,
-    longitude: 79.9733,
-    accuracy: 8,
-    distanceKm: 0.0,
-    isInsideCampus: true,
-    campusName: doctor.baseCampus || "SLIIT Malabe Campus Health Center"
+    latitude: null,
+    longitude: null,
+    accuracy: null,
+    distanceKm: null,
+    isInsideCampus: false,
+    campusName: "Unverified Location (No GPS)"
   };
+
+  const clientIp = req.headers["x-forwarded-for"] || req.ip || "127.0.0.1";
 
   if (coordinates && coordinates.latitude !== undefined && coordinates.longitude !== undefined) {
     const lat = parseFloat(coordinates.latitude);
@@ -262,7 +187,7 @@ router.post("/login", (req, res) => {
     const acc = parseFloat(coordinates.accuracy) || 10;
     const distKm = haversineDistance(6.9147, 79.9733, lat, lon);
     const isInside = distKm <= 0.40; // 400m perimeter
-    const campusName = isInside ? "SLIIT Malabe Campus (Inside Perimeter)" : `Outside SLIIT Malabe (${distKm.toFixed(2)} km)`;
+    const campusName = isInside ? (doctor.baseCampus || "Hospital Campus (Inside Perimeter)") : `Outside Hospital Perimeter (${distKm.toFixed(2)} km)`;
 
     locationInfo = {
       latitude: lat,
@@ -281,19 +206,19 @@ router.post("/login", (req, res) => {
       distanceFromMalabeKm: parseFloat(distKm.toFixed(2)),
       isInsideMalabe: isInside,
       campusName,
-      ipAddress: req.ip || req.headers["x-forwarded-for"] || "172.20.10.8",
+      ipAddress: clientIp,
       userAgent: req.headers["user-agent"] || ""
     });
   } else {
-    // If no GPS transmitted, save default campus location
+    // If no GPS transmitted, save unverified session location
     ehrDatabase.saveDoctorSessionLocation(doctor.id, {
-      latitude: 6.9147,
-      longitude: 79.9733,
-      accuracy: 10,
-      distanceFromMalabeKm: 0.0,
-      isInsideMalabe: true,
-      campusName: "SLIIT Malabe Campus Health Center",
-      ipAddress: req.ip || req.headers["x-forwarded-for"] || "172.20.10.8",
+      latitude: null,
+      longitude: null,
+      accuracy: null,
+      distanceFromMalabeKm: null,
+      isInsideMalabe: false,
+      campusName: "Unverified Location (No GPS)",
+      ipAddress: clientIp,
       userAgent: req.headers["user-agent"] || ""
     });
   }
@@ -307,13 +232,13 @@ router.post("/login", (req, res) => {
     id: doctor.id,
     username: doctor.username,
     name: doctor.name,
-    email: doctor.email || `${doctor.username}@sliit.lk`,
-    slmcNumber: doctor.slmcNumber || "SLMC-VERIFIED",
-    specialty: doctor.specialty,
-    ethereumAddress: doctor.ethereumAddress,
-    baseCampus: doctor.baseCampus,
-    defaultDeviceFingerprint: doctor.defaultDeviceFingerprint,
-    role: doctor.role,
+    email: doctor.email || "",
+    slmcNumber: doctor.slmcNumber || "",
+    specialty: doctor.specialty || "General Medicine",
+    ethereumAddress: doctor.ethereumAddress || "",
+    baseCampus: doctor.baseCampus || "",
+    defaultDeviceFingerprint: doctor.defaultDeviceFingerprint || "",
+    role: doctor.role || "Doctor",
     lastKnownLocation: locationInfo
   };
 
@@ -391,42 +316,12 @@ router.get("/doctors", (req, res) => {
 });
 
 /**
- * GET /api/auth/patient-accounts
- * Exposes seeded patient profiles for 1-click patient portal demo login
- */
-router.get("/patient-accounts", (req, res) => {
-  const ehrDatabase = require("../services/ehrDatabase");
-  const patients = ehrDatabase.getPatients().slice(0, 4).map(p => ({
-    id: p.id,
-    phn: p.phn,
-    nic: p.nic,
-    name: p.name,
-    bloodGroup: p.bloodGroup,
-    sensitivity: p.sensitivity,
-    assignedDoctorsCount: (p.assignedDoctorIds || []).length
-  }));
-  return res.status(200).json(patients);
-});
-
-/**
- * GET /api/auth/demo-accounts
- * Exposes pre-seeded demo accounts for easy testing in the UI
- */
-router.get("/demo-accounts", (req, res) => {
-  const safeAccounts = DEMO_DOCTORS.map(({ password, ...rest }) => ({
-    ...rest,
-    demoPassword: password
-  }));
-  res.status(200).json(safeAccounts);
-});
-
-/**
  * GET /api/auth/network-status
- * Auto-detects hospital network range based on client IP or requested simulated IP
+ * Auto-detects hospital network range based on client IP
  */
 router.get("/network-status", (req, res) => {
-  const queryIp = req.query.simulated_ip || req.ip || req.headers["x-forwarded-for"] || "172.20.10.8";
-  const detection = detectHospitalNetwork(queryIp);
+  const clientIp = req.headers["x-forwarded-for"] || req.ip || "127.0.0.1";
+  const detection = detectHospitalNetwork(clientIp);
   res.status(200).json(detection);
 });
 
@@ -435,7 +330,7 @@ router.get("/network-status", (req, res) => {
  * Real auto-detected hospital network & SLST shift status from server clock
  */
 router.get("/context-status", (req, res) => {
-  const clientIp = req.headers["x-simulated-ip"] || req.headers["x-forwarded-for"] || req.ip || "172.20.10.8";
+  const clientIp = req.headers["x-forwarded-for"] || req.ip || "127.0.0.1";
   const now = new Date();
   const inShift = isWithinTrustedShift(now);
   const locationInfo = checkTrustedLocation(clientIp);
@@ -502,13 +397,14 @@ router.post("/send-2fa-otp", async (req, res) => {
   let doc = null;
   if (doctorId) {
     doc = ehrDatabase.getDoctorById(doctorId) || ehrDatabase.getDoctorByUsername(doctorId);
-    if (!doc) {
-      doc = DEMO_DOCTORS.find(d => d.id === doctorId || d.ethereumAddress === doctorId || d.username === doctorId);
-    }
   }
 
-  const targetEmail = (email || (doc ? doc.email : "") || "alice.vance@sliit.lk").trim();
-  const doctorName = doc ? doc.name : (req.body.doctorName || "Attending Physician");
+  const targetEmail = (email || (doc ? doc.email : "")).trim();
+  if (!targetEmail || !targetEmail.includes("@")) {
+    return res.status(400).json({ error: "No valid email address registered for 2FA dispatch." });
+  }
+
+  const doctorName = doc ? doc.name : (req.body.doctorName || "Attending Clinician");
 
   try {
     const result = await emailService.send2FAOtp(
@@ -526,20 +422,6 @@ router.post("/send-2fa-otp", async (req, res) => {
   } catch (err) {
     return res.status(500).json({ error: `Failed to dispatch 2FA email: ${err.message}` });
   }
-});
-
-/**
- * GET /api/auth/latest-email
- * Returns the most recent dispatched 2FA email for UI/examiner live inspection
- */
-router.get("/latest-email", (req, res) => {
-  const emailService = require("../services/emailService");
-  const target = req.query.doctorId || req.query.email || "";
-  const emailRecord = emailService.getLatestEmail(target);
-  if (!emailRecord) {
-    return res.status(404).json({ error: "No dispatched 2FA emails found for this account." });
-  }
-  return res.status(200).json(emailRecord);
 });
 
 /**
@@ -593,7 +475,6 @@ router.get("/device-status", (req, res) => {
 
 module.exports = {
   router,
-  DEMO_DOCTORS,
   detectHospitalNetwork,
   checkTrustedLocation,
   isWithinTrustedShift

@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import { AlertOctagon, Clock, Key, ShieldAlert, FileText, CheckCircle2 } from "lucide-react";
 import { activateBreakGlass, accessBreakGlassRecord } from "../api/client";
 
-export default function BreakGlassPanel({ onEmergencyRecordDecrypted }) {
-  const [doctorAddress, setDoctorAddress] = useState("0x70997970C51812dc3A010C7d01b50e0d17dc79C8");
-  const [patientId, setPatientId] = useState("patient-456");
-  const [justification, setJustification] = useState(
-    "Patient in acute trauma in ER, unconscious, acute intracranial hemorrhage, allergy status vital."
-  );
+export default function BreakGlassPanel({ onEmergencyRecordDecrypted, doctor, patient }) {
+  const [doctorAddress, setDoctorAddress] = useState(doctor?.ethereumAddress || doctor?.id || "");
+  const [patientId, setPatientId] = useState(patient?.id || "");
+  const [justification, setJustification] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

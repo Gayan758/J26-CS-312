@@ -10,7 +10,6 @@ import {
   Compass,
   UserCheck,
   AlertTriangle,
-  Play,
   RotateCcw,
   CheckCircle2,
   Lock,
@@ -45,7 +44,6 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
   const [devices, setDevices] = useState([]);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isSimulating, setIsSimulating] = useState(false);
   const [selectedDeviceId, setSelectedDeviceId] = useState(null);
 
   // Fetch live devices & geofence events from backend
@@ -178,60 +176,26 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
     });
   }, [devices]);
 
-  // Handler: Simulate Doctor Exit
-  const handleSimulateExit = async () => {
-    setIsSimulating(true);
-    try {
-      const res = await fetch("/api/tracking/simulate-exit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ doctorId: "doc-001" })
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        await fetchData();
-
-        if (mapInstanceRef.current && data.simulatedLocation) {
-          mapInstanceRef.current.flyTo(
-            [data.simulatedLocation.lat, data.simulatedLocation.lon],
-            15,
-            { duration: 1.2 }
-          );
-        }
-
-        if (onShowToast) {
-          onShowToast(
-            `Geofence Transition: Dr. Alice Vance detected outside SLIIT Malabe Campus · Risk score updated to ${data.evaluation.risk_score}`,
-            "warning"
-          );
-        }
-      }
-    } catch (err) {
-      console.error("Simulation error:", err);
-    } finally {
-      setIsSimulating(false);
-    }
-  };
-
   // Handler: Trigger SOS Distress Beacon
   const handleTriggerSOS = async () => {
+    if (!doctor) return;
     try {
-      const targetDoc = doctor?.id || "doc-001";
+      const lat = doctor.lastKnownLocation?.latitude || 6.9147;
+      const lon = doctor.lastKnownLocation?.longitude || 79.9733;
       const res = await fetch("/api/tracking/sos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ doctorId: targetDoc, lat: 6.9421, lon: 79.9912 })
+        body: JSON.stringify({ doctorId: doctor.id, lat, lon })
       });
 
       if (res.ok) {
         await fetchData();
         if (onShowToast) {
-          onShowToast("EMERGENCY SOS BROADCAST ACTIVATED · Security dispatch notified", "error");
+          onShowToast("Emergency SOS broadcast activated — security dispatch notified", "critical");
         }
       }
     } catch (err) {
-      console.error("SOS error:", err);
+      if (onShowToast) onShowToast("Failed to activate SOS beacon", "critical");
     }
   };
 
@@ -292,9 +256,6 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
           <h2 className="text-sm font-semibold text-text-primary flex items-center gap-2">
             <Radio className="w-4 h-4 text-emerald-600" />
             <span>Staff Safety &amp; Real-Time Location</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded border border-border bg-surface-muted text-text-subtle">
-              Traccar · OsmAnd Port 5055
-            </span>
           </h2>
           <p className="text-xs text-text-muted mt-0.5">
             Physical safety monitoring, geofence boundary checks, and lone-worker emergency dispatch
@@ -442,20 +403,10 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
           <div className="px-4 py-2.5 border-b border-border bg-surface-muted flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-xs font-medium text-text-primary">
               <MapPin className="w-3.5 h-3.5 text-primary" />
-              <span>Campus Geofence Zones (SLIIT Malabe &amp; Seylan Clinic)</span>
+              <span>Campus Safety Zones</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <Button
-                variant="secondary"
-                size="sm"
-                icon={Play}
-                loading={isSimulating}
-                onClick={handleSimulateExit}
-                title="Simulate clinician stepping outside campus boundary to test risk evaluation"
-              >
-                Simulate Exit
-              </Button>
 
               {sosActiveCount === 0 ? (
                 <Button
