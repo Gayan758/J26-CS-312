@@ -6,6 +6,7 @@ const accessRequestRoutes = require("./routes/accessRequest");
 const breakGlassRoutes = require("./routes/breakGlass");
 const patientsRoutes = require("./routes/patients");
 const trackingRoutes = require("./routes/tracking");
+const adminRoutes = require("./routes/admin");
 const errorHandler = require("./middleware/errorHandler");
 const auditService = require("./services/auditService");
 
@@ -27,6 +28,7 @@ app.get("/api/audit-logs", (req, res) => {
 
 // API Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/patients", patientsRoutes);
 app.use("/api/tracking", trackingRoutes);
 app.use("/api", accessRequestRoutes);

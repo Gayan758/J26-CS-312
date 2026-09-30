@@ -26,6 +26,17 @@
       "registeredAt": "2026-09-01T08:00:00Z",
       "vitals": [
         {
+          "id": "vit-1790746244380",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-09-30T05:30:44.380Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
           "id": "vit-1790742748679",
           "bp": "122/78",
           "hr": 70,
@@ -269,6 +280,22 @@
         }
       ],
       "encounters": [
+        {
+          "id": "enc-1790746244362",
+          "date": "2026-09-30",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
         {
           "id": "enc-1790742748623",
           "date": "2026-09-30",
@@ -624,6 +651,19 @@
         }
       ],
       "prescriptions": [
+        {
+          "id": "rx-1790746244372",
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-09-30T05:30:44.372Z",
+          "status": "Active"
+        },
         {
           "id": "rx-1790742748650",
           "drugName": "Atorvastatin Calcium",
@@ -2896,6 +2936,75 @@
       "encounters": [],
       "prescriptions": [],
       "labResults": []
+    },
+    {
+      "id": "patient-4388",
+      "patientId": "patient-4388",
+      "phn": "PHN-737782",
+      "nic": "851032481V",
+      "name": "Nimal Perera",
+      "patientName": "Nimal Perera",
+      "dob": "1985-04-12",
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Consultation",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-09-30T05:30:44.389Z",
+      "assignedDoctorIds": [
+        "doc-001"
+      ],
+      "assignedDoctorAddresses": [
+        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+      ],
+      "consentedDoctors": [
+        "Attending Physician"
+      ],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [
+        {
+          "bp": "120/80",
+          "hr": 72,
+          "rr": 16,
+          "spo2": 98,
+          "temp": "36.8 C",
+          "glucose": "95 mg/dL",
+          "recordedAt": "2026-09-30T05:30:44.387Z",
+          "recordedBy": "Admissions Clinician"
+        }
+      ],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
     }
   ],
   "accessHistory": [
@@ -3198,6 +3307,12 @@
       "patientId": "patient-123",
       "sensitivity": "medium",
       "timestamp": 1790742748243
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790746244054
     }
   ],
   "staffTrackingDevices": [
@@ -3219,10 +3334,10 @@
         "speed": 38.5,
         "altitude": 16,
         "accuracy": 6,
-        "timestamp": "2026-09-30T04:32:28.872Z"
+        "timestamp": "2026-09-30T05:30:44.483Z"
       },
-      "lastReportTime": "2026-09-30T04:32:28.809Z",
-      "updatedAt": "2026-09-30T04:32:28.896Z"
+      "lastReportTime": "2026-09-30T05:30:44.443Z",
+      "updatedAt": "2026-09-30T05:30:44.499Z"
     },
     {
       "deviceId": "dev-kasun-02",
@@ -3264,9 +3379,9 @@
         "speed": 0,
         "altitude": 18,
         "accuracy": 12,
-        "timestamp": "2026-09-30T04:32:25.247Z"
+        "timestamp": "2026-09-30T05:30:41.485Z"
       },
-      "lastReportTime": "2026-09-30T04:32:25.247Z"
+      "lastReportTime": "2026-09-30T05:30:41.485Z"
     },
     {
       "deviceId": "device-doc-8933",
@@ -3369,14 +3484,14 @@
       "batteryLevel": 100,
       "sosActive": false,
       "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
+        "lat": 6.917300371428572,
+        "lon": 79.84776180873673,
         "speed": 0,
         "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-22T09:05:41.261Z"
+        "accuracy": 77,
+        "timestamp": "2026-09-30T04:55:42.157Z"
       },
-      "lastReportTime": "2026-09-22T09:05:41.261Z"
+      "lastReportTime": "2026-09-30T04:55:42.157Z"
     },
     {
       "deviceId": "device-doc-3185",
@@ -3685,9 +3800,89 @@
         "timestamp": "2026-09-30T04:32:28.715Z"
       },
       "lastReportTime": "2026-09-30T04:32:28.715Z"
+    },
+    {
+      "deviceId": "device-doc-1407",
+      "doctorId": "doc-1407",
+      "doctorName": "Dr. Nuwan Senanayake, MD",
+      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
+      "osmandProtocolId": "osmand-doc-1407",
+      "consentGiven": true,
+      "consentTimestamp": "2026-09-30T05:30:41.407Z",
+      "consentVersion": "v1.0",
+      "trackingEnabled": true,
+      "batteryLevel": 100,
+      "sosActive": false,
+      "lastPosition": {
+        "lat": 6.9147,
+        "lon": 79.9733,
+        "speed": 0,
+        "altitude": 18,
+        "accuracy": 10,
+        "timestamp": "2026-09-30T05:30:41.464Z"
+      },
+      "lastReportTime": "2026-09-30T05:30:41.464Z"
+    },
+    {
+      "deviceId": "device-doc-4395",
+      "doctorId": "doc-4395",
+      "doctorName": "Dr. Rohana Wijesinghe, MD",
+      "deviceName": "Dr. Rohana Wijesinghe, MD's Medical Device",
+      "osmandProtocolId": "osmand-doc-4395",
+      "consentGiven": true,
+      "consentTimestamp": "2026-09-30T05:30:44.395Z",
+      "consentVersion": "v1.0",
+      "trackingEnabled": true,
+      "batteryLevel": 100,
+      "sosActive": false,
+      "lastPosition": {
+        "lat": 6.9147,
+        "lon": 79.9733,
+        "speed": 0,
+        "altitude": 18,
+        "accuracy": 5,
+        "timestamp": "2026-09-30T05:30:44.395Z"
+      },
+      "lastReportTime": "2026-09-30T05:30:44.395Z"
     }
   ],
   "geofenceRiskEvents": [
+    {
+      "id": "geofence-evt-1790746244489-7620",
+      "deviceId": "dev-alice-01",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-09-30T05:30:44.489Z",
+      "retentionExpiresAt": "2026-11-29T05:30:44.489Z"
+    },
+    {
+      "id": "geofence-evt-1790746244454-2656",
+      "deviceId": "dev-alice-01",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sliit-malabe",
+      "geofenceName": "SLIIT Malabe Campus (Main Perimeter)",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9421,
+      "longitude": 79.9912,
+      "distanceFromBaseKm": 3.631,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-09-30T05:30:44.454Z",
+      "retentionExpiresAt": "2026-11-29T05:30:44.454Z"
+    },
     {
       "id": "geofence-evt-1790742748880-5001",
       "deviceId": "dev-alice-01",
@@ -4285,6 +4480,26 @@
   ],
   "staffSafetyAuditLogs": [
     {
+      "id": "audit-1790746244492-6563",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-09-30T05:30:44.492Z"
+    },
+    {
+      "id": "audit-1790746244457-2300",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited SLIIT Malabe Campus (Main Perimeter) (3.631 km, Risk: MEDIUM)",
+      "timestamp": "2026-09-30T05:30:44.457Z"
+    },
+    {
       "id": "audit-1790742748885-2026",
       "actorId": "doc-001",
       "actorName": "Dr. Alice Vance, MD",
@@ -4776,6 +4991,30 @@
       "fingerprint": "sha256:test-workstation-enclave-999",
       "trusted": true,
       "enrolledAt": "2026-09-30T04:32:28.773Z"
+    },
+    {
+      "doctorId": "0x130d19799c5ca42f059caec0a20a9e80ec48d4e6",
+      "fingerprint": "sha256:enrolled-workstation-gayan.fernando",
+      "trusted": true,
+      "enrolledAt": "2026-09-30T04:55:42.166Z"
+    },
+    {
+      "doctorId": "0x35ad3cb7bea212b02fcd5217637f9b6efd529a29",
+      "fingerprint": "sha256:enrolled-workstation-nuwan_1790746241302",
+      "trusted": true,
+      "enrolledAt": "2026-09-30T05:30:41.407Z"
+    },
+    {
+      "doctorId": "0x0b6bdc68c257e6b9ea2e28ff21c3444c8317b929",
+      "fingerprint": "sha256:enrolled-workstation-doc.test.1790746241250",
+      "trusted": true,
+      "enrolledAt": "2026-09-30T05:30:44.395Z"
+    },
+    {
+      "doctorId": "doc-4395",
+      "fingerprint": "sha256:test-workstation-enclave-999",
+      "trusted": true,
+      "enrolledAt": "2026-09-30T05:30:44.416Z"
     }
   ],
   "doctors": [
@@ -4799,7 +5038,7 @@
         "distanceFromMalabeKm": 0,
         "isInsideMalabe": true,
         "campusName": "SLIIT Malabe Campus (Inside Perimeter)",
-        "recordedAt": "2026-09-30T04:32:25.225Z"
+        "recordedAt": "2026-09-30T05:30:41.477Z"
       },
       "email": "alice.vance@sliit.lk"
     },
@@ -4847,7 +5086,7 @@
         "distanceFromMalabeKm": 12.45,
         "isInsideMalabe": false,
         "campusName": "Outside SLIIT Malabe (12.45 km)",
-        "recordedAt": "2026-09-30T04:32:25.247Z"
+        "recordedAt": "2026-09-30T05:30:41.485Z"
       },
       "email": "sarah.jenkins@hospital.lk"
     },
@@ -4961,13 +5200,13 @@
       "role": "Doctor",
       "registeredAt": "2026-09-22T09:05:41.240Z",
       "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-22T09:05:41.261Z"
+        "latitude": 6.917300371428572,
+        "longitude": 79.84776180873673,
+        "accuracy": 77,
+        "distanceFromMalabeKm": 13.86,
+        "isInsideMalabe": false,
+        "campusName": "Outside SLIIT Malabe (13.86 km)",
+        "recordedAt": "2026-09-30T04:55:42.157Z"
       },
       "email": "it23270374@my.sliit.lk"
     },
@@ -5283,9 +5522,114 @@
       "role": "Doctor",
       "registeredAt": "2026-09-30T04:32:28.715Z",
       "lastKnownLocation": null
+    },
+    {
+      "id": "doc-1407",
+      "username": "nuwan_1790746241302",
+      "password": "SecurePassword123!",
+      "name": "Dr. Nuwan Senanayake, MD",
+      "email": "nuwan_1790746241302@sliit.lk",
+      "slmcNumber": "SLMC-88214",
+      "specialty": "Consultant Neurologist",
+      "ethereumAddress": "0x35ad3cb7bea212b02fcd5217637f9b6efd529a29",
+      "baseCampus": "SLIIT Malabe Campus Health Center",
+      "phone": "+94 77 555 9999",
+      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790746241302",
+      "role": "Doctor",
+      "registeredAt": "2026-09-30T05:30:41.407Z",
+      "lastKnownLocation": {
+        "latitude": 6.9147,
+        "longitude": 79.9733,
+        "accuracy": 10,
+        "distanceFromMalabeKm": 0,
+        "isInsideMalabe": true,
+        "campusName": "SLIIT Malabe Campus Health Center",
+        "recordedAt": "2026-09-30T05:30:41.464Z"
+      }
+    },
+    {
+      "id": "doc-4395",
+      "username": "doc.test.1790746241250",
+      "password": "Password123!",
+      "name": "Dr. Rohana Wijesinghe, MD",
+      "email": "test.physician.1790746241250@sliit.lk",
+      "slmcNumber": "SLMC-99412",
+      "specialty": "Consultant Pulmonologist",
+      "ethereumAddress": "0x0b6bdc68c257e6b9ea2e28ff21c3444c8317b929",
+      "baseCampus": "SLIIT Malabe Campus Health Center",
+      "phone": "+94 77 444 5555",
+      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790746241250",
+      "role": "Doctor",
+      "registeredAt": "2026-09-30T05:30:44.395Z",
+      "lastKnownLocation": null
     }
   ],
   "doctorSessions": [
+    {
+      "id": "sess-1790746241485",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside SLIIT Malabe (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-09-30T05:30:41.485Z"
+    },
+    {
+      "id": "sess-1790746241477",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus (Inside Perimeter)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-09-30T05:30:41.477Z"
+    },
+    {
+      "id": "sess-1790746241464",
+      "doctorId": "doc-1407",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-09-30T05:30:41.464Z"
+    },
+    {
+      "id": "sess-1790746241282",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-09-30T05:30:41.282Z"
+    },
+    {
+      "id": "sess-1790744142156",
+      "doctorId": "doc-1240",
+      "latitude": 6.917300371428572,
+      "longitude": 79.84776180873673,
+      "accuracy": 77,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside SLIIT Malabe (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-09-30T04:55:42.156Z"
+    },
     {
       "id": "sess-1790742745247",
       "doctorId": "doc-003",

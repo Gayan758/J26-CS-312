@@ -7,6 +7,17 @@
 
 export const MOCK_DOCTORS = [
   {
+    id: "admin-001",
+    username: "admin",
+    password: "Admin123!",
+    name: "Hospital IT & Compliance Admin",
+    role: "Admin",
+    department: "Clinical Governance & IT Security",
+    facility: "SLIIT Malabe Campus Health Center",
+    ethereumAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    deviceFingerprint: "sha256:enrolled-workstation-admin"
+  },
+  {
     id: "doc-gayan",
     username: "gayan.fernando",
     password: "Password123!",

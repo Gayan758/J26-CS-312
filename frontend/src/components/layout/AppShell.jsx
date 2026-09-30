@@ -5,6 +5,7 @@ import {
   FileText,
   Database,
   Radio,
+  Users,
   Clock,
   MapPin,
   Laptop,
@@ -160,32 +161,54 @@ export default function AppShell({
       : parts[0].slice(0, 2).toUpperCase();
   };
 
-  const navItems = [
-    {
-      id: "queue",
-      label: "Clinic Queue & Triage",
-      icon: Activity,
-      badge: queueCount > 0 ? queueCount : null
-    },
-    {
-      id: "chart",
-      label: "Patient Chart (EMR)",
-      icon: FileText
-    },
-    {
-      id: "audit",
-      label: "Hospital Compliance Ledger",
-      icon: Database
-    },
-    {
-      id: "tracking",
-      label: "Staff Safety & Location",
-      icon: Radio,
-      badgeDot: true
-    }
-  ];
+  const isAdmin = doctor?.role?.toLowerCase() === "admin";
+
+  const navItems = isAdmin
+    ? [
+        {
+          id: "users",
+          label: "User Management & Access",
+          icon: Users
+        },
+        {
+          id: "audit",
+          label: "Hospital Compliance Ledger",
+          icon: Database
+        },
+        {
+          id: "tracking",
+          label: "Staff Safety & Location",
+          icon: Radio,
+          badgeDot: true
+        }
+      ]
+    : [
+        {
+          id: "queue",
+          label: "Clinic Queue & Triage",
+          icon: Activity,
+          badge: queueCount > 0 ? queueCount : null
+        },
+        {
+          id: "chart",
+          label: "Patient Chart (EMR)",
+          icon: FileText
+        },
+        {
+          id: "audit",
+          label: "Hospital Compliance Ledger",
+          icon: Database
+        },
+        {
+          id: "tracking",
+          label: "Staff Safety & Location",
+          icon: Radio,
+          badgeDot: true
+        }
+      ];
 
   const viewTitles = {
+    users: "User Management & Access Governance",
     queue: "Clinic Queue & Triage",
     chart: "Patient Chart",
     audit: "Hospital Compliance Ledger",
@@ -518,24 +541,34 @@ export default function AppShell({
               )}
             </div>
 
-            {/* Active Break-Glass Countdown Timer Banner */}
-            {breakGlassSession && (
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-critical-bg border border-critical text-critical text-xs font-mono font-bold animate-pulse">
-                <AlertOctagon className="w-3.5 h-3.5" />
-                <span>RAP Active: {formatTimer(breakGlassSession.timeLeft)}</span>
+            {/* Action / Mode Status: Admin Console vs ER Break-Glass */}
+            {isAdmin ? (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 border border-purple-200 text-xs font-semibold">
+                <Shield className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                <span>ADMINISTRATOR CONSOLE</span>
               </div>
-            )}
+            ) : (
+              <>
+                {/* Active Break-Glass Countdown Timer Banner */}
+                {breakGlassSession && (
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-critical-bg border border-critical text-critical text-xs font-mono font-bold animate-pulse">
+                    <AlertOctagon className="w-3.5 h-3.5" />
+                    <span>RAP Active: {formatTimer(breakGlassSession.timeLeft)}</span>
+                  </div>
+                )}
 
-            {/* ER Break-Glass (RAP) Button — ONLY Solid Red Element in the entire system */}
-            <Button
-              variant="critical"
-              size="md"
-              icon={AlertOctagon}
-              onClick={onOpenBreakGlass}
-              title="Red Alert Protocol: Emergency medical record access with immutable audit logging"
-            >
-              ER Break-Glass (RAP)
-            </Button>
+                {/* ER Break-Glass (RAP) Button — ONLY Solid Red Element in the entire system */}
+                <Button
+                  variant="critical"
+                  size="md"
+                  icon={AlertOctagon}
+                  onClick={onOpenBreakGlass}
+                  title="Red Alert Protocol: Emergency medical record access with immutable audit logging"
+                >
+                  ER Break-Glass (RAP)
+                </Button>
+              </>
+            )}
           </div>
         </header>
 

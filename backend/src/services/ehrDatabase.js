@@ -675,6 +675,108 @@ class EhrDatabase {
     return doctors.find((d) => d.username && d.username.toLowerCase() === clean) || null;
   }
 
+  getAllUsers() {
+    const db = this._readData();
+    const doctors = (db.doctors || []).map((d) => ({
+      id: d.id,
+      name: d.name,
+      username: d.username,
+      email: d.email || `${d.username}@sliit.lk`,
+      role: d.role || "Doctor",
+      specialty: d.specialty || "General Physician",
+      slmcNumber: d.slmcNumber || "N/A",
+      baseCampus: d.baseCampus || "SLIIT Malabe Campus Health Center",
+      phone: d.phone || "+94 77 123 4567",
+      ethereumAddress: d.ethereumAddress,
+      defaultDeviceFingerprint: d.defaultDeviceFingerprint,
+      status: d.status || (d.disabled ? "disabled" : "active"),
+      registeredAt: d.registeredAt || "2026-01-01T00:00:00Z"
+    }));
+
+    const hasAdmin = doctors.some((u) => u.role === "Admin" || u.username === "admin");
+    if (!hasAdmin) {
+      doctors.unshift({
+        id: "admin-001",
+        name: "Hospital IT & Compliance Admin",
+        username: "admin",
+        email: "admin.compliance@sliit.lk",
+        role: "Admin",
+        specialty: "Hospital Security & Governance",
+        slmcNumber: "ADMIN-GOV",
+        baseCampus: "SLIIT Malabe Campus Health Center",
+        phone: "+94 11 754 4801",
+        ethereumAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        defaultDeviceFingerprint: "sha256:enrolled-workstation-admin",
+        status: "active",
+        registeredAt: "2026-01-01T08:00:00Z"
+      });
+    }
+
+    return doctors;
+  }
+
+  updateUserStatus(userId, newStatus) {
+    const db = this._readData();
+    if (!db.doctors) db.doctors = [];
+    const doc = db.doctors.find((d) => d.id === userId || d.username?.toLowerCase() === userId.toLowerCase());
+    if (!doc) {
+      if (userId === "admin-001" || userId === "admin") {
+        throw new Error("Cannot disable the primary root Administrator account.");
+      }
+      throw new Error(`User with ID "${userId}" not found.`);
+    }
+    doc.status = newStatus;
+    doc.disabled = newStatus === "disabled";
+    this._writeData(db);
+    return { id: doc.id, username: doc.username, name: doc.name, status: doc.status };
+  }
+
+  resetUserPassword(userId, newPassword) {
+    const db = this._readData();
+    if (!db.doctors) db.doctors = [];
+    const doc = db.doctors.find((d) => d.id === userId || d.username?.toLowerCase() === userId.toLowerCase());
+    if (!doc) {
+      throw new Error(`User with ID "${userId}" not found.`);
+    }
+    doc.password = newPassword;
+    this._writeData(db);
+    return { id: doc.id, username: doc.username, name: doc.name };
+  }
+
+  removeUser(userId) {
+    const db = this._readData();
+    if (!db.doctors) db.doctors = [];
+    const idx = db.doctors.findIndex((d) => d.id === userId || d.username?.toLowerCase() === userId.toLowerCase());
+    if (idx === -1) {
+      throw new Error(`User with ID "${userId}" not found.`);
+    }
+    const removed = db.doctors.splice(idx, 1)[0];
+    
+    if (db.staffTrackingDevices) {
+      db.staffTrackingDevices = db.staffTrackingDevices.filter((dev) => dev.doctorId !== removed.id);
+    }
+    if (db.knownDevices) {
+      db.knownDevices = db.knownDevices.filter((dev) => dev.doctorId !== removed.ethereumAddress && dev.doctorId !== removed.id);
+    }
+
+    this._writeData(db);
+    return { id: removed.id, name: removed.name, username: removed.username };
+  }
+
+  resetUserDevice(userId) {
+    const db = this._readData();
+    const doc = db.doctors?.find((d) => d.id === userId || d.username?.toLowerCase() === userId.toLowerCase());
+    if (!doc) throw new Error(`User with ID "${userId}" not found.`);
+    
+    const oldFp = doc.defaultDeviceFingerprint;
+    doc.defaultDeviceFingerprint = `sha256:unregistered-${Date.now()}`;
+    if (db.knownDevices) {
+      db.knownDevices = db.knownDevices.filter((dev) => dev.fingerprint !== oldFp);
+    }
+    this._writeData(db);
+    return { id: doc.id, defaultDeviceFingerprint: doc.defaultDeviceFingerprint };
+  }
+
   registerDoctor(doctorData) {
     const db = this._readData();
     if (!db.doctors) db.doctors = this._getDefaultDoctors();

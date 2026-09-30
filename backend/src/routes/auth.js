@@ -219,8 +219,31 @@ router.post("/login", (req, res) => {
     doctor = null;
   }
 
+  // Support root administrator credentials
+  if (!doctor && username.trim().toLowerCase() === "admin" && password === "Admin123!") {
+    doctor = {
+      id: "admin-001",
+      username: "admin",
+      name: "Hospital IT & Compliance Admin",
+      role: "Admin",
+      specialty: "Hospital Security & Governance",
+      email: "admin.compliance@sliit.lk",
+      baseCampus: "SLIIT Malabe Campus Health Center",
+      ethereumAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      defaultDeviceFingerprint: "sha256:enrolled-workstation-admin",
+      status: "active"
+    };
+  }
+
   if (!doctor) {
     return res.status(401).json({ error: "Invalid username or password. Please verify your clinical credentials." });
+  }
+
+  // Enforce administrative suspension
+  if (doctor.disabled || doctor.status === "disabled") {
+    return res.status(403).json({
+      error: "Access Denied: Your account has been temporarily suspended by Hospital Administration. Please contact IT Security."
+    });
   }
 
   // Real location calculation

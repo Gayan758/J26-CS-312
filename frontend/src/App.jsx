@@ -15,7 +15,8 @@ import PatientAdmissionModal from "./components/PatientAdmissionModal";
 import LoginScreen from "./components/LoginScreen";
 import StaffSafetyMap from "./components/StaffSafetyMap";
 import PatientPortal from "./components/PatientPortal";
-import { CheckCircle2, AlertOctagon, Info, X } from "lucide-react";
+import UserManagement from "./components/UserManagement";
+import { CheckCircle2, AlertOctagon, Info, X, ShieldAlert } from "lucide-react";
 
 export default function App() {
   // 1. Session State
@@ -406,7 +407,9 @@ export default function App() {
       <LoginScreen
         onLoginSuccess={(doc, loc) => {
           setDoctor(doc);
-          setUserRole("doctor");
+          const isDocAdmin = doc.role?.toLowerCase() === "admin";
+          setUserRole(isDocAdmin ? "admin" : "doctor");
+          setActiveTab(isDocAdmin ? "users" : "queue");
           if (loc) {
             setDoctorLocation(loc);
             setContextStatus((prev) => ({
@@ -449,35 +452,86 @@ export default function App() {
       theme={theme}
       onToggleTheme={toggleTheme}
     >
+      {/* Tab 0 (Admin View): User Management & Access Governance */}
+      {activeTab === "users" && (
+        <UserManagement onShowToast={showToast} />
+      )}
+
       {/* Tab 1: Clinic Queue & Triage */}
       {activeTab === "queue" && (
-        <ClinicQueue
-          patients={patients}
-          onOpenChart={handleOpenChart}
-          onOpenBreakGlass={(patient) => {
-            setBreakGlassTargetPatient(patient);
-            setIsBreakGlassOpen(true);
-          }}
-          onOpenAdmissions={() => setIsAdmissionsOpen(true)}
-          onRefreshQueue={() => showToast("Clinic Worklist synchronized", "info")}
-        />
+        userRole === "admin" ? (
+          <div className="bg-surface rounded-lg border border-border p-8 text-center max-w-xl mx-auto my-12 space-y-3">
+            <div className="w-12 h-12 rounded-full bg-critical-bg text-critical flex items-center justify-center mx-auto">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
+            <h2 className="text-base font-semibold text-text-primary">
+              Clinical Queue Restricted from Administrator Role
+            </h2>
+            <p className="text-xs text-text-muted leading-relaxed">
+              Under the HIPAA Minimum Necessary Rule (45 CFR § 164.502) and clinical data governance standards, administrative and IT compliance personnel are strictly barred from accessing identifiable patient queues, triage states, and triage notes.
+            </p>
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setActiveTab("users")}
+                className="px-4 py-2 rounded bg-primary text-white text-xs font-medium hover:bg-primary-hover transition"
+              >
+                Return to User Management
+              </button>
+            </div>
+          </div>
+        ) : (
+          <ClinicQueue
+            patients={patients}
+            onOpenChart={handleOpenChart}
+            onOpenBreakGlass={(patient) => {
+              setBreakGlassTargetPatient(patient);
+              setIsBreakGlassOpen(true);
+            }}
+            onOpenAdmissions={() => setIsAdmissionsOpen(true)}
+            onRefreshQueue={() => showToast("Clinic Worklist synchronized", "info")}
+          />
+        )
       )}
 
       {/* Tab 2: Full Patient Medical Chart (EMR) */}
       {activeTab === "chart" && (
-        <PatientChart
-          patient={activePatient}
-          doctor={doctor}
-          breakGlassSession={breakGlassSession}
-          onBackToQueue={() => setActiveTab("queue")}
-          onUpdatePatient={(updated) => {
-            setPatients((list) =>
-              list.map((p) => (p.id === updated.id ? updated : p))
-            );
-            setActivePatient(updated);
-            showToast("Patient medical record updated & encrypted", "success");
-          }}
-        />
+        userRole === "admin" ? (
+          <div className="bg-surface rounded-lg border border-border p-8 text-center max-w-xl mx-auto my-12 space-y-3">
+            <div className="w-12 h-12 rounded-full bg-critical-bg text-critical flex items-center justify-center mx-auto">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
+            <h2 className="text-base font-semibold text-text-primary">
+              Protected Health Information (PHI) Strictly Restricted
+            </h2>
+            <p className="text-xs text-text-muted leading-relaxed">
+              Only treating medical doctors with explicit patient sovereign consent or an emergency Break-Glass override token are authorized to decrypt patient medical histories, medications, and lab results.
+            </p>
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setActiveTab("users")}
+                className="px-4 py-2 rounded bg-primary text-white text-xs font-medium hover:bg-primary-hover transition"
+              >
+                Return to User Management
+              </button>
+            </div>
+          </div>
+        ) : (
+          <PatientChart
+            patient={activePatient}
+            doctor={doctor}
+            breakGlassSession={breakGlassSession}
+            onBackToQueue={() => setActiveTab("queue")}
+            onUpdatePatient={(updated) => {
+              setPatients((list) =>
+                list.map((p) => (p.id === updated.id ? updated : p))
+              );
+              setActivePatient(updated);
+              showToast("Patient medical record updated & encrypted", "success");
+            }}
+          />
+        )
       )}
 
       {/* Tab 3: Hospital Compliance & Blockchain Audit Ledger */}

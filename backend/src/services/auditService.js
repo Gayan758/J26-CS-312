@@ -78,6 +78,22 @@ class AuditService {
     return this.mockAuditLedger;
   }
 
+  logInternalAudit(entry) {
+    const record = {
+      accessDecisionId: "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(""),
+      requester: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      patientIdHash: "0x0000000000000000000000000000000000000000000000000000000000000000",
+      timestamp: Math.floor(Date.now() / 1000),
+      riskLevel: "ADMIN",
+      decision: entry.action || "ADMIN_ACTION",
+      isBreakGlass: false,
+      details: entry.details || "",
+      actor: entry.actor || "Hospital Administrator"
+    };
+    this.mockAuditLedger.unshift(record);
+    return record;
+  }
+
   async logAccess(params) {
     return this.logDecision(params);
   }
