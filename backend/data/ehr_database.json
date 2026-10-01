@@ -4598,6 +4598,114 @@
       "patientId": "patient-123",
       "sensitivity": "medium",
       "timestamp": 1790828760896
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-321",
+      "sensitivity": "high",
+      "timestamp": 1790841343017
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-321",
+      "sensitivity": "high",
+      "timestamp": 1790841350677
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790841358250
+    },
+    {
+      "doctorId": "0xffefd67760e6dd0c9f7e6d01b982e5466a0a3e6c",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790841505088
+    },
+    {
+      "doctorId": "0xffefd67760e6dd0c9f7e6d01b982e5466a0a3e6c",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790841517754
+    },
+    {
+      "doctorId": "0xffefd67760e6dd0c9f7e6d01b982e5466a0a3e6c",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790841536760
+    },
+    {
+      "doctorId": "0xffefd67760e6dd0c9f7e6d01b982e5466a0a3e6c",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790841541811
+    },
+    {
+      "doctorId": "0x627a61fc6e013657c71c539da27f17efa6eff62e",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790841577876
+    },
+    {
+      "doctorId": "0x627a61fc6e013657c71c539da27f17efa6eff62e",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790841589147
+    },
+    {
+      "doctorId": "0x627a61fc6e013657c71c539da27f17efa6eff62e",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790841590660
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1790841663710
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1790841665654
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790841672636
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790841680669
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1790841682985
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790841693116
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790841695671
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790842172249
     }
   ],
   "staffTrackingDevices": [
@@ -4614,14 +4722,14 @@
       "sosActive": false,
       "batteryLevel": 82,
       "lastPosition": {
-        "lat": 6.9148,
-        "lon": 79.9734,
+        "lat": 6.917254737935247,
+        "lon": 79.8477692425168,
         "speed": 0,
-        "altitude": 18.5,
-        "accuracy": 5,
-        "timestamp": "2026-10-01T04:26:03.050Z"
+        "altitude": 18,
+        "accuracy": 82,
+        "timestamp": "2026-10-01T07:55:15.302Z"
       },
-      "lastReportTime": "2026-10-01T04:26:02.994Z",
+      "lastReportTime": "2026-10-01T07:55:15.302Z",
       "updatedAt": "2026-10-01T04:26:03.088Z"
     },
     {
@@ -4637,14 +4745,14 @@
       "sosActive": false,
       "batteryLevel": 62,
       "lastPosition": {
-        "lat": 6.916462211603404,
-        "lon": 79.84804821538566,
+        "lat": 6.917225284449577,
+        "lon": 79.8477814561201,
         "speed": 0,
         "altitude": 18,
-        "accuracy": 73,
-        "timestamp": "2026-09-22T09:18:58.969Z"
+        "accuracy": 88,
+        "timestamp": "2026-10-01T08:05:54.039Z"
       },
-      "lastReportTime": "2026-09-22T09:18:58.969Z"
+      "lastReportTime": "2026-10-01T08:05:54.039Z"
     },
     {
       "deviceId": "dev-sarah-03",
@@ -4901,14 +5009,14 @@
       "batteryLevel": 100,
       "sosActive": false,
       "lastPosition": {
-        "lat": 6.917336171285604,
-        "lon": 79.84773539530408,
+        "lat": 6.917239579162354,
+        "lon": 79.84777107356172,
         "speed": 0,
         "altitude": 18,
-        "accuracy": 88,
-        "timestamp": "2026-09-29T08:22:59.807Z"
+        "accuracy": 73,
+        "timestamp": "2026-10-01T07:59:35.661Z"
       },
-      "lastReportTime": "2026-09-29T08:22:59.807Z"
+      "lastReportTime": "2026-10-01T07:59:35.661Z"
     },
     {
       "deviceId": "device-doc-9691",
@@ -6966,6 +7074,12 @@
       "fingerprint": "sha256:test-workstation-enclave-999",
       "trusted": true,
       "enrolledAt": "2026-10-01T04:26:01.307Z"
+    },
+    {
+      "doctorId": "0xffefd67760e6dd0c9f7e6d01b982e5466a0a3e6c",
+      "fingerprint": "sha256:enrolled-workstation-gayan.g",
+      "trusted": true,
+      "enrolledAt": "2026-10-01T07:58:06.705Z"
     }
   ],
   "doctors": [
@@ -6983,20 +7097,20 @@
       "role": "Doctor",
       "registeredAt": "2026-01-10T08:00:00Z",
       "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
+        "latitude": 6.917254737935247,
+        "longitude": 79.8477692425168,
+        "accuracy": 82,
+        "distanceFromMalabeKm": 13.86,
         "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T04:26:02.518Z"
+        "campusName": "Outside Hospital Perimeter (13.86 km)",
+        "recordedAt": "2026-10-01T07:55:15.302Z"
       },
       "email": "alice.vance@sliit.lk"
     },
     {
       "id": "doc-002",
       "username": "kasun.perera",
-      "password": "Password123!",
+      "password": "$2b$12$B3WqWu8vAzozlNx5bcU8jO7Z8ef/LiEUeLCyQxWme3LVxQFG4eJyK",
       "name": "Dr. Kasun Perera, MBBS",
       "slmcNumber": "SLMC-42915",
       "specialty": "Emergency Medicine Specialist",
@@ -7007,15 +7121,16 @@
       "role": "Doctor",
       "registeredAt": "2026-02-15T09:30:00Z",
       "lastKnownLocation": {
-        "latitude": 6.916462211603404,
-        "longitude": 79.84804821538566,
-        "accuracy": 73,
-        "distanceFromMalabeKm": 13.83,
+        "latitude": 6.917225284449577,
+        "longitude": 79.8477814561201,
+        "accuracy": 88,
+        "distanceFromMalabeKm": 13.86,
         "isInsideMalabe": false,
-        "campusName": "Outside SLIIT Malabe (13.83 km)",
-        "recordedAt": "2026-09-22T09:18:58.969Z"
+        "campusName": "Outside Hospital Perimeter (13.86 km)",
+        "recordedAt": "2026-10-01T08:05:54.038Z"
       },
-      "email": "kasun.perera@seylan.lk"
+      "email": "it23270374@my.sliit.lk",
+      "emailUpdatedAt": "2026-10-01T08:06:35.753Z"
     },
     {
       "id": "doc-003",
@@ -7295,13 +7410,13 @@
       "role": "Doctor",
       "registeredAt": "2026-09-29T05:55:48.705Z",
       "lastKnownLocation": {
-        "latitude": 6.917336171285604,
-        "longitude": 79.84773539530408,
-        "accuracy": 88,
+        "latitude": 6.917239579162354,
+        "longitude": 79.84777107356172,
+        "accuracy": 73,
         "distanceFromMalabeKm": 13.86,
         "isInsideMalabe": false,
-        "campusName": "Outside SLIIT Malabe (13.86 km)",
-        "recordedAt": "2026-09-29T08:22:59.807Z"
+        "campusName": "Outside Hospital Perimeter (13.86 km)",
+        "recordedAt": "2026-10-01T07:59:35.661Z"
       },
       "email": "vimuktgayan@gmail.com",
       "emailUpdatedAt": "2026-09-29T08:25:34.468Z"
@@ -7873,9 +7988,133 @@
       "role": "Doctor",
       "registeredAt": "2026-10-01T04:26:01.282Z",
       "lastKnownLocation": null
+    },
+    {
+      "id": "admin-243294",
+      "name": "System Administrator",
+      "username": "admin",
+      "password": "$2b$12$J3GR8XmrT/UuATY3DSNWvemfQAI2iBRHFPg4G5WKS7OXWk08y4GHC",
+      "email": "admin@hospital.local",
+      "role": "admin",
+      "status": "active",
+      "specialty": "Hospital Health-IT Administration",
+      "baseCampus": "Information Security & Compliance Center",
+      "phone": "",
+      "registeredAt": "2026-10-01T07:04:03.295Z",
+      "lastKnownLocation": {
+        "latitude": 6.917270681700118,
+        "longitude": 79.84776260684771,
+        "accuracy": 77,
+        "distanceFromMalabeKm": 13.86,
+        "isInsideMalabe": false,
+        "campusName": "Outside Hospital Perimeter (13.86 km)",
+        "recordedAt": "2026-10-01T08:14:28.562Z"
+      }
+    },
+    {
+      "id": "doc-6705",
+      "username": "gayan.g",
+      "password": "$2b$12$lRVAeizu6YxI3atmG4iLXO3u3orIPvmkENij0kl02KVbUhNUPIM8m",
+      "name": "Gayan vimukthi",
+      "email": "it23270374@my.sliit.lk",
+      "slmcNumber": "123456789",
+      "specialty": "General Medicine",
+      "ethereumAddress": "0xffefd67760e6dd0c9f7e6d01b982e5466a0a3e6c",
+      "baseCampus": "Main Hospital FacilitY",
+      "phone": "0773634440",
+      "defaultDeviceFingerprint": "sha256:enrolled-workstation-gayan.g",
+      "role": "Doctor",
+      "registeredAt": "2026-10-01T07:58:06.705Z",
+      "lastKnownLocation": {
+        "latitude": 6.9172377995277445,
+        "longitude": 79.84777545643448,
+        "accuracy": 77,
+        "distanceFromMalabeKm": 13.86,
+        "isInsideMalabe": false,
+        "campusName": "Outside Hospital Perimeter (13.86 km)",
+        "recordedAt": "2026-10-01T07:58:21.154Z"
+      }
     }
   ],
   "doctorSessions": [
+    {
+      "id": "sess-1790842468561",
+      "doctorId": "admin-243294",
+      "latitude": 6.917270681700118,
+      "longitude": 79.84776260684771,
+      "accuracy": 77,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T08:14:28.561Z"
+    },
+    {
+      "id": "sess-1790841954038",
+      "doctorId": "doc-002",
+      "latitude": 6.917225284449577,
+      "longitude": 79.8477814561201,
+      "accuracy": 88,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T08:05:54.038Z"
+    },
+    {
+      "id": "sess-1790841652839",
+      "doctorId": "doc-002",
+      "latitude": 6.917239579162354,
+      "longitude": 79.84777107356172,
+      "accuracy": 73,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T08:00:52.839Z"
+    },
+    {
+      "id": "sess-1790841575661",
+      "doctorId": "doc-8703",
+      "latitude": 6.917239579162354,
+      "longitude": 79.84777107356172,
+      "accuracy": 73,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T07:59:35.661Z"
+    },
+    {
+      "id": "sess-1790841501154",
+      "doctorId": "doc-6705",
+      "latitude": 6.9172377995277445,
+      "longitude": 79.84777545643448,
+      "accuracy": 77,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T07:58:21.154Z"
+    },
+    {
+      "id": "sess-1790841315302",
+      "doctorId": "doc-001",
+      "latitude": 6.917254737935247,
+      "longitude": 79.8477692425168,
+      "accuracy": 82,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T07:55:15.302Z"
+    },
     {
       "id": "sess-1790828762518",
       "doctorId": "doc-001",
