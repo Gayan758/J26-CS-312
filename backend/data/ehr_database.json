@@ -26,6 +26,17 @@
       "registeredAt": "2026-09-01T08:00:00Z",
       "vitals": [
         {
+          "id": "vit-1790852092999",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-01T10:54:52.999Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
           "id": "vit-1790848805885",
           "bp": "122/78",
           "hr": 70,
@@ -445,6 +456,57 @@
         }
       ],
       "encounters": [
+        {
+          "id": "enc-1790852094585",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-01T10:54:54.596Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T10:54:54.585Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-01T10:54:54.596Z"
+        },
+        {
+          "id": "enc-1790852092974",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T10:54:52.974Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
         {
           "id": "enc-1790848807492",
           "version": 2,
@@ -1340,6 +1402,21 @@
       ],
       "prescriptions": [
         {
+          "id": "rx-1790852092987",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-01T10:54:52.987Z",
+          "status": "Active"
+        },
+        {
           "id": "rx-1790848805872",
           "version": 1,
           "amendments": [],
@@ -1936,7 +2013,7 @@
           "modify": false
         }
       },
-      "consentUpdatedAt": "2026-10-01T10:00:06.958Z"
+      "consentUpdatedAt": "2026-10-01T10:54:54.068Z"
     },
     {
       "id": "patient-456",
@@ -5224,6 +5301,107 @@
       "encounters": [],
       "prescriptions": [],
       "labResults": []
+    },
+    {
+      "id": "patient-3012",
+      "patientId": "patient-3012",
+      "phn": "PHN-537842",
+      "nic": "851032481V",
+      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
+      "name": "Nimal Perera",
+      "patientName": "Nimal Perera",
+      "dob": "1985-04-12",
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Consultation",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T10:54:53.012Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-blind-1790852094374",
+      "patientId": "patient-blind-1790852094374",
+      "phn": "PHN-160155",
+      "nic": "9991790852094374V",
+      "nicHash": "bfa615d11b4440a27973f9abc80965d534837b060ada6c852581dc21b88dfc07",
+      "name": "Blind Index Test Subject",
+      "patientName": "Blind Index Test Subject",
+      "gender": "Unspecified",
+      "bloodGroup": "B+",
+      "allergies": [],
+      "chronicConditions": [],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Clinic",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T10:54:54.378Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
     }
   ],
   "accessHistory": [
@@ -5820,6 +5998,12 @@
       "patientId": "patient-123",
       "sensitivity": "medium",
       "timestamp": 1790848805841
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790852092957
     }
   ],
   "staffTrackingDevices": [
@@ -5841,10 +6025,10 @@
         "speed": 0,
         "altitude": 18.5,
         "accuracy": 5,
-        "timestamp": "2026-10-01T10:00:07.691Z"
+        "timestamp": "2026-10-01T10:54:54.789Z"
       },
-      "lastReportTime": "2026-10-01T10:00:07.647Z",
-      "updatedAt": "2026-10-01T10:00:07.708Z"
+      "lastReportTime": "2026-10-01T10:54:54.745Z",
+      "updatedAt": "2026-10-01T10:54:54.805Z"
     },
     {
       "deviceId": "device-doc-002",
@@ -5870,6 +6054,42 @@
     }
   ],
   "geofenceRiskEvents": [
+    {
+      "id": "geofence-evt-1790852094794-4205",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-01T10:54:54.794Z",
+      "retentionExpiresAt": "2026-11-30T10:54:54.794Z"
+    },
+    {
+      "id": "geofence-evt-1790852094759-5835",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-01T10:54:54.759Z",
+      "retentionExpiresAt": "2026-11-30T10:54:54.759Z"
+    },
     {
       "id": "geofence-evt-1790848807697-4533",
       "deviceId": "device-doc-001",
@@ -7007,6 +7227,26 @@
   ],
   "staffSafetyAuditLogs": [
     {
+      "id": "audit-1790852094798-5617",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-01T10:54:54.798Z"
+    },
+    {
+      "id": "audit-1790852094762-1869",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-01T10:54:54.762Z"
+    },
+    {
       "id": "audit-1790848807700-6624",
       "actorId": "doc-001",
       "actorName": "Dr. Alice Vance, MD",
@@ -7708,7 +7948,7 @@
         "distanceFromMalabeKm": 0,
         "isInsideMalabe": false,
         "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T10:00:07.242Z"
+        "recordedAt": "2026-10-01T10:54:54.331Z"
       }
     },
     {
@@ -7747,7 +7987,7 @@
         "distanceFromMalabeKm": 12.45,
         "isInsideMalabe": false,
         "campusName": "Outside Hospital Perimeter (12.45 km)",
-        "recordedAt": "2026-10-01T10:00:05.602Z"
+        "recordedAt": "2026-10-01T10:54:52.662Z"
       }
     },
     {
@@ -7793,7 +8033,7 @@
       "id": "admin-243294",
       "name": "System Administrator",
       "username": "admin",
-      "password": "$2b$12$J3GR8XmrT/UuATY3DSNWvemfQAI2iBRHFPg4G5WKS7OXWk08y4GHC",
+      "password": "$2b$12$/zatXTkXE3Zw5C.6Nt7VSeuRMuLRDxNt1CAdjwaT2SeiKgMRw7iGi",
       "email": "admin@hospital.local",
       "role": "admin",
       "status": "active",
@@ -7802,17 +8042,121 @@
       "phone": "",
       "registeredAt": "2026-10-01T07:04:03.295Z",
       "lastKnownLocation": {
-        "latitude": 6.917201327728676,
-        "longitude": 79.84778389530557,
-        "accuracy": 75,
-        "distanceFromMalabeKm": 13.86,
+        "latitude": null,
+        "longitude": null,
+        "accuracy": 10,
+        "distanceFromMalabeKm": 0,
         "isInsideMalabe": false,
-        "campusName": "Outside Hospital Perimeter (13.86 km)",
-        "recordedAt": "2026-10-01T09:23:40.179Z"
+        "campusName": "Unverified Location (No GPS)",
+        "recordedAt": "2026-10-01T10:52:38.749Z"
       }
     }
   ],
   "doctorSessions": [
+    {
+      "id": "sess-1790852094331",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:54:54.331Z"
+    },
+    {
+      "id": "sess-1790852094010",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:54:54.010Z"
+    },
+    {
+      "id": "sess-1790852092662",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:54:52.662Z"
+    },
+    {
+      "id": "sess-1790852092403",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:54:52.403Z"
+    },
+    {
+      "id": "sess-1790852092143",
+      "doctorId": "doc-1825",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:54:52.143Z"
+    },
+    {
+      "id": "sess-1790852091327",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:54:51.327Z"
+    },
+    {
+      "id": "sess-1790851958749",
+      "doctorId": "admin-243294",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:52:38.749Z"
+    },
+    {
+      "id": "sess-1790849181440",
+      "doctorId": "doc-001",
+      "latitude": 6.9172713810059,
+      "longitude": 79.84776405169991,
+      "accuracy": 79,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T10:06:21.440Z"
+    },
     {
       "id": "sess-1790848807242",
       "doctorId": "doc-001",
@@ -10073,6 +10417,52 @@
   },
   "breakGlassEvents": [
     {
+      "id": "bg-1790852094546",
+      "tokenId": "0xba26a94cd78532caf517f7e22be605d4969caf2071d20c7884ecd3392e87cd24",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-01T10:54:54.546Z",
+      "expiresAt": "2026-10-01T14:54:54.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-01T10:54:54.556Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1790852094366",
+      "tokenId": "0xbedbc76caa85b5658cf67301eb68a75ac1781a0263fd7e63183caf91e6245dba",
+      "patientId": "patient-456",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-01T10:54:54.366Z",
+      "expiresAt": "2026-10-01T14:54:54.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790852092903",
+      "tokenId": "0x8cf7cfd9b296120e7442eba0cb7838e3514339ece571f369041f9b966e6940d9",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-01T10:54:52.903Z",
+      "expiresAt": "2026-10-01T14:54:52.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
       "id": "bg-1790848807444",
       "tokenId": "0x58a40e97e00af3ae5c71047360ddcaa94ec20f09aa97b4d48560efd7bc4ecd3c",
       "patientId": "patient-123",
@@ -10552,6 +10942,17 @@
       "approvedAt": "2026-10-01T10:00:07.544Z",
       "revokedBy": "Administrator",
       "revokedAt": "2026-10-01T10:00:07.550Z"
+    },
+    "sha256:terminal-1790852094629": {
+      "fingerprint": "sha256:terminal-1790852094629",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-01T10:54:54.631Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-01T10:54:54.637Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-01T10:54:54.646Z"
     }
   }
 }
