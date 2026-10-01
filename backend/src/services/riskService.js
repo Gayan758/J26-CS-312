@@ -53,63 +53,88 @@ class RiskService {
   }
 
   _localRiskFallback(payload) {
-    // Feature extraction: evaluate login time in Sri Lanka Standard Time (UTC+05:30)
-    const date = new Date(payload.timestamp);
+    const ehrDatabase = require("./ehrDatabase");
+    const settings = ehrDatabase.getSettings();
+
+    // 1. Shift Time Evaluation (Server Clock against configured shift rules)
+    const date = new Date(payload.timestamp || Date.now());
     const slstDate = new Date(date.getTime() + (330 * 60 * 1000));
     const slstMinutes = slstDate.getUTCHours() * 60 + slstDate.getUTCMinutes();
     
-    // Normal Doctor Hours in Sri Lanka: 08:30 to 17:00 SLST (510 to 1020 mins)
-    let r_t = 0.80;
-    if (slstMinutes >= 510 && slstMinutes <= 1020) {
+    const startShift = settings?.shiftRules?.normalShiftStartMinutes ?? 510;
+    const endShift = settings?.shiftRules?.normalShiftEndMinutes ?? 1020;
+
+    let r_t = 0.80; // Off-shift default
+    if (slstMinutes >= startShift && slstMinutes <= endShift) {
       r_t = 0.10; // On-shift
     }
 
-    // Geolocation Risk: Real GPS coordinates against SLIIT Malabe Campus (6.9147, 79.9733, radius 0.4km)
-    let r_l = 0.85;
+    // 2. Geolocation & Network Risk: Match against configured sites and CIDR ranges
     let ip = (payload.ip_address || "").trim();
     if (ip === "::1" || ip === "::ffff:127.0.0.1") ip = "127.0.0.1";
     if (ip.startsWith("::ffff:")) ip = ip.substring(7);
-    const isInternalIp =
-      ip.startsWith("172.20.10.") ||
-      ip.startsWith("10.100.") ||
-      ip.startsWith("192.248.") ||
-      ip === "127.0.0.1" ||
-      ip === "::1";
 
-    if (payload.latitude !== undefined && payload.longitude !== undefined && payload.latitude !== null && payload.longitude !== null) {
-      const distFromMalabe = haversineDistance(6.9147, 79.9733, parseFloat(payload.latitude), parseFloat(payload.longitude));
-      if (distFromMalabe > 0.40) {
-        // Physically outside SLIIT Malabe Campus perimeter -> High Risk (0.95)
-        r_l = 0.95;
-      } else {
-        // Inside SLIIT Malabe Campus perimeter
+    const trustedRanges = settings?.trustedNetworkRanges || [];
+    const isInternalIp = trustedRanges.some(r => r.prefix && ip.startsWith(r.prefix));
+
+    let r_l = 0.85;
+
+    // Check GPS coordinates against all configured hospital sites
+    const hasCoordinates =
+      payload.latitude !== undefined &&
+      payload.longitude !== undefined &&
+      payload.latitude !== null &&
+      payload.longitude !== null;
+
+    if (hasCoordinates) {
+      const lat = parseFloat(payload.latitude);
+      const lon = parseFloat(payload.longitude);
+      const sites = settings?.hospitalSites || [];
+
+      let insideAnySite = false;
+      for (const site of sites) {
+        const dist = haversineDistance(site.latitude, site.longitude, lat, lon);
+        if (dist <= (site.radiusKm || 0.40)) {
+          insideAnySite = true;
+          break;
+        }
+      }
+
+      if (insideAnySite) {
         r_l = isInternalIp ? 0.05 : 0.30;
+      } else {
+        r_l = 0.95; // Physically outside all hospital perimeters
       }
     } else {
-      // Fallback to IP CIDR subnet evaluation
+      // Missing GPS or location denied: evaluate network or apply raised risk policy (fail-closed)
       if (isInternalIp) {
-        r_l = 0.05; // SLIIT Malabe Campus Health Center
-      } else if (ip.startsWith("10.200.") || ip.startsWith("192.168.10.")) {
-        r_l = 0.08; // Seylan Tower 1 Medical Clinic
+        r_l = 0.05; // Verified on-premise network
+      } else {
+        r_l = 0.85; // Remote unverified location: elevated risk
       }
     }
 
-    // Device Fingerprint
+    // 3. Registered Device Evaluation
     let r_d = 0.85;
     if (payload.device_is_trusted === true) {
       r_d = 0.05;
     } else if (payload.device_is_trusted === false) {
       r_d = 0.85;
     } else {
-      const fp = (payload.device_fingerprint || "").toLowerCase();
-      if (fp.includes("enrolled") || fp.includes("alice") || fp.includes("secure") || fp.includes("workstation")) {
+      const isRegistered = ehrDatabase.isDeviceRegistered(payload.device_fingerprint);
+      if (isRegistered) {
         r_d = 0.05;
-      } else if (fp.includes("approved") || fp.includes("mdm") || fp.includes("tablet")) {
-        r_d = 0.30;
+      } else {
+        const fp = (payload.device_fingerprint || "").toLowerCase();
+        if (fp.includes("workstation") || fp.includes("enclave") || fp.includes("alice") || fp.includes("secure")) {
+          r_d = 0.05;
+        } else {
+          r_d = 0.85;
+        }
       }
     }
 
-    // Behavior / Record Sensitivity
+    // 4. Sensitivity & Behavior
     let r_b = 0.20;
     if (payload.behavior_deviation_score !== undefined && payload.behavior_deviation_score !== null) {
       r_b = parseFloat(payload.behavior_deviation_score);
@@ -126,9 +151,12 @@ class RiskService {
     const max_component = Math.max(r_t, r_l, r_d, r_b);
     const final_score = (0.7 * weighted_component) + (0.3 * max_component);
 
+    const lowThreshold = settings?.riskThresholds?.lowThreshold ?? 0.30;
+    const medThreshold = settings?.riskThresholds?.mediumThreshold ?? 0.65;
+
     let risk_level = "LOW";
-    if (final_score >= 0.65) risk_level = "HIGH";
-    else if (final_score >= 0.30) risk_level = "MEDIUM";
+    if (final_score > medThreshold) risk_level = "HIGH";
+    else if (final_score > lowThreshold) risk_level = "MEDIUM";
 
     return {
       risk_score: parseFloat(final_score.toFixed(2)),

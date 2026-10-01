@@ -121,4 +121,69 @@ router.post("/break-glass/access-record", async (req, res, next) => {
   }
 });
 
+/**
+ * GET /api/break-glass/review-queue
+ * Retrieves pending and completed break-glass incidents for compliance review
+ */
+router.get("/break-glass/review-queue", optionalAuthenticate, (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    const authCheck = authorizationService.authorize(req.user, "read_audit_logs");
+    if (!authCheck.allowed) {
+      return res.status(403).json({ error: authCheck.reason });
+    }
+
+    const ehrDatabase = require("../services/ehrDatabase");
+    const queue = ehrDatabase.getBreakGlassReviewQueue();
+    return res.status(200).json({ reviewQueue: queue, total: queue.length });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * POST /api/break-glass/:id/review
+ * Compliance officer or administrator reviews an emergency break-glass event
+ */
+router.post("/break-glass/:id/review", optionalAuthenticate, (req, res) => {
+  try {
+    const ehrDatabase = require("../services/ehrDatabase");
+    const authorizationService = require("../services/authorizationService");
+    const event = ehrDatabase.getBreakGlassReviewQueue().find(e => e.id === req.params.id || e.tokenId === req.params.id);
+
+    if (!event) {
+      return res.status(404).json({ error: "Break-glass incident not found." });
+    }
+
+    const authCheck = authorizationService.authorize(req.user, "review_break_glass", event);
+    if (!authCheck.allowed) {
+      return res.status(403).json({ error: authCheck.reason, code: authCheck.code });
+    }
+
+    const { decision, notes } = req.body;
+    if (!decision || (decision !== "JUSTIFIED" && decision !== "APPROVED" && decision !== "MISUSE_FLAGGED")) {
+      return res.status(400).json({ error: "Valid review decision ('JUSTIFIED', 'APPROVED', or 'MISUSE_FLAGGED') is required." });
+    }
+
+    const updated = ehrDatabase.recordBreakGlassReview(
+      event.id,
+      req.user || { name: "Compliance Reviewer", username: "compliance" },
+      decision,
+      notes
+    );
+
+    return res.status(200).json({
+      status: "SUCCESS",
+      message: `Break-glass event ${event.id} reviewed successfully.`,
+      event: updated
+    });
+  } catch (err) {
+    if (err.code === "CONFLICT_OF_INTEREST") {
+      return res.status(403).json({ error: err.message, code: err.code });
+    }
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
+

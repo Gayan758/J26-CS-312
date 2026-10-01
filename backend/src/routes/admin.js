@@ -224,4 +224,104 @@ router.get("/system-stats", (req, res) => {
   }
 });
 
+/**
+ * GET /api/admin/settings
+ * Retrieves operational hospital parameters (sites, networks, shift rules, thresholds)
+ */
+router.get("/settings", (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    if (req.user) {
+      const auth = authorizationService.authorize(req.user, "manage_settings");
+      if (!auth.allowed) return res.status(403).json({ error: auth.reason });
+    }
+
+    const settings = ehrDatabase.getSettings();
+    res.status(200).json({ settings });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * PUT /api/admin/settings
+ * Updates operational hospital parameters with audit logging
+ */
+router.put("/settings", (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    if (req.user) {
+      const auth = authorizationService.authorize(req.user, "manage_settings");
+      if (!auth.allowed) return res.status(403).json({ error: auth.reason });
+    }
+
+    const updated = ehrDatabase.updateSettings(req.body, req.user?.name || "Hospital Administrator");
+    res.status(200).json({
+      success: true,
+      message: "Hospital operational configuration updated successfully.",
+      settings: updated
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+/**
+ * GET /api/admin/devices
+ * Lists all registered devices and workstations with approval state
+ */
+router.get("/devices", (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    if (req.user) {
+      const auth = authorizationService.authorize(req.user, "manage_devices");
+      if (!auth.allowed) return res.status(403).json({ error: auth.reason });
+    }
+
+    const devices = ehrDatabase.getRegisteredDevices();
+    res.status(200).json({ devices, total: devices.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * POST /api/admin/devices/:fingerprint/approve
+ * Administrator approves a registered workstation terminal
+ */
+router.post("/devices/:fingerprint/approve", (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    if (req.user) {
+      const auth = authorizationService.authorize(req.user, "manage_devices");
+      if (!auth.allowed) return res.status(403).json({ error: auth.reason });
+    }
+
+    const dev = ehrDatabase.approveDevice(req.params.fingerprint, req.user?.name || "Hospital Administrator");
+    res.status(200).json({ success: true, device: dev });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+/**
+ * POST /api/admin/devices/:fingerprint/revoke
+ * Administrator revokes an approved workstation terminal
+ */
+router.post("/devices/:fingerprint/revoke", (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    if (req.user) {
+      const auth = authorizationService.authorize(req.user, "manage_devices");
+      if (!auth.allowed) return res.status(403).json({ error: auth.reason });
+    }
+
+    const dev = ehrDatabase.revokeDevice(req.params.fingerprint, req.user?.name || "Hospital Administrator");
+    res.status(200).json({ success: true, device: dev });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 module.exports = router;
+

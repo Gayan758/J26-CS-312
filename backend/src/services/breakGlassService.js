@@ -31,9 +31,13 @@ class BreakGlassService {
       throw new Error("Emergency justification must be at least 15 characters.");
     }
 
+    const ehrDatabase = require("./ehrDatabase");
+    const settings = ehrDatabase.getSettings();
+    const durationSeconds = (settings?.breakGlassPolicy?.durationMinutes || 60) * 60;
+
     const patientIdBytes32 = ethers.keccak256(ethers.toUtf8Bytes(patientId));
     let tokenId;
-    let expiresAt = Math.floor(Date.now() / 1000) + 14400; // 4 hours emergency override TTL
+    let expiresAt = Math.floor(Date.now() / 1000) + durationSeconds;
 
     try {
       if (this.contract) {
@@ -68,6 +72,17 @@ class BreakGlassService {
         revoked: false
       });
     }
+
+    // Persist incident in database review queue
+    try {
+      ehrDatabase.recordBreakGlassEvent({
+        tokenId,
+        patientId,
+        doctorAddress,
+        justification,
+        expiresAt: new Date(expiresAt * 1000).toISOString()
+      });
+    } catch {}
 
     // Issue short-lived JWT scoped to patient and tokenId
     const tokenPayload = {

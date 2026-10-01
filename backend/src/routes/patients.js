@@ -626,4 +626,110 @@ router.post("/:id/vitals", optionalAuthenticate, (req, res) => {
   }
 });
 
+/**
+ * POST /api/patients/:id/encounters/:encounterId/amend
+ * Clinician records an immutable amendment to an existing clinical encounter note.
+ */
+router.post("/:id/encounters/:encounterId/amend", optionalAuthenticate, (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    if (req.user) {
+      const authCheck = authorizationService.authorize(req.user, "write_encounter");
+      if (!authCheck.allowed) {
+        return res.status(403).json({ error: authCheck.reason });
+      }
+    }
+
+    const { id: patientId, encounterId } = req.params;
+    const { soap, diagnosisIcd10, reason, expectedVersion } = req.body;
+
+    if (!reason || reason.trim().length < 5) {
+      return res.status(400).json({ error: "A clear clinical rationale (min 5 characters) is required for amending an encounter note." });
+    }
+
+    const amended = ehrDatabase.amendEncounter(
+      patientId,
+      encounterId,
+      {
+        soap,
+        diagnosisIcd10,
+        reason: reason.trim(),
+        amendedBy: req.user?.name || "Attending Clinician"
+      },
+      expectedVersion
+    );
+
+    // Re-encrypt updated patient chart
+    const updatedPatient = ehrDatabase.getPatientById(patientId);
+    const key = encryptionService.getPatientKey(patientId);
+    ipfsService.storeEncryptedRecord(patientId, updatedPatient, key);
+
+    return res.status(200).json({
+      status: "SUCCESS",
+      message: `Encounter ${encounterId} amended to version ${amended.version}. Previous state preserved in immutable history.`,
+      encounter: amended
+    });
+  } catch (err) {
+    if (err.code === "CONCURRENCY_CONFLICT") {
+      return res.status(409).json({ error: err.message, code: err.code });
+    }
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * POST /api/patients/:id/prescriptions/:prescriptionId/amend
+ * Doctor records an adjustment, dose modification, or discontinuation of a medication.
+ */
+router.post("/:id/prescriptions/:prescriptionId/amend", optionalAuthenticate, (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    if (req.user) {
+      const authCheck = authorizationService.authorize(req.user, "write_prescription");
+      if (!authCheck.allowed) {
+        return res.status(403).json({ error: authCheck.reason });
+      }
+    }
+
+    const { id: patientId, prescriptionId } = req.params;
+    const { dosage, frequency, duration, instructions, status, reason, expectedVersion } = req.body;
+
+    if (!reason || reason.trim().length < 5) {
+      return res.status(400).json({ error: "A clinical justification (min 5 characters) is required for amending a prescription." });
+    }
+
+    const amended = ehrDatabase.amendPrescription(
+      patientId,
+      prescriptionId,
+      {
+        dosage,
+        frequency,
+        duration,
+        instructions,
+        status,
+        reason: reason.trim(),
+        amendedBy: req.user?.name || "Attending Physician"
+      },
+      expectedVersion
+    );
+
+    // Re-encrypt updated patient chart
+    const updatedPatient = ehrDatabase.getPatientById(patientId);
+    const key = encryptionService.getPatientKey(patientId);
+    ipfsService.storeEncryptedRecord(patientId, updatedPatient, key);
+
+    return res.status(200).json({
+      status: "SUCCESS",
+      message: `Prescription ${prescriptionId} amended to version ${amended.version}. Previous state preserved.`,
+      prescription: amended
+    });
+  } catch (err) {
+    if (err.code === "CONCURRENCY_CONFLICT") {
+      return res.status(409).json({ error: err.message, code: err.code });
+    }
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
+

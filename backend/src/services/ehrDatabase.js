@@ -26,6 +26,56 @@ class EhrDatabase {
     }
   }
 
+  _getDefaultSettings() {
+    return {
+      hospitalSites: [
+        {
+          id: "site-001",
+          name: "SLIIT Malabe Health Center",
+          latitude: 6.9147,
+          longitude: 79.9733,
+          radiusKm: 0.40
+        },
+        {
+          id: "site-002",
+          name: "Seylan Tower 1 Medical Clinic",
+          latitude: 6.9319,
+          longitude: 79.8437,
+          radiusKm: 0.25
+        }
+      ],
+      trustedNetworkRanges: [
+        { id: "net-001", name: "Malabe Campus LAN", prefix: "172.20.10." },
+        { id: "net-002", name: "Malabe Clinical Subnet", prefix: "10.100." },
+        { id: "net-003", name: "SLIIT Academic Network", prefix: "192.248." },
+        { id: "net-004", name: "Seylan Tower LAN", prefix: "10.200." },
+        { id: "net-005", name: "Local Loopback", prefix: "127.0.0.1" }
+      ],
+      shiftRules: {
+        timezone: "Asia/Colombo",
+        normalShiftStartMinutes: 510, // 08:30 SLST
+        normalShiftEndMinutes: 1020,  // 17:00 SLST
+        nightShiftAllowed: true
+      },
+      riskThresholds: {
+        lowThreshold: 0.30,
+        mediumThreshold: 0.65
+      },
+      breakGlassPolicy: {
+        durationMinutes: 240, // 4 hours emergency TTL
+        minJustificationChars: 15,
+        autoExpire: true,
+        requireComplianceReview: true,
+        notifyPatient: true
+      },
+      locationService: {
+        traccarEnabled: false,
+        historyRetentionDays: 90,
+        unavailableBehavior: "ELEVATE_RISK"
+      }
+    };
+  }
+
   _readData() {
     try {
       const raw = fs.readFileSync(DATA_FILE, "utf8");
@@ -35,6 +85,19 @@ class EhrDatabase {
       if (!data.sessionLocations) data.sessionLocations = {};
       if (!data.trustedDevices) data.trustedDevices = {};
       if (!data.accessEvents) data.accessEvents = [];
+      if (!data.settings) data.settings = this._getDefaultSettings();
+      if (!data.breakGlassEvents) data.breakGlassEvents = [];
+      if (!data.registeredDevices) {
+        data.registeredDevices = {
+          "sha256:alice-workstation-secure-enclave": {
+            fingerprint: "sha256:alice-workstation-secure-enclave",
+            name: "Registered Workstation",
+            status: "approved",
+            approvedBy: "Hospital Administration",
+            approvedAt: new Date().toISOString()
+          }
+        };
+      }
       return data;
     } catch (err) {
       return {
@@ -42,7 +105,10 @@ class EhrDatabase {
         patients: [],
         sessionLocations: {},
         trustedDevices: {},
-        accessEvents: []
+        accessEvents: [],
+        settings: this._getDefaultSettings(),
+        breakGlassEvents: [],
+        registeredDevices: {}
       };
     }
   }
@@ -217,7 +283,10 @@ class EhrDatabase {
 
     const newEncounter = {
       id: `enc-${Date.now()}`,
+      version: 1,
+      amendments: [],
       date: new Date().toISOString().split("T")[0],
+      createdAt: new Date().toISOString(),
       doctorName: encounter.doctorName || "Attending Physician",
       doctorAddress: encounter.doctorAddress || "0x0000000000000000000000000000000000000000",
       chiefComplaint: encounter.chiefComplaint || "General consultation",
@@ -236,6 +305,48 @@ class EhrDatabase {
     return newEncounter;
   }
 
+  amendEncounter(patientId, encounterId, amendmentData, expectedVersion) {
+    const db = this._readData();
+    const patient = db.patients.find((p) => p.id === patientId);
+    if (!patient) throw new Error(`Patient not found: ${patientId}`);
+
+    const encounter = (patient.encounters || []).find((e) => e.id === encounterId);
+    if (!encounter) throw new Error(`Encounter not found: ${encounterId}`);
+
+    if (expectedVersion !== undefined && expectedVersion !== null && encounter.version !== expectedVersion) {
+      const err = new Error(`Concurrency Conflict: Encounter version mismatch (expected v${expectedVersion}, found v${encounter.version}). Please refresh.`);
+      err.code = "CONCURRENCY_CONFLICT";
+      throw err;
+    }
+
+    if (!encounter.amendments) encounter.amendments = [];
+
+    encounter.amendments.push({
+      amendedAt: new Date().toISOString(),
+      amendedBy: amendmentData.amendedBy || "Attending Clinician",
+      reason: amendmentData.reason || "Clinical note correction",
+      previousSoap: { ...encounter.soap }
+    });
+
+    if (amendmentData.soap) {
+      encounter.soap = {
+        subjective: amendmentData.soap.subjective !== undefined ? amendmentData.soap.subjective : encounter.soap.subjective,
+        objective: amendmentData.soap.objective !== undefined ? amendmentData.soap.objective : encounter.soap.objective,
+        assessment: amendmentData.soap.assessment !== undefined ? amendmentData.soap.assessment : encounter.soap.assessment,
+        plan: amendmentData.soap.plan !== undefined ? amendmentData.soap.plan : encounter.soap.plan
+      };
+    }
+    if (amendmentData.diagnosisIcd10) {
+      encounter.diagnosisIcd10 = amendmentData.diagnosisIcd10;
+    }
+
+    encounter.version = (encounter.version || 1) + 1;
+    encounter.updatedAt = new Date().toISOString();
+
+    this._writeData(db);
+    return encounter;
+  }
+
   addPrescription(patientId, rx) {
     const db = this._readData();
     const patient = db.patients.find((p) => p.id === patientId);
@@ -243,6 +354,8 @@ class EhrDatabase {
 
     const newPrescription = {
       id: `rx-${Date.now()}`,
+      version: 1,
+      amendments: [],
       drugName: rx.drugName,
       dosage: rx.dosage,
       route: rx.route || "Oral",
@@ -259,6 +372,44 @@ class EhrDatabase {
     patient.prescriptions.unshift(newPrescription);
     this._writeData(db);
     return newPrescription;
+  }
+
+  amendPrescription(patientId, rxId, amendmentData, expectedVersion) {
+    const db = this._readData();
+    const patient = db.patients.find((p) => p.id === patientId);
+    if (!patient) throw new Error(`Patient not found: ${patientId}`);
+
+    const rx = (patient.prescriptions || []).find((r) => r.id === rxId);
+    if (!rx) throw new Error(`Prescription not found: ${rxId}`);
+
+    if (expectedVersion !== undefined && expectedVersion !== null && rx.version !== expectedVersion) {
+      const err = new Error(`Concurrency Conflict: Prescription version mismatch (expected v${expectedVersion}, found v${rx.version}).`);
+      err.code = "CONCURRENCY_CONFLICT";
+      throw err;
+    }
+
+    if (!rx.amendments) rx.amendments = [];
+
+    rx.amendments.push({
+      amendedAt: new Date().toISOString(),
+      amendedBy: amendmentData.amendedBy || "Attending Physician",
+      reason: amendmentData.reason || "Prescription adjustment",
+      previousStatus: rx.status,
+      previousDosage: rx.dosage,
+      previousFrequency: rx.frequency
+    });
+
+    if (amendmentData.dosage) rx.dosage = amendmentData.dosage;
+    if (amendmentData.frequency) rx.frequency = amendmentData.frequency;
+    if (amendmentData.duration) rx.duration = amendmentData.duration;
+    if (amendmentData.instructions) rx.instructions = amendmentData.instructions;
+    if (amendmentData.status) rx.status = amendmentData.status;
+
+    rx.version = (rx.version || 1) + 1;
+    rx.updatedAt = new Date().toISOString();
+
+    this._writeData(db);
+    return rx;
   }
 
   addVitals(patientId, vitals) {
@@ -737,6 +888,219 @@ class EhrDatabase {
     }
     const sess = (db.doctorSessions || []).find((s) => s.doctorId === doctorId);
     return sess || null;
+  }
+
+  getSettings() {
+    const db = this._readData();
+    return db.settings || this._getDefaultSettings();
+  }
+
+  updateSettings(updatedSettings, modifiedBy = "Administrator") {
+    const db = this._readData();
+    const current = db.settings || this._getDefaultSettings();
+
+    const merged = {
+      ...current,
+      ...updatedSettings,
+      hospitalSites: updatedSettings.hospitalSites || current.hospitalSites,
+      trustedNetworkRanges: updatedSettings.trustedNetworkRanges || current.trustedNetworkRanges,
+      shiftRules: { ...current.shiftRules, ...(updatedSettings.shiftRules || {}) },
+      riskThresholds: { ...current.riskThresholds, ...(updatedSettings.riskThresholds || {}) },
+      breakGlassPolicy: { ...current.breakGlassPolicy, ...(updatedSettings.breakGlassPolicy || {}) },
+      locationService: { ...current.locationService, ...(updatedSettings.locationService || {}) }
+    };
+
+    db.settings = merged;
+    this._writeData(db);
+
+    try {
+      const auditService = require("./auditService");
+      auditService.logInternalAudit({
+        actor: modifiedBy,
+        action: "SETTINGS_UPDATE",
+        details: "Hospital operational settings updated by administrator"
+      });
+    } catch {}
+
+    return merged;
+  }
+
+  getRegisteredDevices() {
+    const db = this._readData();
+    if (!db.registeredDevices) {
+      db.registeredDevices = {
+        "sha256:alice-workstation-secure-enclave": {
+          fingerprint: "sha256:alice-workstation-secure-enclave",
+          name: "Registered Workstation",
+          status: "approved",
+          approvedBy: "Hospital Administration",
+          approvedAt: new Date().toISOString()
+        }
+      };
+      this._writeData(db);
+    }
+    return Object.values(db.registeredDevices);
+  }
+
+  isDeviceRegistered(fingerprint) {
+    if (!fingerprint) return false;
+    const clean = String(fingerprint).trim();
+    const devices = this.getRegisteredDevices();
+    const match = devices.find(d => d.fingerprint === clean || (d.fingerprint && d.fingerprint.toLowerCase() === clean.toLowerCase()));
+    return match ? match.status === "approved" : false;
+  }
+
+  registerDevice(fingerprint, name, userId) {
+    const db = this._readData();
+    if (!db.registeredDevices) db.registeredDevices = {};
+
+    const clean = String(fingerprint).trim();
+    db.registeredDevices[clean] = {
+      fingerprint: clean,
+      name: name || "Registered Hospital Device",
+      userId: userId || null,
+      status: "pending",
+      registeredAt: new Date().toISOString(),
+      approvedBy: null,
+      approvedAt: null
+    };
+
+    this._writeData(db);
+    return db.registeredDevices[clean];
+  }
+
+  approveDevice(fingerprint, approvedBy = "Administrator") {
+    const db = this._readData();
+    if (!db.registeredDevices) db.registeredDevices = {};
+
+    const clean = String(fingerprint).trim();
+    if (!db.registeredDevices[clean]) {
+      db.registeredDevices[clean] = {
+        fingerprint: clean,
+        name: "Registered Workstation",
+        status: "approved",
+        approvedBy,
+        approvedAt: new Date().toISOString()
+      };
+    } else {
+      db.registeredDevices[clean].status = "approved";
+      db.registeredDevices[clean].approvedBy = approvedBy;
+      db.registeredDevices[clean].approvedAt = new Date().toISOString();
+    }
+
+    this._writeData(db);
+
+    try {
+      const auditService = require("./auditService");
+      auditService.logInternalAudit({
+        actor: approvedBy,
+        action: "DEVICE_APPROVAL",
+        details: `Device fingerprint ${clean} approved for clinical workstation access`
+      });
+    } catch {}
+
+    return db.registeredDevices[clean];
+  }
+
+  revokeDevice(fingerprint, revokedBy = "Administrator") {
+    const db = this._readData();
+    if (!db.registeredDevices) db.registeredDevices = {};
+
+    const clean = String(fingerprint).trim();
+    if (db.registeredDevices[clean]) {
+      db.registeredDevices[clean].status = "revoked";
+      db.registeredDevices[clean].revokedBy = revokedBy;
+      db.registeredDevices[clean].revokedAt = new Date().toISOString();
+    }
+
+    this._writeData(db);
+
+    try {
+      const auditService = require("./auditService");
+      auditService.logInternalAudit({
+        actor: revokedBy,
+        action: "DEVICE_REVOCATION",
+        details: `Device fingerprint ${clean} revoked by administrator`
+      });
+    } catch {}
+
+    return db.registeredDevices[clean] || null;
+  }
+
+  recordBreakGlassEvent(eventData) {
+    const db = this._readData();
+    if (!db.breakGlassEvents) db.breakGlassEvents = [];
+
+    const newEvent = {
+      id: eventData.id || `bg-${Date.now()}`,
+      tokenId: eventData.tokenId,
+      patientId: eventData.patientId,
+      doctorId: eventData.doctorId || eventData.doctorAddress,
+      doctorAddress: eventData.doctorAddress,
+      justification: eventData.justification,
+      grantedAt: eventData.grantedAt || new Date().toISOString(),
+      expiresAt: eventData.expiresAt || new Date(Date.now() + 3600 * 1000).toISOString(),
+      status: "ACTIVE",
+      reviewStatus: "PENDING_REVIEW",
+      reviewedBy: null,
+      reviewedAt: null,
+      reviewDecision: null,
+      reviewNotes: null
+    };
+
+    db.breakGlassEvents.unshift(newEvent);
+    this._writeData(db);
+    return newEvent;
+  }
+
+  getBreakGlassReviewQueue() {
+    const db = this._readData();
+    return db.breakGlassEvents || [];
+  }
+
+  recordBreakGlassReview(tokenIdOrId, reviewer, decision, notes) {
+    const db = this._readData();
+    if (!db.breakGlassEvents) db.breakGlassEvents = [];
+
+    const event = db.breakGlassEvents.find(
+      (e) => e.tokenId === tokenIdOrId || e.id === tokenIdOrId
+    );
+    if (!event) throw new Error(`Break-glass event not found for ID: ${tokenIdOrId}`);
+
+    // Self-Review Prevention: Invoking clinician cannot review their own break-glass incident
+    const reviewerId = (reviewer.id || reviewer.username || "").toLowerCase();
+    const reviewerAddr = (reviewer.ethereumAddress || "").toLowerCase();
+    const eventDocId = (event.doctorId || "").toLowerCase();
+    const eventDocAddr = (event.doctorAddress || "").toLowerCase();
+
+    if (
+      (reviewerId && eventDocId && reviewerId === eventDocId) ||
+      (reviewerAddr && eventDocAddr && reviewerAddr === eventDocAddr)
+    ) {
+      const err = new Error("Conflict of Interest: Break-glass activations cannot be self-reviewed by the invoking clinician.");
+      err.code = "CONFLICT_OF_INTEREST";
+      throw err;
+    }
+
+    event.reviewStatus = decision || "JUSTIFIED";
+    event.reviewedBy = reviewer.name || reviewer.username || "Compliance Officer";
+    event.reviewedAt = new Date().toISOString();
+    event.reviewDecision = decision;
+    event.reviewNotes = notes || "Standard compliance review completed.";
+
+    this._writeData(db);
+
+    try {
+      const auditService = require("./auditService");
+      auditService.logInternalAudit({
+        actor: event.reviewedBy,
+        action: "BREAK_GLASS_REVIEW",
+        targetUser: event.doctorId,
+        details: `Emergency override ${event.tokenId} reviewed. Outcome: ${decision}`
+      });
+    } catch {}
+
+    return event;
   }
 
   _getSeedData() {
