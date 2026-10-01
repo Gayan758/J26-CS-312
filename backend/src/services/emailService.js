@@ -228,6 +228,10 @@ class EmailService {
     }
     return null;
   }
+
+  getDispatchedEmails() {
+    return this.dispatchedEmails;
+  }
 }
 
 module.exports = new EmailService();
