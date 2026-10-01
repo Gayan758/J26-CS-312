@@ -1,0 +1,25 @@
+{
+  "name": "medguard-riskbac",
+  "version": "2.0.0",
+  "description": "MedGuard v2: RiskBAC and Audited Break-Glass Protocol",
+  "scripts": {
+    "check:clean": "node scripts/check-production-clean.js",
+    "seed:dev": "node scripts/dev/seed.js",
+    "admin:create": "node scripts/admin-create.js",
+    "cleanup:legacy": "node scripts/ops/cleanup-legacy.js",
+    "db:migrate": "node scripts/db-migrate.js",
+    "db:backup": "node scripts/db-backup.js",
+    "db:restore": "node scripts/db-restore.js",
+    "verify:ledger": "node scripts/verify-audit-chain.js",
+    "test:contracts": "hardhat test",
+    "compile:contracts": "hardhat compile",
+    "test:backend": "npm --prefix backend test",
+    "test:risk": "set PYTHONPATH=risk-engine && python -m pytest risk-engine/tests",
+    "test:all": "npm run test:contracts && npm run test:backend",
+    "build:frontend": "npm --prefix frontend run build"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.2"
+  }
+}

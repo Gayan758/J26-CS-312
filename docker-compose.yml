@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  # 1. Local Ethereum Node (Hardhat)
+  hardhat-node:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: npx hardhat node --hostname 0.0.0.0
+    ports:
+      - "8545:8545"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8545"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Open Policy Agent (OPA)
+  opa:
+    image: openpolicyagent/opa:latest
+    ports:
+      - "8181:8181"
+    volumes:
+      - ./policy:/policy
+    command: run --server --set=decision_logs.console=true /policy/access_policy.rego
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8181/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 3. Python Risk Scoring Engine
+  risk-engine:
+    build:
+      context: ./risk-engine
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MEDGUARD_WEIGHT_TIME=0.15
+      - MEDGUARD_WEIGHT_GEO=0.35
+      - MEDGUARD_WEIGHT_DEVICE=0.25
+      - MEDGUARD_WEIGHT_BEHAVIOR=0.25
+      - MEDGUARD_ALPHA_WEIGHTED=0.7
+      - MEDGUARD_BETA_MAX=0.3
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 4. Node.js Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - RISK_ENGINE_URL=http://risk-engine:8000
+      - OPA_URL=http://opa:8181/v1/data/medguard/access
+      - ETH_RPC_URL=http://hardhat-node:8545
+      - ETH_SIGNER_PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+    depends_on:
+      hardhat-node:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+      risk-engine:
+        condition: service_healthy
+
+  # 5. React Provider Portal
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend

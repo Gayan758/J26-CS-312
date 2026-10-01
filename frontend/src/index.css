@@ -1,0 +1,149 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Neutrals */
+  --bg: #F4F6F9;
+  --surface: #FFFFFF;
+  --surface-muted: #F8FAFC;
+  --border: #E2E8F0;
+  --border-subtle: #EDF2F7;
+  --text: #0F172A;
+  --text-muted: #475569;
+  --text-subtle: #64748B;
+
+  /* Brand / Primary */
+  --primary: #0B5FA5;
+  --primary-hover: #094E88;
+  --primary-subtle: #E6F0F9;
+  --accent: #0E8F8A;
+
+  /* Sidebar Tokens */
+  --sidebar-bg: #0F2A43;
+  --sidebar-text: #B9C7D6;
+  --sidebar-hover-bg: #16375A;
+  --sidebar-active-bg: #1B4470;
+  --sidebar-divider: #22405F;
+
+  /* Semantic Status Tokens */
+  --critical: #B42318;
+  --critical-bg: #FEF3F2;
+  --critical-border: #FECDCA;
+
+  --warning: #B54708;
+  --warning-bg: #FFFAEB;
+  --warning-border: #FEDF89;
+
+  --success: #067647;
+  --success-bg: #ECFDF3;
+  --success-border: #A6F4C5;
+
+  --info: #0B5FA5;
+  --info-bg: #EFF6FF;
+  --info-border: #B2DDFF;
+
+  --neutral: #475569;
+  --neutral-bg: #F1F5F9;
+  --neutral-border: #E2E8F0;
+}
+
+[data-theme="dark"] {
+  --bg: #0B1623;
+  --surface: #101E2E;
+  --surface-muted: #15273C;
+  --border: #1E354F;
+  --border-subtle: #182C42;
+  --text: #E6EEF6;
+  --text-muted: #94A3B8;
+  --text-subtle: #64748B;
+
+  --primary: #38BDF8;
+  --primary-hover: #0EA5E9;
+  --primary-subtle: #0C2B42;
+  --accent: #14B8A6;
+
+  --sidebar-bg: #07101B;
+  --sidebar-text: #94A3B8;
+  --sidebar-hover-bg: #0E1D2F;
+  --sidebar-active-bg: #142840;
+  --sidebar-divider: #1A314A;
+
+  --critical: #F87171;
+  --critical-bg: #361214;
+  --critical-border: #5C1D24;
+
+  --warning: #FBBF24;
+  --warning-bg: #3B2A0A;
+  --warning-border: #6B4912;
+
+  --success: #34D399;
+  --success-bg: #0B2E1E;
+  --success-border: #14593B;
+
+  --info: #38BDF8;
+  --info-bg: #0C2B42;
+  --info-border: #184D72;
+
+  --neutral: #94A3B8;
+  --neutral-bg: #162638;
+  --neutral-border: #1E354F;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tabular figures for clinical metrics, clocks, tables */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Monospace font */
+.font-mono {
+  font-family: 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #2A4565;
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #3B5D88;
+}
+
+/* Clinical Enterprise Card */
+.clinical-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.clinical-card:hover {
+  border-color: #CBD5E1;
+}
+
+[data-theme="dark"] .clinical-card:hover {
+  border-color: #2D4C70;
+}

@@ -1,0 +1,136 @@
+const { ethers } = require("ethers");
+const jwt = require("jsonwebtoken");
+const config = require("../config");
+const logger = require("../utils/logger");
+
+const BREAK_GLASS_REGISTRY_ABI = [
+  "function activateBreakGlass(bytes32 patientId, string justification) external returns (bytes32)",
+  "function isTokenValid(bytes32 tokenId) external view returns (bool)",
+  "function getToken(bytes32 tokenId) external view returns (bytes32, address, bytes32, uint256, uint256, string, bool)",
+  "event BreakGlassActivated(address indexed doctor, bytes32 indexed patientId, bytes32 indexed tokenId, uint256 expiresAt, string justification)"
+];
+
+class BreakGlassService {
+  constructor() {
+    this.provider = null;
+    this.signer = null;
+    this.contract = null;
+
+    if (config.ethSignerKey && config.ethSignerKey.length === 66 && config.breakGlassRegistryAddress && ethers.isAddress(config.breakGlassRegistryAddress)) {
+      try {
+        this.provider = new ethers.JsonRpcProvider(config.ethRpcUrl, undefined, { staticNetwork: true });
+        this.signer = new ethers.Wallet(config.ethSignerKey, this.provider);
+        this.contract = new ethers.Contract(config.breakGlassRegistryAddress, BREAK_GLASS_REGISTRY_ABI, this.signer);
+      } catch {
+        this.contract = null;
+      }
+    }
+
+    this.mockTokens = new Map();
+  }
+
+  setContractAddress(address) {
+    this.contract = new ethers.Contract(address, BREAK_GLASS_REGISTRY_ABI, this.signer);
+  }
+
+  async activateEmergencyOverride({ doctorAddress, patientId, justification }) {
+    if (!justification || justification.trim().length < 15) {
+      throw new Error("Emergency justification must be at least 15 characters.");
+    }
+
+    const ehrDatabase = require("./ehrDatabase");
+    const settings = ehrDatabase.getSettings();
+    const durationSeconds = (settings?.breakGlassPolicy?.durationMinutes || 60) * 60;
+
+    const patientIdBytes32 = ethers.keccak256(ethers.toUtf8Bytes(patientId));
+    let tokenId;
+    let expiresAt = Math.floor(Date.now() / 1000) + durationSeconds;
+
+    try {
+      if (this.contract) {
+        const tx = await this.contract.activateBreakGlass(patientIdBytes32, justification);
+        const receipt = await tx.wait();
+
+        const event = receipt.logs
+          .map(log => {
+            try { return this.contract.interface.parseLog(log); } catch { return null; }
+          })
+          .find(parsed => parsed && parsed.name === "BreakGlassActivated");
+
+        if (event && event.args) {
+          tokenId = event.args.tokenId;
+          expiresAt = Number(event.args.expiresAt);
+        }
+      }
+    } catch (err) {
+      logger.warn({ error: err.message }, "[BreakGlassService] On-chain activateBreakGlass failed, falling back to local");
+    }
+
+    if (!tokenId) {
+      tokenId = ethers.keccak256(
+        ethers.toUtf8Bytes(`${doctorAddress}:${patientId}:${Date.now()}:${justification}`)
+      );
+      this.mockTokens.set(tokenId, {
+        tokenId,
+        doctor: doctorAddress,
+        patientId,
+        expiresAt,
+        justification,
+        revoked: false
+      });
+    }
+
+    // Persist incident in database review queue
+    try {
+      ehrDatabase.recordBreakGlassEvent({
+        tokenId,
+        patientId,
+        doctorAddress,
+        justification,
+        expiresAt: new Date(expiresAt * 1000).toISOString()
+      });
+    } catch {}
+
+    // Issue short-lived JWT scoped to patient and tokenId
+    const tokenPayload = {
+      sub: doctorAddress,
+      patient_id: patientId,
+      token_id: tokenId,
+      scope: "EMERGENCY_OVERRIDE_READ",
+      exp: expiresAt
+    };
+
+    const emergencyJwt = jwt.sign(tokenPayload, config.jwtSecret);
+
+    return {
+      tokenId,
+      jwt: emergencyJwt,
+      expiresAt,
+      justification
+    };
+  }
+
+  async isTokenValid(tokenId) {
+    try {
+      if (this.contract) {
+        return await this.contract.isTokenValid(tokenId);
+      }
+    } catch (err) {
+      logger.warn({ error: err.message }, "[BreakGlassService] On-chain isTokenValid failed, using local registry");
+    }
+
+    const mock = this.mockTokens.get(tokenId);
+    if (!mock || mock.revoked) return false;
+    return Math.floor(Date.now() / 1000) <= mock.expiresAt;
+  }
+
+  verifyJwt(emergencyJwt) {
+    try {
+      return jwt.verify(emergencyJwt, config.jwtSecret);
+    } catch (err) {
+      throw new Error(`Invalid or expired emergency token: ${err.message}`);
+    }
+  }
+}
+
+module.exports = new BreakGlassService();
