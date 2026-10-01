@@ -21,7 +21,10 @@ import {
   Copy,
   Check,
   XCircle,
-  FileCheck
+  FileCheck,
+  Edit3,
+  History,
+  X
 } from "lucide-react";
 import Button from "./ui/Button";
 import StatusBadge from "./ui/StatusBadge";
@@ -58,6 +61,26 @@ export default function PatientChart({
   const [vitalsHr, setVitalsHr] = useState("");
   const [vitalsSpo2, setVitalsSpo2] = useState("");
   const [vitalsTemp, setVitalsTemp] = useState("");
+
+  // Encounter amendment state
+  const [amendingEncounter, setAmendingEncounter] = useState(null);
+  const [amendSubjective, setAmendSubjective] = useState("");
+  const [amendObjective, setAmendObjective] = useState("");
+  const [amendAssessment, setAmendAssessment] = useState("");
+  const [amendPlan, setAmendPlan] = useState("");
+  const [amendEncounterReason, setAmendEncounterReason] = useState("");
+  const [isSubmittingEncounterAmend, setIsSubmittingEncounterAmend] = useState(false);
+  const [encounterAmendError, setEncounterAmendError] = useState("");
+
+  // Prescription amendment state
+  const [amendingRx, setAmendingRx] = useState(null);
+  const [amendRxDosage, setAmendRxDosage] = useState("");
+  const [amendRxFrequency, setAmendRxFrequency] = useState("");
+  const [amendRxDuration, setAmendRxDuration] = useState("");
+  const [amendRxStatus, setAmendRxStatus] = useState("Active");
+  const [amendRxReason, setAmendRxReason] = useState("");
+  const [isSubmittingRxAmend, setIsSubmittingRxAmend] = useState(false);
+  const [rxAmendError, setRxAmendError] = useState("");
 
   if (!patient) {
     return (
@@ -248,6 +271,176 @@ export default function PatientChart({
     setVitalsHr("");
     setVitalsSpo2("");
     setVitalsTemp("");
+  };
+
+  // 1. Encounter Amendment Handlers
+  const handleOpenAmendEncounter = (enc) => {
+    setAmendingEncounter(enc);
+    setAmendSubjective(enc.soap?.subjective || "");
+    setAmendObjective(enc.soap?.objective || "");
+    setAmendAssessment(enc.soap?.assessment || "");
+    setAmendPlan(enc.soap?.plan || "");
+    setAmendEncounterReason("");
+    setEncounterAmendError("");
+  };
+
+  const handleSaveEncounterAmendment = async (e) => {
+    e.preventDefault();
+    if (!amendEncounterReason || amendEncounterReason.trim().length < 5) {
+      setEncounterAmendError("A clinical justification (min 5 characters) is required.");
+      return;
+    }
+    setIsSubmittingEncounterAmend(true);
+    setEncounterAmendError("");
+
+    try {
+      const token = localStorage.getItem("medguard_doctor_token");
+      const res = await fetch(`/api/patients/${patient.id}/encounters/${amendingEncounter.id}/amend`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({
+          subjective: amendSubjective,
+          objective: amendObjective,
+          assessment: amendAssessment,
+          plan: amendPlan,
+          reason: amendEncounterReason.trim(),
+          expectedVersion: amendingEncounter.version || 1
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        if (res.status === 409) {
+          throw new Error("Concurrency Conflict: This record was amended by another clinician. Please refresh your chart.");
+        }
+        throw new Error(data.error || "Failed to amend clinical note.");
+      }
+
+      const updatedEncounters = (patient.encounters || []).map((enc) =>
+        enc.id === amendingEncounter.id
+          ? {
+              ...enc,
+              ...data.encounter,
+              version: data.encounter?.version || (enc.version || 1) + 1,
+              soap: data.encounter?.soap || {
+                subjective: amendSubjective,
+                objective: amendObjective,
+                assessment: amendAssessment,
+                plan: amendPlan
+              },
+              amendmentHistory: data.encounter?.amendmentHistory || [
+                ...(enc.amendmentHistory || []),
+                {
+                  amendedAt: new Date().toISOString(),
+                  amendedBy: doctor?.name || "Attending Physician",
+                  reason: amendEncounterReason.trim(),
+                  previousVersion: enc.version || 1
+                }
+              ]
+            }
+          : enc
+      );
+
+      const updatedPatient = {
+        ...patient,
+        encounters: updatedEncounters
+      };
+
+      if (onUpdatePatient) onUpdatePatient(updatedPatient);
+      setAmendingEncounter(null);
+    } catch (err) {
+      setEncounterAmendError(err.message);
+    } finally {
+      setIsSubmittingEncounterAmend(false);
+    }
+  };
+
+  // 2. Prescription Amendment Handlers
+  const handleOpenAmendRx = (rx) => {
+    setAmendingRx(rx);
+    setAmendRxDosage(rx.dosage || "");
+    setAmendRxFrequency(rx.frequency || "");
+    setAmendRxDuration(rx.duration || "");
+    setAmendRxStatus(rx.status || "Active");
+    setAmendRxReason("");
+    setRxAmendError("");
+  };
+
+  const handleSaveRxAmendment = async (e) => {
+    e.preventDefault();
+    if (!amendRxReason || amendRxReason.trim().length < 5) {
+      setRxAmendError("A clinical justification (min 5 characters) is required.");
+      return;
+    }
+    setIsSubmittingRxAmend(true);
+    setRxAmendError("");
+
+    try {
+      const token = localStorage.getItem("medguard_doctor_token");
+      const res = await fetch(`/api/patients/${patient.id}/prescriptions/${amendingRx.id}/amend`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({
+          dosage: amendRxDosage,
+          frequency: amendRxFrequency,
+          duration: amendRxDuration,
+          status: amendRxStatus,
+          reason: amendRxReason.trim(),
+          expectedVersion: amendingRx.version || 1
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        if (res.status === 409) {
+          throw new Error("Concurrency Conflict: This prescription was amended by another clinician. Please refresh your chart.");
+        }
+        throw new Error(data.error || "Failed to amend prescription.");
+      }
+
+      const updatedPrescriptions = (patient.prescriptions || []).map((rx) =>
+        rx.id === amendingRx.id
+          ? {
+              ...rx,
+              ...data.prescription,
+              dosage: amendRxDosage,
+              frequency: amendRxFrequency,
+              duration: amendRxDuration,
+              status: amendRxStatus,
+              version: data.prescription?.version || (rx.version || 1) + 1,
+              amendmentHistory: data.prescription?.amendmentHistory || [
+                ...(rx.amendmentHistory || []),
+                {
+                  amendedAt: new Date().toISOString(),
+                  amendedBy: doctor?.name || "Attending Physician",
+                  reason: amendRxReason.trim(),
+                  previousVersion: rx.version || 1
+                }
+              ]
+            }
+          : rx
+      );
+
+      const updatedPatient = {
+        ...patient,
+        prescriptions: updatedPrescriptions
+      };
+
+      if (onUpdatePatient) onUpdatePatient(updatedPatient);
+      setAmendingRx(null);
+    } catch (err) {
+      setRxAmendError(err.message);
+    } finally {
+      setIsSubmittingRxAmend(false);
+    }
   };
 
   // Compute patient age
@@ -615,17 +808,38 @@ export default function PatientChart({
                   className="border border-border rounded-lg bg-surface p-4 shadow-xs space-y-3"
                 >
                   <div className="flex items-center justify-between border-b border-border pb-2.5">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold text-text-primary text-xs">
                         {enc.chiefComplaint}
                       </span>
                       <span className="text-[11px] font-mono text-text-subtle">
                         · {enc.doctor}
                       </span>
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-muted border border-border text-text-muted font-medium">
+                        v{enc.version || 1}
+                      </span>
+                      {enc.amendmentHistory && enc.amendmentHistory.length > 0 && (
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-700 font-medium">
+                          Amended ({enc.amendmentHistory.length})
+                        </span>
+                      )}
                     </div>
-                    <span className="text-xs font-mono text-text-subtle">
-                      {enc.date}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono text-text-subtle">
+                        {enc.date}
+                      </span>
+                      {canModifySoap && (
+                        <Button
+                          variant="ghost"
+                          size="xs"
+                          icon={Edit3}
+                          onClick={() => handleOpenAmendEncounter(enc)}
+                          title="Amend clinical encounter note"
+                        >
+                          Amend
+                        </Button>
+                      )}
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -634,7 +848,7 @@ export default function PatientChart({
                         Subjective (S)
                       </span>
                       <p className="text-text-muted leading-relaxed">
-                        {enc.soap.subjective}
+                        {enc.soap?.subjective}
                       </p>
                     </div>
 
@@ -643,7 +857,7 @@ export default function PatientChart({
                         Objective (O)
                       </span>
                       <p className="text-text-muted leading-relaxed">
-                        {enc.soap.objective}
+                        {enc.soap?.objective}
                       </p>
                     </div>
 
@@ -652,7 +866,7 @@ export default function PatientChart({
                         Assessment (A)
                       </span>
                       <p className="text-text-muted leading-relaxed">
-                        {enc.soap.assessment}
+                        {enc.soap?.assessment}
                       </p>
                     </div>
 
@@ -661,10 +875,28 @@ export default function PatientChart({
                         Plan (P)
                       </span>
                       <p className="text-text-muted leading-relaxed">
-                        {enc.soap.plan}
+                        {enc.soap?.plan}
                       </p>
                     </div>
                   </div>
+
+                  {enc.amendmentHistory && enc.amendmentHistory.length > 0 && (
+                    <details className="text-[11px] border-t border-border pt-2 text-text-muted">
+                      <summary className="cursor-pointer font-medium text-text-subtle hover:text-text-primary select-none flex items-center gap-1">
+                        <History className="w-3 h-3 text-amber-600 inline" />
+                        <span>View Amendment Audit Log ({enc.amendmentHistory.length})</span>
+                      </summary>
+                      <div className="mt-2 space-y-1.5 pl-3 border-l-2 border-amber-300">
+                        {enc.amendmentHistory.map((hist, hIdx) => (
+                          <div key={hIdx} className="text-[11px]">
+                            <span className="font-semibold text-text-primary">{hist.amendedBy || "Physician"}</span>
+                            <span className="text-text-subtle font-mono"> · {new Date(hist.amendedAt || hist.timestamp).toLocaleString()}</span>
+                            <p className="italic text-text-muted mt-0.5">Reason: "{hist.reason}"</p>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  )}
                 </div>
               ))}
 
@@ -809,7 +1041,41 @@ export default function PatientChart({
                   header: "Status",
                   accessor: "status",
                   render: (row) => (
-                    <StatusBadge variant="success" dot label={row.status || "Active"} size="xs" />
+                    <StatusBadge
+                      variant={row.status === "Discontinued" ? "critical" : (row.status === "Adjusted" ? "warning" : "success")}
+                      dot
+                      label={row.status || "Active"}
+                      size="xs"
+                    />
+                  )
+                },
+                {
+                  header: "Version",
+                  accessor: "version",
+                  align: "center",
+                  cellClassName: "w-20",
+                  render: (row) => (
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-muted border border-border text-text-muted">
+                      v{row.version || 1}
+                    </span>
+                  )
+                },
+                {
+                  header: "Actions",
+                  accessor: "actions",
+                  align: "right",
+                  render: (row) => (
+                    canModifyRx && (
+                      <Button
+                        variant="ghost"
+                        size="xs"
+                        icon={Edit3}
+                        onClick={() => handleOpenAmendRx(row)}
+                        title="Amend prescription"
+                      >
+                        Amend
+                      </Button>
+                    )
                   )
                 }
               ]}
@@ -983,6 +1249,212 @@ export default function PatientChart({
             }
           />
         )
+      )}
+
+      {/* Encounter Amendment Modal */}
+      {amendingEncounter && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-surface w-full max-w-xl rounded-lg border border-border shadow-2xl p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-border pb-2.5">
+              <div>
+                <h3 className="text-sm font-semibold text-text-primary flex items-center gap-2">
+                  <Edit3 className="w-4 h-4 text-primary" />
+                  <span>Amend Clinical Note (Append-Only v{(amendingEncounter.version || 1) + 1})</span>
+                </h3>
+                <p className="text-[11px] text-text-muted mt-0.5">
+                  Previous version will be archived immutably in the patient audit trail.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setAmendingEncounter(null)}
+                className="text-text-subtle hover:text-text-primary p-1 rounded"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {encounterAmendError && (
+              <div className="p-2.5 rounded bg-critical-bg border border-critical-border text-critical text-xs font-medium">
+                {encounterAmendError}
+              </div>
+            )}
+
+            <form onSubmit={handleSaveEncounterAmendment} className="space-y-3 text-xs">
+              <div>
+                <label className="font-semibold text-text-primary block mb-1">
+                  Clinical Justification / Reason for Amendment <span className="text-critical">*</span>:
+                </label>
+                <input
+                  type="text"
+                  required
+                  minLength={5}
+                  value={amendEncounterReason}
+                  onChange={(e) => setAmendEncounterReason(e.target.value)}
+                  placeholder="e.g. Correcting dose titration following repeat lab results"
+                  className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-medium text-text-primary block mb-1">Subjective (S):</label>
+                  <textarea
+                    rows={3}
+                    value={amendSubjective}
+                    onChange={(e) => setAmendSubjective(e.target.value)}
+                    className="w-full p-2 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary resize-none leading-relaxed"
+                  />
+                </div>
+                <div>
+                  <label className="font-medium text-text-primary block mb-1">Objective (O):</label>
+                  <textarea
+                    rows={3}
+                    value={amendObjective}
+                    onChange={(e) => setAmendObjective(e.target.value)}
+                    className="w-full p-2 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary resize-none leading-relaxed"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-medium text-text-primary block mb-1">Assessment (A):</label>
+                  <input
+                    type="text"
+                    value={amendAssessment}
+                    onChange={(e) => setAmendAssessment(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary"
+                  />
+                </div>
+                <div>
+                  <label className="font-medium text-text-primary block mb-1">Plan (P):</label>
+                  <input
+                    type="text"
+                    value={amendPlan}
+                    onChange={(e) => setAmendPlan(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-3 border-t border-border">
+                <Button variant="secondary" size="sm" onClick={() => setAmendingEncounter(null)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" size="sm" type="submit" loading={isSubmittingEncounterAmend} icon={Save}>
+                  Sign &amp; Append Amendment
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Prescription Amendment Modal */}
+      {amendingRx && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-surface w-full max-w-lg rounded-lg border border-border shadow-2xl p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-border pb-2.5">
+              <div>
+                <h3 className="text-sm font-semibold text-text-primary flex items-center gap-2">
+                  <Edit3 className="w-4 h-4 text-primary" />
+                  <span>Amend Prescription: {amendingRx.drug} (v{(amendingRx.version || 1) + 1})</span>
+                </h3>
+                <p className="text-[11px] text-text-muted mt-0.5">
+                  Previous prescription state will be retained in audit history.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setAmendingRx(null)}
+                className="text-text-subtle hover:text-text-primary p-1 rounded"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {rxAmendError && (
+              <div className="p-2.5 rounded bg-critical-bg border border-critical-border text-critical text-xs font-medium">
+                {rxAmendError}
+              </div>
+            )}
+
+            <form onSubmit={handleSaveRxAmendment} className="space-y-3 text-xs">
+              <div>
+                <label className="font-semibold text-text-primary block mb-1">
+                  Clinical Reason for Adjustment <span className="text-critical">*</span>:
+                </label>
+                <input
+                  type="text"
+                  required
+                  minLength={5}
+                  value={amendRxReason}
+                  onChange={(e) => setAmendRxReason(e.target.value)}
+                  placeholder="e.g. Dose titration based on eGFR reduction"
+                  className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-medium text-text-primary block mb-1">Dosage:</label>
+                  <input
+                    type="text"
+                    required
+                    value={amendRxDosage}
+                    onChange={(e) => setAmendRxDosage(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary"
+                  />
+                </div>
+                <div>
+                  <label className="font-medium text-text-primary block mb-1">Frequency:</label>
+                  <input
+                    type="text"
+                    required
+                    value={amendRxFrequency}
+                    onChange={(e) => setAmendRxFrequency(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="font-medium text-text-primary block mb-1">Duration:</label>
+                  <input
+                    type="text"
+                    value={amendRxDuration}
+                    onChange={(e) => setAmendRxDuration(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary"
+                  />
+                </div>
+                <div>
+                  <label className="font-medium text-text-primary block mb-1">Status:</label>
+                  <select
+                    value={amendRxStatus}
+                    onChange={(e) => setAmendRxStatus(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary focus:outline-none focus:border-primary"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Adjusted">Adjusted</option>
+                    <option value="Discontinued">Discontinued</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-3 border-t border-border">
+                <Button variant="secondary" size="sm" onClick={() => setAmendingRx(null)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" size="sm" type="submit" loading={isSubmittingRxAmend} icon={Save}>
+                  Sign &amp; Amend Medication
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );

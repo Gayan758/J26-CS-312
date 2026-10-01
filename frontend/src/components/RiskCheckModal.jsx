@@ -75,6 +75,15 @@ export default function RiskCheckModal({
 
         const data = await res.json();
         if (isMounted) {
+          const isErrorStatus = !res.ok;
+          const decision = isErrorStatus ? "BLOCK" : (data.decision || data.status || "BLOCK");
+          const decisionReason =
+            data.message ||
+            data.error ||
+            (decision === "ALLOW"
+              ? "Permissible Risk Score (R < 0.30) & Verified Consent."
+              : "Context Risk Evaluated.");
+
           const result = {
             patientId: patient.id,
             patientPhn: patient.phn,
@@ -83,24 +92,23 @@ export default function RiskCheckModal({
             timestamp:
               contextStatus?.slstTime ||
               new Date().toLocaleTimeString("en-US", { hour12: true }) + " (SLST)",
-            decision: data.decision || data.status || "BLOCK",
-            riskLevel: data.risk_level || "LOW",
-            decisionReason:
-              data.message ||
-              (data.decision === "ALLOW"
-                ? "Permissible Risk Score (R < 0.30) & Verified Consent."
-                : "Context Risk Evaluated."),
+            decision,
+            riskLevel: data.risk_level || (isErrorStatus ? "HIGH" : "LOW"),
+            decisionReason,
+            errorId: data.errorId || null,
+            requestId: data.requestId || res.headers.get("x-request-id") || null,
+            statusCode: res.status,
             signals: data.signals || [],
             calculation: data.calculation || {
               formula: "R = 0.7 * (Σ w_i · R_i) + 0.3 * max(R_i)",
-              weightedSum: 0.15,
-              weightedComponent: 0.105,
-              maxSignal: 0.1,
-              maxComponent: 0.03,
-              compositeScore: data.risk_score || 0.135
+              weightedSum: isErrorStatus ? 1.0 : 0.15,
+              weightedComponent: isErrorStatus ? 0.7 : 0.105,
+              maxSignal: isErrorStatus ? 1.0 : 0.1,
+              maxComponent: isErrorStatus ? 0.3 : 0.03,
+              compositeScore: data.risk_score || (isErrorStatus ? 1.0 : 0.135)
             },
             consent: {
-              valid: data.consentValid !== undefined ? data.consentValid : true,
+              valid: data.consentValid !== undefined ? data.consentValid : !isErrorStatus,
               consentedDoctors: patient.consentedDoctors || []
             },
             record: data.record || null,
@@ -228,8 +236,8 @@ export default function RiskCheckModal({
         const data = await res.json();
         setOtpDispatchedInfo(data);
       }
-    } catch (e) {
-      console.warn("[RiskCheckModal] Error dispatching 2FA email:", e);
+    } catch (_) {
+      // Non-fatal dispatch error handled via UI retry
     }
   };
 
@@ -541,11 +549,11 @@ export default function RiskCheckModal({
                 <div className="p-3.5 rounded border border-critical-border bg-critical-bg space-y-3">
                   <div className="flex items-start gap-2.5">
                     <ShieldAlert className="w-4 h-4 text-critical shrink-0 mt-0.5" />
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <div className="font-semibold text-critical flex items-center gap-2">
-                        <span>Access Denied (BLOCK)</span>
+                        <span>{evaluationResult.statusCode === 429 ? "Rate Limit Throttled (429)" : "Access Denied by Policy (BLOCK)"}</span>
                         <span className="text-[10px] font-mono px-1.5 py-0.2 rounded border border-critical-border bg-surface font-semibold">
-                          {!evaluationResult.consent.valid ? "Consent Boundary" : "R >= 0.65"}
+                          {evaluationResult.statusCode === 429 ? "Rate Limit" : (!evaluationResult.consent.valid ? "Consent Boundary" : "R >= 0.65")}
                         </span>
                       </div>
                       <p className="text-xs text-text-muted mt-0.5">
@@ -554,24 +562,42 @@ export default function RiskCheckModal({
                     </div>
                   </div>
 
-                  {patient.statusType === "emergency" && (
-                    <div className="p-2.5 rounded border border-critical-border bg-surface flex items-center justify-between gap-3">
-                      <div className="text-[11px] text-text-muted">
-                        Emergency Trauma Bay: Override using cryptographic Red Alert Protocol.
+                  {(evaluationResult.errorId || evaluationResult.requestId) && (
+                    <div className="p-2.5 rounded border border-critical-border/60 bg-surface flex items-center justify-between text-[11px] font-mono">
+                      <div className="flex items-center gap-1.5 truncate">
+                        <span className="text-text-subtle font-sans">Reference ID:</span>
+                        <span className="text-text-primary font-bold truncate select-all">
+                          {evaluationResult.errorId || evaluationResult.requestId}
+                        </span>
                       </div>
-                      <Button
-                        variant="critical"
-                        size="sm"
-                        icon={AlertOctagon}
+                      <button
+                        type="button"
                         onClick={() => {
-                          onClose();
-                          if (onOpenBreakGlass) onOpenBreakGlass(patient);
+                          navigator.clipboard.writeText(evaluationResult.errorId || evaluationResult.requestId);
                         }}
+                        className="text-primary hover:underline text-[10px] shrink-0 font-sans font-medium"
                       >
-                        ER Break-Glass
-                      </Button>
+                        Copy Reference
+                      </button>
                     </div>
                   )}
+
+                  <div className="p-2.5 rounded border border-critical-border bg-surface flex items-center justify-between gap-3">
+                    <div className="text-[11px] text-text-muted">
+                      Clinical Emergency? Override policy restriction via emergency Red Alert Protocol.
+                    </div>
+                    <Button
+                      variant="critical"
+                      size="sm"
+                      icon={AlertOctagon}
+                      onClick={() => {
+                        onClose();
+                        if (onOpenBreakGlass) onOpenBreakGlass(patient);
+                      }}
+                    >
+                      ER Break-Glass
+                    </Button>
+                  </div>
                 </div>
               )}
 

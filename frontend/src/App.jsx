@@ -88,8 +88,8 @@ export default function App() {
         if (isMounted && result?.visitorId) {
           setDeviceFingerprint(result.visitorId);
         }
-      } catch (err) {
-        console.warn("FingerprintJS fallback:", err);
+      } catch (_) {
+        // Enclave device fingerprint fallback
       }
     }
     initFingerprint();
