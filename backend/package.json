@@ -17,7 +17,8 @@
     "express": "^4.19.2",
     "express-rate-limit": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^10.0.12"
+    "nodemailer": "^10.0.12",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
     "chai": "^4.4.1",

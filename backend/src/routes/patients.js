@@ -8,6 +8,7 @@ const consentService = require("../services/consentService");
 const ipfsService = require("../services/ipfsService");
 const decryptionService = require("../services/decryptionService");
 const auditService = require("../services/auditService");
+const encryptionService = require("../services/encryptionService");
 const { detectHospitalNetwork } = require("./auth");
 const { optionalAuthenticate } = require("../middleware/auth");
 
@@ -380,8 +381,8 @@ const handleAdmission = (req, res) => {
 
     const newPatient = ehrDatabase.addPatient(patientData);
 
-    // Deterministically encrypt and store IPFS blob
-    const key = crypto.createHash("sha256").update(`${newPatient.id}-key`).digest();
+    // Securely encrypt and store IPFS blob using derived patient DEK
+    const key = encryptionService.getPatientKey(newPatient.id);
     ipfsService.storeEncryptedRecord(newPatient.id, newPatient, key);
 
     return res.status(201).json({
@@ -525,7 +526,7 @@ const handleEncounter = (req, res) => {
 
     // Re-encrypt updated patient chart
     const updatedPatient = ehrDatabase.getPatientById(patientId);
-    const key = crypto.createHash("sha256").update(`${patientId}-key`).digest();
+    const key = encryptionService.getPatientKey(patientId);
     ipfsService.storeEncryptedRecord(patientId, updatedPatient, key);
 
     return res.status(201).json({
@@ -573,7 +574,7 @@ router.post("/:id/prescriptions", optionalAuthenticate, (req, res) => {
 
     // Re-encrypt updated patient chart
     const updatedPatient = ehrDatabase.getPatientById(patientId);
-    const key = crypto.createHash("sha256").update(`${patientId}-key`).digest();
+    const key = encryptionService.getPatientKey(patientId);
     ipfsService.storeEncryptedRecord(patientId, updatedPatient, key);
 
     return res.status(201).json({
@@ -613,7 +614,7 @@ router.post("/:id/vitals", optionalAuthenticate, (req, res) => {
 
     // Re-encrypt updated patient chart
     const updatedPatient = ehrDatabase.getPatientById(patientId);
-    const key = crypto.createHash("sha256").update(`${patientId}-key`).digest();
+    const key = encryptionService.getPatientKey(patientId);
     ipfsService.storeEncryptedRecord(patientId, updatedPatient, key);
 
     return res.status(201).json({

@@ -7,6 +7,9 @@
     "seed:dev": "node scripts/dev/seed.js",
     "admin:create": "node scripts/admin-create.js",
     "cleanup:legacy": "node scripts/ops/cleanup-legacy.js",
+    "db:migrate": "node scripts/db-migrate.js",
+    "db:backup": "node scripts/db-backup.js",
+    "db:restore": "node scripts/db-restore.js",
     "test:contracts": "hardhat test",
     "compile:contracts": "hardhat compile"
   },

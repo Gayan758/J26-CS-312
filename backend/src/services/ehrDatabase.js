@@ -69,11 +69,14 @@ class EhrDatabase {
   getPatientByIdentifier(identifier) {
     if (!identifier) return null;
     const clean = String(identifier).trim().toLowerCase();
+    const encryptionService = require("./encryptionService");
+    const nicBlindIndex = encryptionService.computeBlindIndex(identifier);
     const all = this.getPatients();
     return all.find((p) => 
       (p.id && p.id.toLowerCase() === clean) ||
       (p.phn && p.phn.toLowerCase() === clean) ||
       (p.nic && p.nic.toLowerCase() === clean) ||
+      (p.nicHash && p.nicHash === nicBlindIndex) ||
       (p.name && p.name.toLowerCase() === clean) ||
       (p.phn && p.phn.replace(/[^0-9]/g, "") === clean.replace(/[^0-9]/g, ""))
     ) || null;
@@ -164,11 +167,15 @@ class EhrDatabase {
     const assignedDoctorAddresses = (patientData.assignedDoctorAddresses || (admittingAddress ? [admittingAddress] : [])).map(a => a.toLowerCase());
     const consentedDoctors = patientData.consentedDoctors || (admittingName ? [admittingName] : []);
 
+    const encryptionService = require("./encryptionService");
+    const nicHash = patientData.nic && patientData.nic !== "N/A" ? encryptionService.computeBlindIndex(patientData.nic) : null;
+
     const newPatient = {
       id,
       patientId: id,
       phn: patientData.phn || `PHN-${Math.floor(100000 + Math.random() * 900000)}`,
       nic: patientData.nic || "N/A",
+      nicHash,
       name: patientData.name,
       patientName: patientData.name,
       dob: patientData.dob,

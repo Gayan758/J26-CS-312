@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require("path");
 const request = require("supertest");
 const { expect } = require("chai");
 const app = require("../src/server");
@@ -375,6 +377,11 @@ describe("MedGuard Backend Integration Tests", function () {
       expect(res.body.status).to.equal("SUCCESS");
       expect(res.body.patient.name).to.equal("Nimal Perera");
       expect(res.body.patient.id).to.be.a("string");
+
+      const testFile = path.join(__dirname, `../data/ipfs_storage/${res.body.patient.id}.json`);
+      if (fs.existsSync(testFile)) {
+        try { fs.unlinkSync(testFile); } catch {}
+      }
     });
   });
 

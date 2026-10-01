@@ -113,7 +113,8 @@ class ConsentService {
     }
 
     // In-memory fallback (exact 32-byte key)
-    const mockKey = this.mockKeys.get(patientId) || crypto.createHash("sha256").update(`${patientId}-key`).digest();
+    const encryptionService = require("./encryptionService");
+    const mockKey = this.mockKeys.get(patientId) || encryptionService.getPatientKey(patientId);
     return mockKey;
   }
 }

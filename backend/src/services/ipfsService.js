@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const ehrDatabase = require("./ehrDatabase");
+const encryptionService = require("./encryptionService");
 
 const IPFS_REPO_DIR = path.join(__dirname, "../../data/ipfs_storage");
 
@@ -87,7 +88,7 @@ class IpfsService {
     // 3. Fallback: load patient from ehrDatabase and encrypt with patient key
     const patient = ehrDatabase.getPatientById(patientId);
     if (patient) {
-      const key = crypto.createHash("sha256").update(`${patientId}-key`).digest();
+      const key = encryptionService.getPatientKey(patientId);
       blob = this.storeEncryptedRecord(patientId, patient, key);
       return blob;
     }
