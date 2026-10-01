@@ -15,7 +15,7 @@
 const fs = require("fs");
 const path = require("path");
 const readline = require("readline");
-const nodemailer = require("nodemailer");
+const nodemailer = require("../backend/node_modules/nodemailer");
 
 const BACKEND_ENV_PATH = path.join(__dirname, "../backend/.env");
 
