@@ -6,6 +6,7 @@
     "check:clean": "node scripts/check-production-clean.js",
     "seed:dev": "node scripts/dev/seed.js",
     "admin:create": "node scripts/admin-create.js",
+    "smtp:setup": "node scripts/smtp-setup.js",
     "cleanup:legacy": "node scripts/ops/cleanup-legacy.js",
     "db:migrate": "node scripts/db-migrate.js",
     "db:backup": "node scripts/db-backup.js",
