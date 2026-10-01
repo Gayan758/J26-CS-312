@@ -1,4 +1,12 @@
 require("dotenv").config();
+const { validateEnvironment } = require("./validateEnv");
+
+// Run environment validation on configuration boot
+const validation = validateEnvironment({
+  env: process.env,
+  isProduction: process.env.NODE_ENV === "production",
+  exitOnError: process.env.NODE_ENV === "production" && process.env.SKIP_ENV_VALIDATION !== "true"
+});
 
 module.exports = {
   port: parseInt(process.env.PORT || "5000", 10),
@@ -23,5 +31,8 @@ module.exports = {
   smtpSecure: process.env.SMTP_SECURE === "true",
   smtpUser: process.env.SMTP_USER || "",
   smtpPass: process.env.SMTP_PASS || "",
-  smtpFrom: process.env.SMTP_FROM || "MedGuard Clinical Security <security@medguard.sliit.lk>"
+  smtpFrom: process.env.SMTP_FROM || "MedGuard Clinical Security <security@medguard.sliit.lk>",
+
+  validation,
+  validateEnvironment
 };

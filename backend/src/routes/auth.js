@@ -3,13 +3,11 @@ const jwt = require("jsonwebtoken");
 const config = require("../config");
 const passwordService = require("../services/passwordService");
 const sessionService = require("../services/sessionService");
-const twoFactorService = require("../services/twoFactorService");
 const auditService = require("../services/auditService");
-const { authenticate, loginLimiter } = require("../middleware/auth");
+const { authenticate } = require("../middleware/auth");
+const { loginLimiter, registerLimiter, otpLimiter } = require("../middleware/rateLimiter");
 
 const router = express.Router();
-
-// Trusted Shift Hours (08:30–17:00, Asia/Colombo timezone)
 function isWithinTrustedShift(serverTimestamp = new Date()) {
   const hospitalTime = new Date(serverTimestamp.toLocaleString('en-US', { timeZone: 'Asia/Colombo' }));
   const minutes = hospitalTime.getHours() * 60 + hospitalTime.getMinutes();
@@ -93,7 +91,7 @@ function detectHospitalNetwork(ip) {
  * POST /api/auth/register
  * Doctor self-registration with SLMC credentials and persistent storage
  */
-router.post("/register", async (req, res) => {
+router.post("/register", registerLimiter, async (req, res) => {
   const doctorName = req.body.name || req.body.fullName;
   const { slmcNumber, specialty, username, password, baseCampus, phone, deviceFingerprint, email } = req.body;
 
@@ -548,7 +546,7 @@ router.get("/context-status", (req, res) => {
  * POST /api/auth/verify-device
  * 2FA OTP verification to enroll & trust a new device fingerprint
  */
-router.post("/verify-device", (req, res) => {
+router.post("/verify-device", otpLimiter, (req, res) => {
   const { doctorId, fingerprint, otp } = req.body;
   if (!doctorId || !fingerprint) {
     return res.status(400).json({ error: "doctorId and device fingerprint are required." });
@@ -598,7 +596,7 @@ router.post("/verify-device", (req, res) => {
  * POST /api/auth/send-2fa-otp
  * Dispatches dynamic 6-digit OTP to doctor's registered email
  */
-router.post("/send-2fa-otp", async (req, res) => {
+router.post("/send-2fa-otp", otpLimiter, async (req, res) => {
   const { doctorId, email, reason, fingerprint, network } = req.body;
   const ehrDatabase = require("../services/ehrDatabase");
   const emailService = require("../services/emailService");

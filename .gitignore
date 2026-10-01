@@ -53,3 +53,4 @@ Thumbs.db
 .idea/
 .vite/
 backups/
+backend/data/audit_ledger.json

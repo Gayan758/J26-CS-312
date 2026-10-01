@@ -26,6 +26,15 @@ function errorHandler(err, req, res, next) {
     code: err.code || null
   }, "Request handling failure");
 
+  if (err.message && err.message.startsWith("CORS policy:")) {
+    return res.status(403).json({
+      error: "Access Denied by CORS Policy",
+      message: err.message,
+      errorId,
+      requestId
+    });
+  }
+
   if (statusCode === 403 || err.code === "ACCESS_DENIED") {
     return res.status(403).json({
       error: "Access Denied by Policy",

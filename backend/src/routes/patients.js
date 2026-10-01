@@ -12,12 +12,13 @@ const encryptionService = require("../services/encryptionService");
 const logger = require("../utils/logger");
 const { detectHospitalNetwork } = require("./auth");
 const { optionalAuthenticate } = require("../middleware/auth");
+const { patientDataLimiter } = require("../middleware/rateLimiter");
 
 /**
  * GET /api/patients
  * Returns the hospital queue / directory of registered clinical patients.
  */
-router.get("/", optionalAuthenticate, (req, res) => {
+router.get("/", optionalAuthenticate, patientDataLimiter, (req, res) => {
   try {
     const userRole = (req.user?.role || "").toLowerCase();
 
@@ -115,7 +116,7 @@ router.get("/", optionalAuthenticate, (req, res) => {
  * GET /api/patients/:id
  * Evaluates Context-Aware RiskBAC silently and decrypts the full clinical EMR chart on ALLOW.
  */
-router.get("/:id", optionalAuthenticate, async (req, res) => {
+router.get("/:id", optionalAuthenticate, patientDataLimiter, async (req, res) => {
   try {
     const patientId = req.params.id;
     const patient = ehrDatabase.getPatientById(patientId);

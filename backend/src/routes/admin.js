@@ -3,6 +3,7 @@ const ehrDatabase = require("../services/ehrDatabase");
 const auditService = require("../services/auditService");
 const passwordService = require("../services/passwordService");
 const { optionalAuthenticate, authenticate, requireRole } = require("../middleware/auth");
+const { passwordResetLimiter } = require("../middleware/rateLimiter");
 
 const router = express.Router();
 
@@ -66,7 +67,7 @@ router.post("/users/:id/toggle-status", (req, res) => {
  * POST /api/admin/users/:id/reset-password
  * Administrative password reset for user
  */
-router.post("/users/:id/reset-password", async (req, res) => {
+router.post("/users/:id/reset-password", passwordResetLimiter, async (req, res) => {
   try {
     if (req.user) {
       const role = (req.user.role || "").toLowerCase();

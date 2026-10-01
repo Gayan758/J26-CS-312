@@ -1,32 +1,9 @@
-const rateLimit = require("express-rate-limit");
 const sessionService = require("../services/sessionService");
-
-// Rate limit access-request per IP/user to blunt brute-force signal probing
-const accessRequestLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 30,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { error: "Too many access attempts. Please try again later." }
-});
-
-// Rate limit emergency break-glass activation
-const breakGlassLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 10,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { error: "Too many break-glass activation attempts. Please try again later." }
-});
-
-// Rate limit authentication attempts (brute force protection)
-const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 15, // max 15 login attempts per 15 minutes per IP
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { error: "Too many sign-in attempts from this network. Please wait 15 minutes before trying again." }
-});
+const {
+  accessRequestLimiter,
+  breakGlassLimiter,
+  loginLimiter
+} = require("./rateLimiter");
 
 /**
  * Extracts and verifies the user session from the HTTP-only cookie or Authorization header.
