@@ -27,13 +27,13 @@ class BreakGlassService {
   }
 
   async activateEmergencyOverride({ doctorAddress, patientId, justification }) {
-    if (!justification || justification.trim().length < 10) {
-      throw new Error("Emergency justification must be at least 10 characters.");
+    if (!justification || justification.trim().length < 15) {
+      throw new Error("Emergency justification must be at least 15 characters.");
     }
 
     const patientIdBytes32 = ethers.keccak256(ethers.toUtf8Bytes(patientId));
     let tokenId;
-    let expiresAt = Math.floor(Date.now() / 1000) + 1800; // 30 minutes default
+    let expiresAt = Math.floor(Date.now() / 1000) + 14400; // 4 hours emergency override TTL
 
     try {
       if (this.contract) {

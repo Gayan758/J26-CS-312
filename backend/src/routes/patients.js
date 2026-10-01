@@ -9,19 +9,68 @@ const ipfsService = require("../services/ipfsService");
 const decryptionService = require("../services/decryptionService");
 const auditService = require("../services/auditService");
 const { detectHospitalNetwork } = require("./auth");
+const { optionalAuthenticate } = require("../middleware/auth");
 
 /**
  * GET /api/patients
  * Returns the hospital queue / directory of registered clinical patients.
  */
-router.get("/", (req, res) => {
+router.get("/", optionalAuthenticate, (req, res) => {
   try {
-    const doctorId = req.query.doctorId || req.headers["x-doctor-id"];
-    const doctorAddress = req.query.doctorAddress || req.headers["x-doctor-address"];
-    const showAll = req.query.all === "true";
+    const userRole = (req.user?.role || "").toLowerCase();
+
+    // 1. Patient view: Patients may only view their own summary
+    if (userRole === "patient") {
+      const allPatients = ehrDatabase.getPatients();
+      const myPatient = allPatients.find(
+        (p) => p.id === req.user.id || p.phn === req.user.phn || p.nic === req.user.nic
+      );
+      if (!myPatient) {
+        return res.json({ patients: [] });
+      }
+      return res.json({
+        patients: [{
+          id: myPatient.id,
+          phn: myPatient.phn,
+          name: myPatient.name,
+          gender: myPatient.gender,
+          dob: myPatient.dob,
+          bloodGroup: myPatient.bloodGroup,
+          consentStatus: myPatient.consentStatus,
+          consentedDoctors: myPatient.consentedDoctors || [],
+          allergies: myPatient.allergies || [],
+          chronicConditions: myPatient.chronicConditions || []
+        }]
+      });
+    }
+
+    // 2. Administrator view: Separation of Duties (Administrative metadata only, NO clinical notes)
+    if (userRole === "admin" || userRole === "administrator") {
+      const allPatients = ehrDatabase.getPatients();
+      const adminSummaries = allPatients.map((p) => ({
+        id: p.id,
+        phn: p.phn,
+        name: p.name,
+        dob: p.dob,
+        gender: p.gender,
+        bloodGroup: p.bloodGroup,
+        department: p.department || "General OPD",
+        triageQueue: p.triageQueue || "General OPD",
+        emergencyStatus: p.emergencyStatus || "Stable",
+        consentStatus: p.consentStatus,
+        assignedDoctorIds: p.assignedDoctorIds || [],
+        assignedDoctorAddresses: p.assignedDoctorAddresses || []
+      }));
+      return res.json({ patients: adminSummaries });
+    }
+
+    // 3. Clinician view: Hospital triage queue
+    const doctorId = req.user ? req.user.id : (req.query.doctorId || req.headers["x-doctor-id"]);
+    const doctorAddress = req.user ? (req.user.ethereumAddress || req.user.id) : (req.query.doctorAddress || req.headers["x-doctor-address"]);
+    const showAll = req.query.all === "true" || (!doctorId && !doctorAddress);
 
     let patients;
-    if (showAll || (!doctorId && !doctorAddress)) {
+    if (showAll) {
       patients = ehrDatabase.getPatients();
     } else {
       patients = ehrDatabase.getPatientsForDoctor(doctorId, doctorAddress);
@@ -64,7 +113,7 @@ router.get("/", (req, res) => {
  * GET /api/patients/:id
  * Evaluates Context-Aware RiskBAC silently and decrypts the full clinical EMR chart on ALLOW.
  */
-router.get("/:id", async (req, res) => {
+router.get("/:id", optionalAuthenticate, async (req, res) => {
   try {
     const patientId = req.params.id;
     const patient = ehrDatabase.getPatientById(patientId);
@@ -72,11 +121,40 @@ router.get("/:id", async (req, res) => {
       return res.status(404).json({ error: "Patient not found" });
     }
 
-    // Resolve context signals from real request headers
-    const doctorAddress = req.headers["x-doctor-address"] || "";
+    const userRole = (req.user?.role || "").toLowerCase();
+
+    // 1. Separation of Duties: Administrators are strictly forbidden from viewing clinical EMR records
+    if (userRole === "admin" || userRole === "administrator") {
+      return res.status(403).json({
+        error: "Separation of Duties: Hospital administrators are prohibited from viewing patient clinical health records."
+      });
+    }
+
+    // 2. Patient self-view: Patients may only access their own clinical health records
+    if (userRole === "patient") {
+      const isSelf = req.user.id === patient.id || req.user.phn === patient.phn || req.user.nic === patient.nic;
+      if (!isSelf) {
+        return res.status(403).json({
+          error: "Access Denied: Patients may only access their own clinical health records."
+        });
+      }
+
+      return res.json({
+        status: "ALLOW",
+        decision: "ALLOW",
+        risk_score: 0.0,
+        risk_level: "LOW",
+        signals: [],
+        record: patient,
+        message: "Patient personal health record released to verified patient."
+      });
+    }
+
+    // Resolve context signals from verified user session or real request headers
+    const doctorAddress = req.user ? (req.user.ethereumAddress || req.user.id) : (req.headers["x-doctor-address"] || "");
     const forwarded = req.headers["x-forwarded-for"];
     const clientIp = (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket?.remoteAddress || req.ip || "127.0.0.1";
-    const deviceFingerprint = req.headers["x-device-fingerprint"] || "";
+    const deviceFingerprint = req.headers["x-device-fingerprint"] || (req.user?.defaultDeviceFingerprint || "");
     const recordSensitivity = patient.sensitivity || "medium";
     const timestamp = new Date().toISOString();
 
@@ -126,7 +204,7 @@ router.get("/:id", async (req, res) => {
       isBreakGlass: false
     });
 
-    const txHash = auditTx?.transactionHash || ("0x" + crypto.randomBytes(32).toString("hex"));
+    const txHash = auditTx?.txHash || auditTx?.transactionHash || null;
 
     const calculation = {
       weightedSum: parseFloat(((signal_breakdown.weighted_component || 0) / 0.7).toFixed(3)),
@@ -323,10 +401,17 @@ router.post("/admit", handleAdmission);
  * GET /api/patients/:id/consent
  * Returns current doctor assignments and granular permission settings
  */
-router.get("/:id/consent", (req, res) => {
+router.get("/:id/consent", optionalAuthenticate, (req, res) => {
   try {
     const patient = ehrDatabase.getPatientById(req.params.id);
     if (!patient) return res.status(404).json({ error: "Patient not found" });
+
+    if (req.user && req.user.role === "patient") {
+      const isSelf = req.user.id === patient.id || req.user.phn === patient.phn || req.user.nic === patient.nic;
+      if (!isSelf) {
+        return res.status(403).json({ error: "Access Denied: Patients may only access their own consent settings." });
+      }
+    }
 
     return res.json({
       patientId: patient.id,
@@ -353,9 +438,19 @@ router.get("/:id/consent", (req, res) => {
  * PUT /api/patients/:id/consent
  * Patient updates doctor authorizations and granular permissions
  */
-router.put("/:id/consent", async (req, res) => {
+router.put("/:id/consent", optionalAuthenticate, async (req, res) => {
   try {
     const patientId = req.params.id;
+    const patient = ehrDatabase.getPatientById(patientId);
+    if (!patient) return res.status(404).json({ error: "Patient not found" });
+
+    if (req.user && req.user.role === "patient") {
+      const isSelf = req.user.id === patient.id || req.user.phn === patient.phn || req.user.nic === patient.nic;
+      if (!isSelf) {
+        return res.status(403).json({ error: "Access Denied: Patients may only modify their own consent settings." });
+      }
+    }
+
     const { assignedDoctorIds, assignedDoctorAddresses, consentedDoctors, granularPermissions, consentStatus } = req.body;
 
     const updated = ehrDatabase.updatePatientConsent(patientId, {
@@ -366,23 +461,31 @@ router.put("/:id/consent", async (req, res) => {
       consentStatus
     });
 
-    // Synchronize mock & contract consent for authorized addresses
+    let onChainTxHash = null;
     if (assignedDoctorAddresses && Array.isArray(assignedDoctorAddresses)) {
       for (const addr of assignedDoctorAddresses) {
         try {
-          consentService.setMockConsent(addr, patientId, true);
+          const tx = await consentService.setConsent(addr, patientId, Boolean(consentStatus !== false));
+          if (tx) onChainTxHash = tx;
         } catch (e) {
-          console.warn("[Consent Sync] Mock consent update:", e.message);
+          // Consent sync logging
         }
       }
     }
+
+    auditService.logInternalAudit({
+      actor: req.user ? `${req.user.name || req.user.username} (${req.user.role})` : "Patient Direct",
+      actorAddress: req.user?.ethereumAddress || null,
+      action: "CONSENT_UPDATE",
+      details: `Consent preferences updated for patient ${patientId}. Active status: ${consentStatus !== false}`
+    });
 
     return res.json({
       status: "SUCCESS",
       message: "Patient consent preferences and care team successfully updated.",
       patient: updated,
-      txHash: "0x" + crypto.randomBytes(32).toString("hex"),
-      syncedOnChain: true
+      txHash: onChainTxHash,
+      syncedOnChain: Boolean(onChainTxHash)
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -393,16 +496,30 @@ router.put("/:id/consent", async (req, res) => {
  * POST /api/patients/:id/encounters
  * Doctor writes a new SOAP Clinical Encounter note.
  */
-router.post("/:id/encounters", (req, res) => {
+const handleEncounter = (req, res) => {
   try {
+    if (req.user) {
+      const role = (req.user.role || "").toLowerCase();
+      if (role === "admin" || role === "administrator" || role === "patient") {
+        return res.status(403).json({ error: `Access Denied: Role "${req.user.role}" cannot author clinical encounter notes.` });
+      }
+    }
+
     const patientId = req.params.id;
-    const { doctorName, doctorAddress, chiefComplaint, soap, diagnosisIcd10 } = req.body;
+    const { doctorName, doctorAddress, chiefComplaint, soap, subjective, objective, assessment, plan, diagnosisIcd10 } = req.body;
+
+    const soapData = soap || {
+      subjective: subjective || "",
+      objective: objective || "",
+      assessment: assessment || "",
+      plan: plan || ""
+    };
 
     const newEncounter = ehrDatabase.addEncounter(patientId, {
-      doctorName,
-      doctorAddress,
+      doctorName: req.user?.name || doctorName,
+      doctorAddress: req.user?.ethereumAddress || doctorAddress,
       chiefComplaint,
-      soap,
+      soap: soapData,
       diagnosisIcd10
     });
 
@@ -418,14 +535,24 @@ router.post("/:id/encounters", (req, res) => {
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
-});
+};
+
+router.post("/:id/encounters", optionalAuthenticate, handleEncounter);
+router.post("/:id/soap", optionalAuthenticate, handleEncounter);
 
 /**
  * POST /api/patients/:id/prescriptions
  * Doctor prescribes a new medication.
  */
-router.post("/:id/prescriptions", (req, res) => {
+router.post("/:id/prescriptions", optionalAuthenticate, (req, res) => {
   try {
+    if (req.user) {
+      const role = (req.user.role || "").toLowerCase();
+      if (role === "admin" || role === "administrator" || role === "patient") {
+        return res.status(403).json({ error: `Access Denied: Role "${req.user.role}" cannot prescribe medications.` });
+      }
+    }
+
     const patientId = req.params.id;
     const { drugName, dosage, route, frequency, duration, refills, instructions, prescribedBy } = req.body;
 
@@ -441,7 +568,7 @@ router.post("/:id/prescriptions", (req, res) => {
       duration,
       refills,
       instructions,
-      prescribedBy
+      prescribedBy: req.user?.name || prescribedBy
     });
 
     // Re-encrypt updated patient chart
@@ -462,8 +589,15 @@ router.post("/:id/prescriptions", (req, res) => {
  * POST /api/patients/:id/vitals
  * Clinical staff records new vital signs.
  */
-router.post("/:id/vitals", (req, res) => {
+router.post("/:id/vitals", optionalAuthenticate, (req, res) => {
   try {
+    if (req.user) {
+      const role = (req.user.role || "").toLowerCase();
+      if (role === "admin" || role === "administrator" || role === "patient") {
+        return res.status(403).json({ error: `Access Denied: Role "${req.user.role}" cannot record clinical vital signs.` });
+      }
+    }
+
     const patientId = req.params.id;
     const { bp, hr, rr, spo2, temp, glucose, recordedBy } = req.body;
 
@@ -474,7 +608,7 @@ router.post("/:id/vitals", (req, res) => {
       spo2,
       temp,
       glucose,
-      recordedBy
+      recordedBy: req.user?.name || recordedBy
     });
 
     // Re-encrypt updated patient chart

@@ -73,6 +73,7 @@ export default function LoginScreen({ onLoginSuccess, onPatientLogin }) {
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: username.trim(),
@@ -111,6 +112,7 @@ export default function LoginScreen({ onLoginSuccess, onPatientLogin }) {
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: regName.trim(),
@@ -154,6 +156,7 @@ export default function LoginScreen({ onLoginSuccess, onPatientLogin }) {
     try {
       const res = await fetch("/api/auth/patient-login", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           identifier: patientIdentifier.trim(),

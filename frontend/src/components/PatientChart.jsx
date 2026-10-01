@@ -110,9 +110,14 @@ export default function PatientChart({
     if (!chiefComplaint || !soapS) return;
 
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
       await fetch(`/api/patients/${patient.id}/soap`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           chiefComplaint,
           subjective: soapS,
@@ -159,9 +164,14 @@ export default function PatientChart({
     if (!rxDrug || !rxDosage) return;
 
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
       await fetch(`/api/patients/${patient.id}/prescriptions`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           drugName: rxDrug,
           dosage: rxDosage,
@@ -203,9 +213,14 @@ export default function PatientChart({
     e.preventDefault();
 
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
       await fetch(`/api/patients/${patient.id}/vitals`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           bp: vitalsBp,
           hr: vitalsHr ? parseInt(vitalsHr, 10) : undefined,

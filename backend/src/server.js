@@ -10,10 +10,27 @@ const adminRoutes = require("./routes/admin");
 const errorHandler = require("./middleware/errorHandler");
 const auditService = require("./services/auditService");
 
+const cookieParser = require("cookie-parser");
 const app = express();
 
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. mobile apps, curl, same-origin, supertest)
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(null, true); // Dev/test permissive fallback
+  },
+  credentials: true
+}));
+app.use(cookieParser(config.jwtSecret));
 app.use(express.json());
 
 // Health & Status

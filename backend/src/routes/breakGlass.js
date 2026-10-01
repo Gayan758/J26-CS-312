@@ -5,7 +5,7 @@ const consentService = require("../services/consentService");
 const ipfsService = require("../services/ipfsService");
 const decryptionService = require("../services/decryptionService");
 const auditService = require("../services/auditService");
-const { breakGlassLimiter, validateDoctorIdentity } = require("../middleware/auth");
+const { breakGlassLimiter, validateDoctorIdentity, optionalAuthenticate } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -13,19 +13,26 @@ const router = express.Router();
  * POST /api/break-glass/activate
  * Emergency Red Alert Protocol (RAP) trigger
  */
-router.post("/break-glass/activate", breakGlassLimiter, validateDoctorIdentity, async (req, res, next) => {
+router.post("/break-glass/activate", breakGlassLimiter, optionalAuthenticate, validateDoctorIdentity, async (req, res, next) => {
   try {
     const { doctor_address, patient_id, justification } = req.body;
+
+    if (req.user) {
+      const role = (req.user.role || "").toLowerCase();
+      if (role === "admin" || role === "administrator" || role === "patient") {
+        return res.status(403).json({ error: "Access Denied: Only licensed physicians may trigger Emergency Break-Glass override." });
+      }
+    }
 
     if (!patient_id) {
       return res.status(400).json({ error: "Missing required patient_id" });
     }
 
-    if (!justification || justification.trim().length < 10) {
-      return res.status(400).json({ error: "Mandatory emergency justification must be at least 10 characters." });
+    if (!justification || justification.trim().length < 15) {
+      return res.status(400).json({ error: "Mandatory emergency justification must be at least 15 characters." });
     }
 
-    // 1. Activate on-chain BreakGlassRegistry token
+    // 1. Activate on-chain BreakGlassRegistry token (4 hours TTL)
     const activation = await breakGlassService.activateEmergencyOverride({
       doctorAddress: doctor_address,
       patientId: patient_id,
@@ -34,14 +41,15 @@ router.post("/break-glass/activate", breakGlassLimiter, validateDoctorIdentity, 
 
     const accessDecisionId = "0x" + crypto.randomBytes(32).toString("hex");
 
-    // 2. Always log break-glass activation to AccessAuditLog
+    // 2. Log break-glass activation to AccessAuditLog and flag compliance alert
     await auditService.logDecision({
       accessDecisionId,
       requester: doctor_address,
       patientId: patient_id,
-      riskLevel: "HIGH",
+      riskLevel: "CRITICAL",
       decision: "BREAK_GLASS_ACTIVATE",
-      isBreakGlass: true
+      isBreakGlass: true,
+      details: `EMERGENCY OVERRIDE (RAP): ${justification.trim()}`
     });
 
     return res.status(200).json({

@@ -59,7 +59,11 @@ export default function UserManagement({ onShowToast }) {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/users");
+      const token = localStorage.getItem("medguard_doctor_token");
+      const res = await fetch("/api/admin/users", {
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
       if (res.ok) {
         const data = await res.json();
         if (data.users && Array.isArray(data.users)) {
@@ -67,79 +71,15 @@ export default function UserManagement({ onShowToast }) {
           setLoading(false);
           return;
         }
+      } else {
+        const err = await res.json().catch(() => ({}));
+        toast(err.error || "Failed to load user directory from server.", "error");
       }
     } catch (err) {
       console.warn("Could not fetch admin users from backend:", err.message);
+      toast("Could not connect to hospital user directory service.", "error");
     }
-
-    // Fallback if backend offline
-    setUsers([
-      {
-        id: "admin-001",
-        name: "Hospital IT & Compliance Admin",
-        username: "admin",
-        email: "admin.compliance@sliit.lk",
-        role: "Admin",
-        specialty: "Hospital Security & Governance",
-        slmcNumber: "ADMIN-GOV",
-        baseCampus: "SLIIT Malabe Campus Health Center",
-        phone: "+94 11 754 4801",
-        status: "active",
-        defaultDeviceFingerprint: "sha256:enrolled-workstation-admin"
-      },
-      {
-        id: "doc-gayan",
-        name: "Dr. Gayan Fernando, MD",
-        username: "gayan.fernando",
-        email: "it23270374@my.sliit.lk",
-        role: "Doctor",
-        specialty: "Lead Access & Clinical Specialist",
-        slmcNumber: "SLMC-78901",
-        baseCampus: "SLIIT Malabe Campus Health Center",
-        phone: "+94 77 123 4567",
-        status: "active",
-        defaultDeviceFingerprint: "sha256:enrolled-workstation-gayan"
-      },
-      {
-        id: "doc-sarah",
-        name: "Dr. Sarah Jenkins, MD",
-        username: "sarah.jenkins",
-        email: "sarah.jenkins@hospital.lk",
-        role: "Doctor",
-        specialty: "Visiting Neurologist",
-        slmcNumber: "SLMC-55102",
-        baseCampus: "External Specialist / On-Call",
-        phone: "+94 76 555 1212",
-        status: "active",
-        defaultDeviceFingerprint: "sha256:enrolled-workstation-sarah-macbook"
-      },
-      {
-        id: "doc-alice",
-        name: "Dr. Alice Vance, MD",
-        username: "alice.vance",
-        email: "alice.vance@sliit.lk",
-        role: "Doctor",
-        specialty: "Senior Cardiologist",
-        slmcNumber: "SLMC-38491",
-        baseCampus: "SLIIT Malabe Campus Hospital",
-        phone: "+94 77 234 5678",
-        status: "active",
-        defaultDeviceFingerprint: "sha256:enrolled-workstation-alice-cardio"
-      },
-      {
-        id: "doc-kasun",
-        name: "Dr. Kasun Perera, MBBS",
-        username: "kasun.perera",
-        email: "kasun.perera@seylan.lk",
-        role: "Doctor",
-        specialty: "Emergency Medicine Specialist",
-        slmcNumber: "SLMC-42915",
-        baseCampus: "Seylan Tower 1 Clinic, Colombo",
-        phone: "+94 71 987 6543",
-        status: "active",
-        defaultDeviceFingerprint: "sha256:enrolled-workstation-kasun-er"
-      }
-    ]);
+    setUsers([]);
     setLoading(false);
   };
 
@@ -154,10 +94,15 @@ export default function UserManagement({ onShowToast }) {
   // Toggle user suspension
   const handleToggleStatus = async (user) => {
     const nextStatus = user.status === "disabled" ? "active" : "disabled";
+    const token = localStorage.getItem("medguard_doctor_token");
     try {
       const res = await fetch(`/api/admin/users/${user.id}/toggle-status`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({ status: nextStatus })
       });
       if (res.ok) {
@@ -166,24 +111,18 @@ export default function UserManagement({ onShowToast }) {
         );
         toast(
           `User ${user.name} (${user.username}) is now ${
-            nextStatus === "disabled" ? "TEMPORARILY SUSPENDED" : "ACTIVATED"
+            nextStatus === "disabled" ? "SUSPENDED" : "ACTIVATED"
           }`,
           nextStatus === "disabled" ? "warning" : "success"
         );
         return;
+      } else {
+        const data = await res.json().catch(() => ({}));
+        toast(data.error || "Failed to update account status.", "error");
       }
     } catch (e) {
-      console.warn("Backend toggle status offline fallback:", e.message);
+      toast("Network error updating user account status.", "error");
     }
-
-    // Local state fallback
-    setUsers((prev) =>
-      prev.map((u) => (u.id === user.id ? { ...u, status: nextStatus } : u))
-    );
-    toast(
-      `Account ${user.name} status updated to ${nextStatus.toUpperCase()}`,
-      nextStatus === "disabled" ? "warning" : "success"
-    );
   };
 
   // Reset password
@@ -192,10 +131,15 @@ export default function UserManagement({ onShowToast }) {
     if (!resetModalUser || !newPassword.trim()) return;
 
     setResetSubmitting(true);
+    const token = localStorage.getItem("medguard_doctor_token");
     try {
       const res = await fetch(`/api/admin/users/${resetModalUser.id}/reset-password`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({ password: newPassword.trim() })
       });
       if (res.ok) {
@@ -204,14 +148,13 @@ export default function UserManagement({ onShowToast }) {
         setNewPassword("");
         setResetSubmitting(false);
         return;
+      } else {
+        const data = await res.json().catch(() => ({}));
+        toast(data.error || "Password reset failed. Ensure it meets the 12-character security policy.", "error");
       }
     } catch (err) {
-      console.warn("Backend password reset fallback:", err.message);
+      toast("Network error occurred while resetting password.", "error");
     }
-
-    toast(`Password updated for ${resetModalUser.name} (${resetModalUser.username}).`, "success");
-    setResetModalUser(null);
-    setNewPassword("");
     setResetSubmitting(false);
   };
 
@@ -220,33 +163,53 @@ export default function UserManagement({ onShowToast }) {
     if (!confirm(`Revoke workstation device enrollment for ${user.name}? The doctor will be prompted for 2FA re-verification on next login.`)) {
       return;
     }
+    const token = localStorage.getItem("medguard_doctor_token");
     try {
-      await fetch(`/api/admin/users/${user.id}/reset-device`, { method: "POST" });
+      const res = await fetch(`/api/admin/users/${user.id}/reset-device`, {
+        method: "POST",
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
+      if (res.ok) {
+        setUsers((prev) =>
+          prev.map((u) =>
+            u.id === user.id
+              ? { ...u, defaultDeviceFingerprint: "" }
+              : u
+          )
+        );
+        toast(`Workstation enrollment revoked for ${user.name}.`, "warning");
+      } else {
+        const data = await res.json().catch(() => ({}));
+        toast(data.error || "Failed to reset workstation enrollment.", "error");
+      }
     } catch (err) {
-      console.warn("Backend reset device fallback:", err.message);
+      toast("Network error occurred while resetting workstation.", "error");
     }
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.id === user.id
-          ? { ...u, defaultDeviceFingerprint: `sha256:unregistered-${Date.now()}` }
-          : u
-      )
-    );
-    toast(`Workstation enrollment revoked for ${user.name}.`, "warning");
   };
 
   // Remove user
   const handleExecuteDelete = async () => {
     if (!deleteConfirmUser) return;
     setDeleteSubmitting(true);
+    const token = localStorage.getItem("medguard_doctor_token");
     try {
-      await fetch(`/api/admin/users/${deleteConfirmUser.id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/users/${deleteConfirmUser.id}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
+      if (res.ok) {
+        setUsers((prev) => prev.filter((u) => u.id !== deleteConfirmUser.id));
+        toast(`User ${deleteConfirmUser.name} removed from system registry.`, "info");
+        setDeleteConfirmUser(null);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        toast(data.error || "Failed to remove user account.", "error");
+      }
     } catch (err) {
-      console.warn("Backend delete user fallback:", err.message);
+      toast("Network error occurred while removing user account.", "error");
     }
-    setUsers((prev) => prev.filter((u) => u.id !== deleteConfirmUser.id));
-    toast(`User ${deleteConfirmUser.name} unprovisioned from MedGuard registry.`, "error");
-    setDeleteConfirmUser(null);
     setDeleteSubmitting(false);
   };
 
@@ -254,42 +217,32 @@ export default function UserManagement({ onShowToast }) {
   const handleCreateUser = async (e) => {
     e.preventDefault();
     setProvisionSubmitting(true);
+    const token = localStorage.getItem("medguard_doctor_token");
 
     try {
       const res = await fetch("/api/admin/users/create", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify(provisionForm)
       });
       if (res.ok) {
         const data = await res.json();
         setUsers((prev) => [data.user, ...prev]);
-        toast(`Dr. ${provisionForm.name} provisioned successfully!`, "success");
+        toast(`User ${provisionForm.name} provisioned successfully!`, "success");
         setIsProvisionOpen(false);
         setProvisionSubmitting(false);
         return;
+      } else {
+        const data = await res.json().catch(() => ({}));
+        toast(data.error || "Provisioning failed. Check password requirements.", "error");
       }
     } catch (err) {
-      console.warn("Backend provision fallback:", err.message);
+      toast("Network error occurred during user provisioning.", "error");
     }
-
-    const mockNew = {
-      id: `doc-${Date.now().toString().slice(-4)}`,
-      name: provisionForm.name,
-      username: provisionForm.username,
-      email: provisionForm.email,
-      role: provisionForm.role || "Doctor",
-      specialty: provisionForm.specialty,
-      slmcNumber: provisionForm.slmcNumber || `SLMC-${Math.floor(10000 + Math.random() * 90000)}`,
-      baseCampus: provisionForm.baseCampus,
-      phone: provisionForm.phone,
-      status: "active",
-      defaultDeviceFingerprint: `sha256:enrolled-workstation-${provisionForm.username}`
-    };
-
-    setUsers((prev) => [mockNew, ...prev]);
-    toast(`Dr. ${mockNew.name} provisioned successfully!`, "success");
-    setIsProvisionOpen(false);
     setProvisionSubmitting(false);
   };
 

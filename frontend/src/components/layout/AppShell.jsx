@@ -81,9 +81,14 @@ export default function AppShell({
     setIsSavingEmail(true);
     setEmailMsg("");
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch("/api/auth/update-email", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           doctorId: doctor?.id || doctor?.ethereumAddress,
           email: inputEmail.trim()
@@ -92,7 +97,7 @@ export default function AppShell({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to update email.");
       setCurrentEmail(inputEmail.trim());
-      setEmailMsg(`✓ 2FA Email updated! Test verification OTP dispatched.`);
+      setEmailMsg(`✓ 2FA Email updated successfully.`);
     } catch (err) {
       setEmailMsg(`✗ ${err.message}`);
     } finally {
@@ -104,9 +109,14 @@ export default function AppShell({
     setIsSavingEmail(true);
     setEmailMsg("");
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch("/api/auth/send-2fa-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           doctorId: doctor?.id || doctor?.ethereumAddress,
           doctorName: doctor?.name,
@@ -117,7 +127,7 @@ export default function AppShell({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to send test OTP.");
-      setEmailMsg(`✓ Test 2FA OTP dispatched! (Code: ${data.previewOtp || "Sent to inbox"})`);
+      setEmailMsg(`✓ Security 2FA OTP dispatched to registered inbox.`);
     } catch (err) {
       setEmailMsg(`✗ ${err.message}`);
     } finally {

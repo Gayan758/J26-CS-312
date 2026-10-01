@@ -1,6 +1,10 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
+const passwordService = require("../services/passwordService");
+const sessionService = require("../services/sessionService");
+const twoFactorService = require("../services/twoFactorService");
+const { authenticate, loginLimiter } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -96,14 +100,16 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ error: "Doctor Name, Username, and Password are required." });
   }
 
-  const cleanEmail = (email || "").trim().toLowerCase();
-  if (!cleanEmail || !cleanEmail.includes("@") || !cleanEmail.includes(".")) {
-    return res.status(400).json({ error: "Please provide a valid registered email address for 2FA OTP delivery." });
+  const policy = passwordService.validatePasswordPolicy(password);
+  if (!policy.valid) {
+    return res.status(400).json({ error: policy.error });
   }
 
   try {
     const ehrDatabase = require("../services/ehrDatabase");
     const emailService = require("../services/emailService");
+    const cleanEmail = (email || `${username}@hospital.lk`).trim().toLowerCase();
+    const hashedPassword = await passwordService.hashPassword(password);
 
     const newDoctor = ehrDatabase.registerDoctor({
       name: doctorName,
@@ -111,7 +117,7 @@ router.post("/register", async (req, res) => {
       slmcNumber,
       specialty,
       username,
-      password,
+      password: hashedPassword,
       baseCampus,
       phone,
       deviceFingerprint
@@ -148,7 +154,7 @@ router.post("/register", async (req, res) => {
  * POST /api/auth/login
  * Doctor authentication with real coordinates capture & persistent session location
  */
-router.post("/login", (req, res) => {
+router.post("/login", loginLimiter, async (req, res) => {
   const { username, password, coordinates, deviceFingerprint } = req.body;
 
   if (!username || !password) {
@@ -156,9 +162,14 @@ router.post("/login", (req, res) => {
   }
 
   const ehrDatabase = require("../services/ehrDatabase");
-  const doctor = ehrDatabase.getDoctorByUsername(username);
+  const doctor = ehrDatabase.getDoctorByUsername(username) || ehrDatabase.getDoctorById(username);
 
-  if (!doctor || doctor.password !== password) {
+  if (!doctor) {
+    return res.status(401).json({ error: "Invalid username or password. Please verify your credentials." });
+  }
+
+  const isPasswordValid = await passwordService.comparePassword(password, doctor.password);
+  if (!isPasswordValid) {
     return res.status(401).json({ error: "Invalid username or password. Please verify your credentials." });
   }
 
@@ -167,6 +178,16 @@ router.post("/login", (req, res) => {
     return res.status(403).json({
       error: "Access Denied: Your account has been temporarily suspended by Hospital Administration. Please contact IT Security."
     });
+  }
+
+  // Transparent password upgrade to bcrypt cost factor >= 12
+  if (passwordService.needsRehash(doctor.password)) {
+    try {
+      const newHashed = await passwordService.hashPassword(password);
+      ehrDatabase.updateDoctorPassword(doctor.id, newHashed);
+    } catch (e) {
+      // Non-fatal rehash
+    }
   }
 
   // Location calculation from real client GPS
@@ -242,7 +263,8 @@ router.post("/login", (req, res) => {
     lastKnownLocation: locationInfo
   };
 
-  const token = jwt.sign(tokenPayload, config.jwtSecret, { expiresIn: "8h" });
+  const token = sessionService.createSessionToken(tokenPayload);
+  sessionService.setSessionCookie(res, token);
 
   res.status(200).json({
     message: "Doctor authenticated successfully.",
@@ -254,20 +276,65 @@ router.post("/login", (req, res) => {
 
 /**
  * GET /api/auth/me
- * Session verification
+ * Session verification from HTTP-only cookie or Authorization Bearer token
  */
-router.get("/me", (req, res) => {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({ error: "No active clinical session" });
-  }
+router.get("/me", authenticate, (req, res) => {
+  res.status(200).json({
+    user: req.user,
+    doctor: req.user
+  });
+});
 
-  const token = authHeader.substring(7);
+/**
+ * POST /api/auth/logout
+ * Terminates the authenticated session and clears the HTTP-only cookie
+ */
+router.post("/logout", (req, res) => {
+  sessionService.clearSessionCookie(res);
+  res.status(200).json({ message: "Signed out successfully." });
+});
+
+/**
+ * POST /api/auth/2fa/totp/setup
+ * Generates an RFC 6238 TOTP secret for authenticator apps (Google / Microsoft Authenticator)
+ */
+router.post("/2fa/totp/setup", authenticate, (req, res) => {
   try {
-    const decoded = jwt.verify(token, config.jwtSecret);
-    res.status(200).json({ doctor: decoded });
+    const email = req.user.email || `${req.user.username}@hospital.lk`;
+    const totpData = twoFactorService.generateTotpSecret(email, "MedGuard EHR");
+    return res.status(200).json(totpData);
   } catch (err) {
-    res.status(401).json({ error: "Session expired or invalid" });
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * POST /api/auth/2fa/totp/verify
+ * Verifies a 6-digit TOTP code and activates authenticator app 2FA for the account
+ */
+router.post("/2fa/totp/verify", authenticate, (req, res) => {
+  try {
+    const { code, secret } = req.body;
+    if (!code || !secret) {
+      return res.status(400).json({ error: "TOTP code and secret are required." });
+    }
+
+    const isValid = twoFactorService.verifyTotp(code, secret);
+    if (!isValid) {
+      return res.status(400).json({
+        error: "Invalid TOTP verification code. Please check your authenticator app and try again."
+      });
+    }
+
+    const ehrDatabase = require("../services/ehrDatabase");
+    ehrDatabase.setDoctorTotpSecret(req.user.id, secret);
+
+    return res.status(200).json({
+      success: true,
+      message: "Two-factor authentication successfully configured with your authenticator app."
+    });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
 });
 
@@ -275,7 +342,7 @@ router.get("/me", (req, res) => {
  * POST /api/auth/patient-login
  * Authenticates a patient by PHN, NIC, or patient ID for Patient Portal
  */
-router.post("/patient-login", (req, res) => {
+router.post("/patient-login", loginLimiter, (req, res) => {
   const { identifier } = req.body;
   if (!identifier) {
     return res.status(400).json({ error: "Personal Health Number (PHN) or NIC is required." });
@@ -295,12 +362,13 @@ router.post("/patient-login", (req, res) => {
     role: "Patient"
   };
 
-  const token = jwt.sign(tokenPayload, config.jwtSecret, { expiresIn: "8h" });
+  const token = sessionService.createSessionToken(tokenPayload);
+  sessionService.setSessionCookie(res, token);
 
   return res.status(200).json({
     message: "Patient authenticated successfully.",
     token,
-    patient
+    patient: tokenPayload
   });
 });
 

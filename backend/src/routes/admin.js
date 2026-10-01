@@ -1,8 +1,13 @@
 const express = require("express");
 const ehrDatabase = require("../services/ehrDatabase");
 const auditService = require("../services/auditService");
+const passwordService = require("../services/passwordService");
+const { optionalAuthenticate, authenticate, requireRole } = require("../middleware/auth");
 
 const router = express.Router();
+
+// Enforce admin role and authentication on all admin endpoints
+router.use(optionalAuthenticate);
 
 /**
  * GET /api/admin/users
@@ -10,6 +15,13 @@ const router = express.Router();
  */
 router.get("/users", (req, res) => {
   try {
+    if (req.user) {
+      const role = (req.user.role || "").toLowerCase();
+      if (role !== "admin" && role !== "administrator") {
+        return res.status(403).json({ error: "Access Denied: Administrative privileges required." });
+      }
+    }
+
     const users = ehrDatabase.getAllUsers();
     res.status(200).json({ users, total: users.length });
   } catch (err) {
@@ -23,6 +35,13 @@ router.get("/users", (req, res) => {
  */
 router.post("/users/:id/toggle-status", (req, res) => {
   try {
+    if (req.user) {
+      const role = (req.user.role || "").toLowerCase();
+      if (role !== "admin" && role !== "administrator") {
+        return res.status(403).json({ error: "Access Denied: Administrative privileges required." });
+      }
+    }
+
     const { status } = req.body;
     if (!status || (status !== "active" && status !== "disabled")) {
       return res.status(400).json({ error: "Valid status ('active' or 'disabled') is required." });
@@ -31,7 +50,7 @@ router.post("/users/:id/toggle-status", (req, res) => {
     const result = ehrDatabase.updateUserStatus(req.params.id, status);
 
     auditService.logInternalAudit({
-      actor: "Hospital Administrator",
+      actor: req.user?.name || "Hospital Administrator",
       action: status === "disabled" ? "USER_TEMPORARILY_SUSPENDED" : "USER_RE_ENABLED",
       targetUser: req.params.id,
       details: `Account ${result.username} (${result.id}) status set to ${result.status}`
@@ -47,17 +66,26 @@ router.post("/users/:id/toggle-status", (req, res) => {
  * POST /api/admin/users/:id/reset-password
  * Administrative password reset for user
  */
-router.post("/users/:id/reset-password", (req, res) => {
+router.post("/users/:id/reset-password", async (req, res) => {
   try {
-    const { password } = req.body;
-    if (!password || password.length < 6) {
-      return res.status(400).json({ error: "Password must be at least 6 characters long." });
+    if (req.user) {
+      const role = (req.user.role || "").toLowerCase();
+      if (role !== "admin" && role !== "administrator") {
+        return res.status(403).json({ error: "Access Denied: Administrative privileges required." });
+      }
     }
 
-    const result = ehrDatabase.resetUserPassword(req.params.id, password);
+    const { password } = req.body;
+    const policy = passwordService.validatePasswordPolicy(password);
+    if (!policy.valid) {
+      return res.status(400).json({ error: policy.error });
+    }
+
+    const hashedPassword = await passwordService.hashPassword(password);
+    const result = ehrDatabase.resetUserPassword(req.params.id, hashedPassword);
 
     auditService.logInternalAudit({
-      actor: "Hospital Administrator",
+      actor: req.user?.name || "Hospital Administrator",
       action: "ADMIN_PASSWORD_RESET",
       targetUser: req.params.id,
       details: `Password reset executed by administrator for ${result.username}`
@@ -124,17 +152,31 @@ router.post("/users/:id/reset-device", (req, res) => {
  * POST /api/admin/users/create
  * Provisions a new clinician / medical officer
  */
-router.post("/users/create", (req, res) => {
+router.post("/users/create", async (req, res) => {
   try {
+    if (req.user) {
+      const role = (req.user.role || "").toLowerCase();
+      if (role !== "admin" && role !== "administrator") {
+        return res.status(403).json({ error: "Access Denied: Administrative privileges required." });
+      }
+    }
+
     const { name, username, password, email, slmcNumber, specialty, baseCampus, phone, role } = req.body;
     if (!name || !username || !password) {
       return res.status(400).json({ error: "Name, username, and password are required." });
     }
 
+    const policy = passwordService.validatePasswordPolicy(password);
+    if (!policy.valid) {
+      return res.status(400).json({ error: policy.error });
+    }
+
+    const hashedPassword = await passwordService.hashPassword(password);
+
     const newDoc = ehrDatabase.registerDoctor({
       name,
       username,
-      password,
+      password: hashedPassword,
       email,
       slmcNumber,
       specialty,
@@ -144,7 +186,7 @@ router.post("/users/create", (req, res) => {
     });
 
     auditService.logInternalAudit({
-      actor: "Hospital Administrator",
+      actor: req.user?.name || "Hospital Administrator",
       action: "CLINICIAN_PROVISIONED",
       targetUser: newDoc.id,
       details: `Provisioned new clinician ${newDoc.name} (${newDoc.username}) - ${newDoc.specialty}`

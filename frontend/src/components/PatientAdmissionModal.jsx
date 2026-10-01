@@ -65,9 +65,14 @@ export default function PatientAdmissionModal({ doctor, onClose, onAdmitted }) {
     };
 
     // Synchronize to backend persistent EHR & IPFS
+    const token = localStorage.getItem("medguard_doctor_token");
     fetch("/api/patients/admit", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
+      },
       body: JSON.stringify({
         ...newPatient,
         admittingDoctorId: doctor.id,

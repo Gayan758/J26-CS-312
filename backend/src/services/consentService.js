@@ -80,10 +80,10 @@ class ConsentService {
         return receipt.hash || tx.hash;
       }
     } catch (err) {
-      console.warn("[ConsentService] On-chain setConsent failed, falling back to simulated hash:", err.message);
+      console.warn("[ConsentService] On-chain setConsent failed:", err.message);
     }
 
-    return "0x" + crypto.randomBytes(32).toString("hex");
+    return null;
   }
 
   async releaseDecryptionKey(doctorAddress, patientId, accessDecisionId) {

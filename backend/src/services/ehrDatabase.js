@@ -530,6 +530,35 @@ class EhrDatabase {
     return { id: doc.id, username: doc.username, name: doc.name };
   }
 
+  updateDoctorPassword(userId, newPasswordHash) {
+    const db = this._readData();
+    if (!db.doctors) db.doctors = [];
+    const doc = db.doctors.find((d) => d.id === userId || d.username?.toLowerCase() === userId.toLowerCase());
+    if (doc) {
+      doc.password = newPasswordHash;
+      this._writeData(db);
+    }
+  }
+
+  setDoctorTotpSecret(userId, secretBase32) {
+    const db = this._readData();
+    if (!db.doctors) db.doctors = [];
+    const doc = db.doctors.find((d) => d.id === userId || d.username?.toLowerCase() === userId.toLowerCase() || d.ethereumAddress?.toLowerCase() === userId.toLowerCase());
+    if (!doc) throw new Error(`User "${userId}" not found.`);
+    doc.totpSecret = secretBase32;
+    doc.totpEnabled = true;
+    doc.totpEnrolledAt = new Date().toISOString();
+    this._writeData(db);
+    return { success: true, totpEnabled: true };
+  }
+
+  getDoctorTotpSecret(userId) {
+    const db = this._readData();
+    if (!db.doctors) db.doctors = [];
+    const doc = db.doctors.find((d) => d.id === userId || d.username?.toLowerCase() === userId.toLowerCase() || d.ethereumAddress?.toLowerCase() === userId.toLowerCase());
+    return doc ? (doc.totpSecret || null) : null;
+  }
+
   removeUser(userId) {
     const db = this._readData();
     if (!db.doctors) db.doctors = [];

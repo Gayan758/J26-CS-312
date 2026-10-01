@@ -152,10 +152,15 @@ export default function App() {
     async function checkTrust() {
       try {
         const docId = doctor.ethereumAddress || doctor.id;
+        const token = localStorage.getItem("medguard_doctor_token");
         const res = await fetch(
           `/api/auth/device-status?doctorId=${encodeURIComponent(
             docId
-          )}&fingerprint=${encodeURIComponent(deviceFingerprint)}`
+          )}&fingerprint=${encodeURIComponent(deviceFingerprint)}`,
+          {
+            credentials: "include",
+            headers: token ? { Authorization: `Bearer ${token}` } : {}
+          }
         );
         if (res.ok) {
           const data = await res.json();
@@ -181,10 +186,15 @@ export default function App() {
     try {
       const docId = targetDoctor.id || "";
       const docAddr = targetDoctor.ethereumAddress || "";
+      const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch(
         `/api/patients?doctorId=${encodeURIComponent(
           docId
-        )}&doctorAddress=${encodeURIComponent(docAddr)}`
+        )}&doctorAddress=${encodeURIComponent(docAddr)}`,
+        {
+          credentials: "include",
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        }
       );
       if (res.ok) {
         const data = await res.json();
@@ -202,7 +212,11 @@ export default function App() {
   // Synchronize audit ledger records when audit tab is selected
   useEffect(() => {
     if (activeTab === "audit") {
-      fetch("/api/audit-logs")
+      const token = localStorage.getItem("medguard_doctor_token");
+      fetch("/api/audit-logs", {
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      })
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
           if (Array.isArray(data)) {
@@ -240,13 +254,9 @@ export default function App() {
               patientPhn: prev.patientPhn,
               decision: "EXPIRED",
               riskScore: "REVOKED",
-              txHash:
-                "0x" +
-                Array.from({ length: 64 }, () =>
-                  Math.floor(Math.random() * 16).toString(16)
-                ).join(""),
+              txHash: null,
               details:
-                "Break-Glass emergency token auto-expired after 30 minutes. Emergency session terminated.",
+                "Break-Glass emergency token auto-expired. Emergency session terminated.",
               isBreakGlass: true
             },
             ...logs

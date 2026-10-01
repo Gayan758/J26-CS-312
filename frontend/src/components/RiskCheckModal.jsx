@@ -62,8 +62,14 @@ export default function RiskCheckModal({
           headers["x-device-longitude"] = String(doctorLocation.longitude);
         }
 
+        const token = localStorage.getItem("medguard_doctor_token");
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+
         const res = await fetch(`/api/patients/${patient.id}`, {
           method: "GET",
+          credentials: "include",
           headers
         });
 
@@ -198,9 +204,14 @@ export default function RiskCheckModal({
 
   const dispatch2faOtp = async () => {
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch("/api/auth/send-2fa-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           doctorId: doctor.id || doctor.ethereumAddress,
           doctorName: doctor.name,
@@ -239,9 +250,14 @@ export default function RiskCheckModal({
     setMfaError("");
 
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch("/api/auth/verify-2fa-otp", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           doctorId: doctor.id || doctor.ethereumAddress,
           email: doctor.email,

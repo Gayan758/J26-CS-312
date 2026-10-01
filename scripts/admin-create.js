@@ -10,6 +10,7 @@
 const fs = require("fs");
 const path = require("path");
 const readline = require("readline");
+const passwordService = require("../backend/src/services/passwordService");
 
 const DB_FILE = path.join(__dirname, "../backend/data/ehr_database.json");
 
@@ -50,7 +51,7 @@ async function promptUser() {
     const name = await question("Enter Administrator Full Name: ");
     const username = await question("Enter Administrator Username: ");
     const email = await question("Enter Notification / 2FA Email: ");
-    const password = await question("Enter Secure Admin Password (min 8 chars): ");
+    const password = await question("Enter Secure Admin Password (min 12 chars, upper, lower, number, symbol): ");
     rl.close();
     return { name, username, email, password };
   } catch (err) {
@@ -80,8 +81,9 @@ async function run() {
     process.exit(1);
   }
 
-  if (credentials.password.length < 8) {
-    process.stderr.write("ERROR: Password must be at least 8 characters long for security compliance.\n");
+  const policy = passwordService.validatePasswordPolicy(credentials.password);
+  if (!policy.valid) {
+    process.stderr.write(`ERROR: Password policy violation: ${policy.error}\n`);
     process.exit(1);
   }
 
@@ -94,11 +96,13 @@ async function run() {
     process.exit(1);
   }
 
+  const hashedPassword = await passwordService.hashPassword(credentials.password);
+
   const adminUser = {
     id: `admin-${Date.now().toString().slice(-6)}`,
     name: credentials.name.trim() || "Hospital Administrator",
     username: credentials.username.toLowerCase(),
-    password: credentials.password,
+    password: hashedPassword,
     email: (credentials.email || "").trim(),
     role: "admin",
     status: "active",

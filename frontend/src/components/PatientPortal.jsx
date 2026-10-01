@@ -56,7 +56,11 @@ export default function PatientPortal({ patient: initialPatient, onLogout }) {
     async function loadPortalData() {
       setLoadingDoctors(true);
       try {
-        const docRes = await fetch("/api/auth/doctors");
+        const token = localStorage.getItem("medguard_patient_token") || localStorage.getItem("medguard_doctor_token");
+        const docRes = await fetch("/api/auth/doctors", {
+          credentials: "include",
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
         if (docRes.ok) {
           const docData = await docRes.json();
           if (isMounted && docData.doctors) {
@@ -64,7 +68,10 @@ export default function PatientPortal({ patient: initialPatient, onLogout }) {
           }
         }
 
-        const consentRes = await fetch(`/api/patients/${patient.id}/consent`);
+        const consentRes = await fetch(`/api/patients/${patient.id}/consent`, {
+          credentials: "include",
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
         if (consentRes.ok) {
           const consentData = await consentRes.json();
           if (isMounted) {
@@ -129,9 +136,14 @@ export default function PatientPortal({ patient: initialPatient, onLogout }) {
         .filter(Boolean);
       const consentedNames = selectedDocs.map((d) => d.name);
 
+      const token = localStorage.getItem("medguard_patient_token") || localStorage.getItem("medguard_doctor_token");
       const res = await fetch(`/api/patients/${patient.id}/consent`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           assignedDoctorIds,
           assignedDoctorAddresses: assignedAddresses,
@@ -149,7 +161,7 @@ export default function PatientPortal({ patient: initialPatient, onLogout }) {
       setPatient(data.patient);
       setLastTxHash(data.txHash);
       setSaveSuccessMsg(
-        "Dynamic Consent Preferences committed to Ethereum blockchain & re-encrypted on IPFS!"
+        "Consent preferences and care team authorizations updated successfully."
       );
     } catch (err) {
       setErrorMsg(err.message);

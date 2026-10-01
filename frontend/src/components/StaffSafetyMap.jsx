@@ -49,9 +49,11 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
   // Fetch live devices & geofence events from backend
   const fetchData = async () => {
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
+      const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
       const [devRes, evtRes] = await Promise.all([
-        fetch("/api/tracking/devices"),
-        fetch("/api/tracking/events?limit=15")
+        fetch("/api/tracking/devices", { credentials: "include", headers: authHeaders }),
+        fetch("/api/tracking/events?limit=15", { credentials: "include", headers: authHeaders })
       ]);
 
       if (devRes.ok) {
@@ -182,9 +184,14 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
     try {
       const lat = doctor.lastKnownLocation?.latitude || 6.9147;
       const lon = doctor.lastKnownLocation?.longitude || 79.9733;
+      const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch("/api/tracking/sos", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({ doctorId: doctor.id, lat, lon })
       });
 
@@ -201,12 +208,17 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
 
   // Handler: Cancel SOS
   const handleCancelSOS = async () => {
+    if (!doctor?.id) return;
     try {
-      const targetDoc = doctor?.id || "doc-001";
+      const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch("/api/tracking/sos/cancel", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ doctorId: targetDoc })
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ doctorId: doctor.id })
       });
 
       if (res.ok) {
@@ -223,9 +235,14 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
   // Handler: Toggle Doctor Tracking Privacy Mode
   const handleToggleTracking = async (deviceId, currentStatus) => {
     try {
+      const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch("/api/tracking/toggle", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({ doctorId: deviceId, enabled: !currentStatus })
       });
 
