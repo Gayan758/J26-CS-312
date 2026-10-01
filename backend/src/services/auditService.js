@@ -303,8 +303,12 @@ class AuditService {
       );
 
       const receipt = await tx.wait();
-      event.tx_hash = receipt.hash;
-      event.anchored = true;
+      try {
+        event.tx_hash = receipt.hash;
+        event.anchored = true;
+      } catch (freezeErr) {
+        // Non-fatal if object is frozen
+      }
       this._persistDisk();
     } catch (err) {
       logger.warn({ error: err.message, eventId: event.id }, "[AuditService] Background on-chain anchoring deferred");

@@ -12,7 +12,7 @@ class EmailService {
   }
 
   _initTransporter() {
-    if (config.smtpHost && config.smtpUser) {
+    if (config.smtpHost && config.smtpUser && config.smtpPass && !config.smtpUser.includes("YOUR_GMAIL")) {
       this.transporter = nodemailer.createTransport({
         host: config.smtpHost,
         port: config.smtpPort,
@@ -20,6 +20,9 @@ class EmailService {
         auth: {
           user: config.smtpUser,
           pass: config.smtpPass
+        },
+        tls: {
+          rejectUnauthorized: false
         }
       });
     } else {
