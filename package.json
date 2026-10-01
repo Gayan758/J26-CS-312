@@ -10,6 +10,7 @@
     "db:migrate": "node scripts/db-migrate.js",
     "db:backup": "node scripts/db-backup.js",
     "db:restore": "node scripts/db-restore.js",
+    "verify:ledger": "node scripts/verify-audit-chain.js",
     "test:contracts": "hardhat test",
     "compile:contracts": "hardhat compile"
   },

@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
+const logger = require("../utils/logger");
 const ehrDatabase = require("./ehrDatabase");
 const encryptionService = require("./encryptionService");
 
@@ -59,7 +60,7 @@ class IpfsService {
       const filePath = path.join(IPFS_REPO_DIR, `${patientId}.json`);
       fs.writeFileSync(filePath, JSON.stringify(blob, null, 2), "utf8");
     } catch (err) {
-      console.warn("[IpfsService] Failed writing blob to disk:", err.message);
+      logger.warn({ error: err.message }, "[IpfsService] Failed writing blob to disk");
     }
 
     return blob;
@@ -81,7 +82,7 @@ class IpfsService {
         this.blobStore.set(patientId, blob);
         return blob;
       } catch (err) {
-        console.warn("[IpfsService] Error reading from disk store:", err.message);
+        logger.warn({ error: err.message }, "[IpfsService] Error reading from disk store");
       }
     }
 

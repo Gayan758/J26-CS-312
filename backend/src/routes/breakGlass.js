@@ -172,6 +172,19 @@ router.post("/break-glass/:id/review", optionalAuthenticate, (req, res) => {
       notes
     );
 
+    auditService.logEvent({
+      actor: req.user?.username || req.user?.name || "Compliance Reviewer",
+      role: req.user?.role || "Compliance",
+      action: "break_glass.reviewed",
+      resource_type: "break_glass",
+      resource_id: event.id,
+      patient_id: event.patientId,
+      outcome: decision,
+      ip: req.ip,
+      request_id: req.id,
+      reason: `Incident review completed: ${decision} - ${notes || "No notes provided"}`
+    });
+
     return res.status(200).json({
       status: "SUCCESS",
       message: `Break-glass event ${event.id} reviewed successfully.`,

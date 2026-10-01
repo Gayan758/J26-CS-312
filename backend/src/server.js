@@ -11,6 +11,9 @@ const errorHandler = require("./middleware/errorHandler");
 const auditService = require("./services/auditService");
 
 const cookieParser = require("cookie-parser");
+const requestLogger = require("./middleware/requestLogger");
+const logger = require("./utils/logger");
+const { optionalAuthenticate } = require("./middleware/auth");
 const app = express();
 
 // Middleware
@@ -32,15 +35,20 @@ app.use(cors({
 }));
 app.use(cookieParser(config.jwtSecret));
 app.use(express.json());
+app.use(requestLogger);
 
 // Health & Status
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy", service: "medguard-backend", version: "2.0.0" });
 });
 
-// Audit ledger endpoint for GRC observation
-app.get("/api/audit-logs", (req, res) => {
+// Audit ledger endpoint for hospital compliance observation
+app.get("/api/audit-logs", optionalAuthenticate, (req, res) => {
   res.status(200).json(auditService.getAuditLogs());
+});
+
+app.get("/api/audit-logs/verify", (req, res) => {
+  res.status(200).json(auditService.verifyIntegrity());
 });
 
 // API Routes

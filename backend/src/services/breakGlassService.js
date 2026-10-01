@@ -1,6 +1,7 @@
 const { ethers } = require("ethers");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
+const logger = require("../utils/logger");
 
 const BREAK_GLASS_REGISTRY_ABI = [
   "function activateBreakGlass(bytes32 patientId, string justification) external returns (bytes32)",
@@ -11,12 +12,18 @@ const BREAK_GLASS_REGISTRY_ABI = [
 
 class BreakGlassService {
   constructor() {
-    this.provider = new ethers.JsonRpcProvider(config.ethRpcUrl);
-    this.signer = new ethers.Wallet(config.ethSignerKey, this.provider);
+    this.provider = null;
+    this.signer = null;
     this.contract = null;
 
-    if (config.breakGlassRegistryAddress && ethers.isAddress(config.breakGlassRegistryAddress)) {
-      this.contract = new ethers.Contract(config.breakGlassRegistryAddress, BREAK_GLASS_REGISTRY_ABI, this.signer);
+    if (config.ethSignerKey && config.ethSignerKey.length === 66 && config.breakGlassRegistryAddress && ethers.isAddress(config.breakGlassRegistryAddress)) {
+      try {
+        this.provider = new ethers.JsonRpcProvider(config.ethRpcUrl, undefined, { staticNetwork: true });
+        this.signer = new ethers.Wallet(config.ethSignerKey, this.provider);
+        this.contract = new ethers.Contract(config.breakGlassRegistryAddress, BREAK_GLASS_REGISTRY_ABI, this.signer);
+      } catch {
+        this.contract = null;
+      }
     }
 
     this.mockTokens = new Map();
@@ -56,7 +63,7 @@ class BreakGlassService {
         }
       }
     } catch (err) {
-      console.warn("[BreakGlassService] On-chain activateBreakGlass failed, falling back to mock:", err.message);
+      logger.warn({ error: err.message }, "[BreakGlassService] On-chain activateBreakGlass failed, falling back to local");
     }
 
     if (!tokenId) {
@@ -109,7 +116,7 @@ class BreakGlassService {
         return await this.contract.isTokenValid(tokenId);
       }
     } catch (err) {
-      console.warn("[BreakGlassService] On-chain isTokenValid failed, using mock:", err.message);
+      logger.warn({ error: err.message }, "[BreakGlassService] On-chain isTokenValid failed, using local registry");
     }
 
     const mock = this.mockTokens.get(tokenId);

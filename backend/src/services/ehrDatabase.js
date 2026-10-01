@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const logger = require("../utils/logger");
 
 const DATA_FILE = path.join(__dirname, "../../data/ehr_database.json");
 
@@ -117,7 +118,7 @@ class EhrDatabase {
     try {
       fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), "utf8");
     } catch (err) {
-      console.error("[EhrDatabase] Error persisting data:", err.message);
+      logger.error({ error: err.message }, "[EhrDatabase] Error persisting data");
       throw err;
     }
   }
@@ -215,7 +216,7 @@ class EhrDatabase {
       const key = crypto.createHash("sha256").update(`${patient.id}-key`).digest();
       ipfsService.storeEncryptedRecord(patient.id, patient, key);
     } catch (e) {
-      console.warn("[EhrDatabase] IPFS re-encrypt on consent update:", e.message);
+      logger.warn({ error: e.message }, "[EhrDatabase] IPFS re-encrypt on consent update");
     }
 
     return patient;

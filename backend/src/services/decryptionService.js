@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const logger = require("../utils/logger");
 
 /**
  * Decryption Service
@@ -54,7 +55,7 @@ class DecryptionService {
             const modernKey = encryptionService.getPatientKey(encryptedBlob.patientId);
             ipfsService.storeEncryptedRecord(encryptedBlob.patientId, plaintext, modernKey);
           } catch (migrateErr) {
-            console.warn(`[DecryptionService] Blob migration re-encryption deferred: ${migrateErr.message}`);
+            logger.warn({ error: migrateErr.message }, "[DecryptionService] Blob migration re-encryption deferred");
           }
 
           return plaintext;

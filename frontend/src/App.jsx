@@ -287,7 +287,7 @@ export default function App() {
     setActivePatient(targetPatient);
     setActiveTab("chart");
     showToast(
-      `Access Granted for ${patient.name} · Decision logged to blockchain audit trail`,
+      `Access Granted for ${patient.name} · Recorded to compliance audit ledger`,
       "success"
     );
   };

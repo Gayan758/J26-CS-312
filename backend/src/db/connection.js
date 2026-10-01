@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const logger = require("../utils/logger");
 
 /**
  * PostgreSQL Connection Pool
@@ -24,7 +25,7 @@ if (databaseUrl) {
   });
 
   pool.on("error", (err) => {
-    console.error("[PostgresPool] Unexpected client error on idle connection:", err.message);
+    logger.error({ error: err.message }, "[PostgresPool] Unexpected client error on idle connection");
   });
 }
 

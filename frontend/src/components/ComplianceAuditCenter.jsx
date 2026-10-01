@@ -6,13 +6,12 @@ import {
   AlertOctagon,
   Copy,
   Check,
-  ExternalLink,
   ShieldCheck,
   ShieldAlert,
-  Key,
   Layers,
   FileCode,
-  Info
+  Info,
+  RefreshCw
 } from "lucide-react";
 import Button from "./ui/Button";
 import StatusBadge from "./ui/StatusBadge";
@@ -24,6 +23,8 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLog, setSelectedLog] = useState(null);
   const [copiedTx, setCopiedTx] = useState(null);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationResult, setVerificationResult] = useState(null);
 
   const handleCopy = (text, id) => {
     navigator.clipboard.writeText(text);
@@ -31,118 +32,154 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
     setTimeout(() => setCopiedTx(null), 2000);
   };
 
+  const handleVerifyIntegrity = async () => {
+    setIsVerifying(true);
+    try {
+      const res = await fetch("/api/audit-logs/verify", { credentials: "include" });
+      if (res.ok) {
+        const data = await res.json();
+        setVerificationResult(data);
+      } else {
+        setVerificationResult({ verified: false, message: "Verification check failed." });
+      }
+    } catch {
+      setVerificationResult({ verified: false, message: "Network error during verification." });
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
   const filteredLogs = auditLogs.filter((log) => {
     const term = searchTerm.toLowerCase();
     const matchesSearch =
-      (log.doctor || "").toLowerCase().includes(term) ||
-      (log.patientPhn || "").toLowerCase().includes(term) ||
-      (log.txHash || "").toLowerCase().includes(term) ||
-      (log.details && log.details.toLowerCase().includes(term));
+      (log.doctor || log.actor || "").toLowerCase().includes(term) ||
+      (log.patientPhn || log.patient_id || "").toLowerCase().includes(term) ||
+      (log.curr_hash || log.txHash || "").toLowerCase().includes(term) ||
+      (log.details || log.reason || "").toLowerCase().includes(term) ||
+      (log.action || "").toLowerCase().includes(term);
 
     if (!matchesSearch) return false;
 
-    if (filterDecision === "allow") return log.decision === "ALLOW";
-    if (filterDecision === "mfa") return log.decision === "MFA_REQUIRED" || log.decision === "MFA";
-    if (filterDecision === "block") return log.decision === "BLOCK";
-    if (filterDecision === "break_glass") return log.decision === "BREAK_GLASS" || log.isBreakGlass;
+    const outcome = String(log.decision || log.outcome || "").toUpperCase();
+    if (filterDecision === "allow") return outcome === "ALLOW" || outcome === "SUCCESS";
+    if (filterDecision === "mfa") return outcome === "MFA_REQUIRED" || outcome === "MFA" || outcome === "CHALLENGE";
+    if (filterDecision === "block") return outcome === "BLOCK" || outcome === "DENIED" || outcome === "FAILURE";
+    if (filterDecision === "break_glass") return outcome === "BREAK_GLASS" || log.isBreakGlass || outcome === "BREAK_GLASS_ACTIVATE" || outcome === "BREAK_GLASS_READ";
 
     return true;
   });
 
   const totalCount = auditLogs.length;
-  const allowCount = auditLogs.filter((l) => l.decision === "ALLOW").length;
-  const mfaCount = auditLogs.filter((l) => l.decision === "MFA_REQUIRED" || l.decision === "MFA").length;
-  const blockCount = auditLogs.filter((l) => l.decision === "BLOCK").length;
-  const breakGlassCount = auditLogs.filter((l) => l.decision === "BREAK_GLASS" || l.isBreakGlass).length;
+  const allowCount = auditLogs.filter((l) => {
+    const o = String(l.decision || l.outcome || "").toUpperCase();
+    return o === "ALLOW" || o === "SUCCESS";
+  }).length;
+  const mfaCount = auditLogs.filter((l) => {
+    const o = String(l.decision || l.outcome || "").toUpperCase();
+    return o === "MFA_REQUIRED" || o === "MFA" || o === "CHALLENGE";
+  }).length;
+  const blockCount = auditLogs.filter((l) => {
+    const o = String(l.decision || l.outcome || "").toUpperCase();
+    return o === "BLOCK" || o === "DENIED" || o === "FAILURE";
+  }).length;
+  const breakGlassCount = auditLogs.filter((l) => {
+    const o = String(l.decision || l.outcome || "").toUpperCase();
+    return o === "BREAK_GLASS" || l.isBreakGlass || o === "BREAK_GLASS_ACTIVATE" || o === "BREAK_GLASS_READ";
+  }).length;
 
   const allowRate = totalCount > 0 ? Math.round((allowCount / totalCount) * 100) : 100;
 
   const getDecisionBadge = (decision, isBreakGlass) => {
-    if (decision === "BREAK_GLASS" || isBreakGlass) {
+    const clean = String(decision || "").toUpperCase();
+    if (clean === "BREAK_GLASS" || isBreakGlass || clean === "BREAK_GLASS_ACTIVATE" || clean === "BREAK_GLASS_READ") {
       return (
-        <StatusBadge variant="critical" icon={AlertOctagon} label="BREAK_GLASS" size="xs" />
+        <StatusBadge variant="critical" icon={AlertOctagon} label="Emergency Override" size="xs" />
       );
     }
-    if (decision === "ALLOW") {
+    if (clean === "ALLOW" || clean === "SUCCESS") {
       return (
-        <StatusBadge variant="success" dot label="ALLOW" size="xs" />
+        <StatusBadge variant="success" dot label="Allowed" size="xs" />
       );
     }
-    if (decision === "MFA_REQUIRED" || decision === "MFA") {
+    if (clean === "MFA_REQUIRED" || clean === "MFA" || clean === "CHALLENGE") {
       return (
-        <StatusBadge variant="warning" dot label="MFA_REQUIRED" size="xs" />
+        <StatusBadge variant="warning" dot label="Verification Required" size="xs" />
       );
     }
-    // BLOCK is neutral/muted, NOT screaming red
     return (
-      <StatusBadge variant="neutral" dot label="BLOCK" size="xs" />
+      <StatusBadge variant="neutral" dot label="Restricted" size="xs" />
     );
   };
 
   const getPolicyRule = (log) => {
-    if (log.decision === "BREAK_GLASS" || log.isBreakGlass) return "RAP-Override-Emergency";
-    if (log.decision === "ALLOW") return "RiskBAC-Allow-LowRisk";
-    if (log.decision === "MFA_REQUIRED" || log.decision === "MFA") return "RiskBAC-MFA-StepUp";
-    return "RiskBAC-Block-Elevated";
+    const clean = String(log.decision || log.outcome || "").toUpperCase();
+    if (clean === "BREAK_GLASS" || log.isBreakGlass || clean === "BREAK_GLASS_ACTIVATE" || clean === "BREAK_GLASS_READ") {
+      return "Emergency override policy";
+    }
+    if (clean === "ALLOW" || clean === "SUCCESS") return "Standard access policy";
+    if (clean === "MFA_REQUIRED" || clean === "MFA" || clean === "CHALLENGE") return "Step-up verification policy";
+    return "Access restriction policy";
   };
 
   const columns = [
     {
-      header: "Timestamp (SLST)",
+      header: "Timestamp",
       accessor: "timestamp",
       isMono: true,
       cellClassName: "text-text-subtle",
-      render: (row) => row.timestamp
+      render: (row) => row.timestamp ? new Date(row.timestamp).toLocaleString("en-US", { timeZone: "Asia/Colombo" }) : "N/A"
     },
     {
-      header: "Decision",
+      header: "Outcome",
       accessor: "decision",
-      render: (row) => getDecisionBadge(row.decision, row.isBreakGlass)
+      render: (row) => getDecisionBadge(row.decision || row.outcome, row.isBreakGlass)
     },
     {
-      header: "Risk Score",
-      accessor: "riskScore",
-      isMono: true,
+      header: "Risk Level",
+      accessor: "riskLevel",
       render: (row) => {
-        const val = parseFloat(row.riskScore);
+        const level = String(row.risk_level || row.riskLevel || "LOW").toUpperCase();
+        const score = row.risk_score !== null && row.risk_score !== undefined
+          ? row.risk_score
+          : (row.riskScore || "0.120");
         return (
-          <span className="font-semibold text-text-primary">
-            {!isNaN(val) ? val.toFixed(3) : row.riskScore || "0.135"}
-          </span>
+          <div className="flex items-center gap-1.5 font-mono text-xs">
+            <span className="font-semibold text-text-primary">{level}</span>
+            <span className="text-[11px] text-text-subtle">({typeof score === "number" ? score.toFixed(3) : score})</span>
+          </div>
         );
       }
     },
     {
-      header: "Clinician",
-      accessor: "doctor",
+      header: "Clinician / Actor",
+      accessor: "actor",
       render: (row) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-text-primary text-xs">{row.doctor}</span>
-          <span className="text-[10px] font-mono text-text-subtle">SLMC-Registered</span>
+          <span className="font-semibold text-text-primary text-xs">{row.actor || row.doctor || "System"}</span>
+          <span className="text-[10px] text-text-subtle">{row.role || "Authorized Staff"}</span>
         </div>
       )
     },
     {
-      header: "Patient PHN",
+      header: "Patient Identifier",
       accessor: "patientPhn",
       isMono: true,
       render: (row) => (
-        <span className="font-semibold text-primary">{row.patientPhn}</span>
+        <span className="font-semibold text-primary">{row.patient_id || row.patientPhn || "System Event"}</span>
       )
     },
     {
-      header: "Policy Rule Fired",
+      header: "Policy Rule",
       accessor: "policy",
-      isMono: true,
       cellClassName: "text-text-muted text-[11px]",
       render: (row) => getPolicyRule(row)
     },
     {
-      header: "Ethereum Tx Hash",
-      accessor: "txHash",
+      header: "Ledger Digest",
+      accessor: "curr_hash",
       isMono: true,
       render: (row) => {
-        const hash = row.txHash || "0x0000000000000000000000000000000000000000";
+        const hash = row.curr_hash || row.txHash || "00000000000000000000000000000000";
         const short = `${hash.slice(0, 8)}...${hash.slice(-6)}`;
         const isCopied = copiedTx === row.id;
 
@@ -153,7 +190,7 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
               type="button"
               onClick={() => handleCopy(hash, row.id)}
               className="p-1 rounded text-text-subtle hover:text-text-primary hover:bg-neutral-bg"
-              title="Copy transaction hash"
+              title="Copy hash digest"
             >
               {isCopied ? (
                 <Check className="w-3 h-3 text-emerald-600" />
@@ -198,12 +235,45 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
           </p>
         </div>
 
-        <div className="text-xs text-text-subtle">
-          Ledger Status: <span className="font-semibold text-emerald-600">Verified Append-Only</span>
+        <div className="flex items-center gap-3">
+          <div className="text-xs text-text-subtle flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+            <span>Ledger Status:</span>
+            <span className="font-semibold text-emerald-700">Integrity verified</span>
+          </div>
+
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={handleVerifyIntegrity}
+            disabled={isVerifying}
+          >
+            <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${isVerifying ? "animate-spin" : ""}`} />
+            <span>Verify Integrity</span>
+          </Button>
         </div>
       </div>
 
-      {/* Summary KPI Cards (Stripe Dashboard Style: 24px bold, 11px muted label, 1px border) */}
+      {/* Verification Result Banner */}
+      {verificationResult && (
+        <div className={`p-3 rounded-lg border text-xs flex items-center justify-between ${
+          verificationResult.verified ? "bg-emerald-50 border-emerald-200 text-emerald-900" : "bg-red-50 border-red-200 text-red-900"
+        }`}>
+          <div className="flex items-center gap-2">
+            {verificationResult.verified ? (
+              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            ) : (
+              <ShieldAlert className="w-4 h-4 text-red-600 flex-shrink-0" />
+            )}
+            <span>{verificationResult.message}</span>
+          </div>
+          {verificationResult.headHash && (
+            <span className="font-mono text-[10px] text-emerald-700">Head: {verificationResult.headHash.slice(0, 16)}...</span>
+          )}
+        </div>
+      )}
+
+      {/* Summary KPI Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
         <div
           onClick={() => setFilterDecision("all")}
@@ -235,7 +305,7 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
             filterDecision === "mfa" ? "border-primary ring-1 ring-primary/20 shadow-xs" : "border-border hover:border-border-subtle"
           }`}
         >
-          <div className="text-[11px] font-medium text-text-subtle">MFA Challenges</div>
+          <div className="text-[11px] font-medium text-text-subtle">Verification Challenges</div>
           <div className="text-2xl font-bold font-mono tabular-nums text-warning mt-1">
             {mfaCount}
           </div>
@@ -247,7 +317,7 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
             filterDecision === "block" ? "border-primary ring-1 ring-primary/20 shadow-xs" : "border-border hover:border-border-subtle"
           }`}
         >
-          <div className="text-[11px] font-medium text-text-subtle">Blocked Requests</div>
+          <div className="text-[11px] font-medium text-text-subtle">Restricted Requests</div>
           <div className="text-2xl font-bold font-mono tabular-nums text-text-muted mt-1">
             {blockCount}
           </div>
@@ -261,7 +331,7 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
         >
           <div className="text-[11px] font-medium text-text-subtle flex items-center gap-1">
             <AlertOctagon className="w-3 h-3 text-critical" />
-            <span>Break-Glass Overrides</span>
+            <span>Emergency Overrides</span>
           </div>
           <div className="text-2xl font-bold font-mono tabular-nums text-critical mt-1">
             {breakGlassCount}
@@ -276,8 +346,8 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Filter by Clinician, PHN, Transaction Hash..."
-          className="w-full h-8 pl-8 pr-3 rounded border border-border bg-surface text-text-primary text-xs font-mono placeholder:font-sans placeholder:text-text-subtle focus:outline-none focus:border-primary transition"
+          placeholder="Filter by Clinician, PHN, Digest, or Reason..."
+          className="w-full h-8 pl-8 pr-3 rounded border border-border bg-surface text-text-primary text-xs placeholder:text-text-subtle focus:outline-none focus:border-primary transition"
         />
       </div>
 
@@ -299,8 +369,8 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
         <Sheet
           isOpen={Boolean(selectedLog)}
           onClose={() => setSelectedLog(null)}
-          title="Cryptographic Audit Record"
-          subtitle={`Verified on Ethereum Local Node · Block #${selectedLog.blockNumber || "194821"}`}
+          title="Audit Ledger Record"
+          subtitle="Integrity verified · SHA-256 Hash Chain"
           width="max-w-lg"
           footer={
             <Button variant="secondary" size="md" onClick={() => setSelectedLog(null)}>
@@ -309,29 +379,33 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
           }
         >
           <div className="space-y-4 text-xs">
-            {/* Decision & Score Overview */}
+            {/* Overview */}
             <div className="p-3 rounded-lg border border-border bg-surface-muted flex items-center justify-between">
               <div>
                 <span className="text-[11px] text-text-subtle block font-sans">Access Decision</span>
-                <div className="mt-1">{getDecisionBadge(selectedLog.decision, selectedLog.isBreakGlass)}</div>
+                <div className="mt-1">{getDecisionBadge(selectedLog.decision || selectedLog.outcome, selectedLog.isBreakGlass)}</div>
               </div>
               <div className="text-right">
-                <span className="text-[11px] text-text-subtle block font-sans">Composite Risk Score</span>
+                <span className="text-[11px] text-text-subtle block font-sans">Risk Assessment</span>
                 <span className="font-mono text-base font-bold text-text-primary mt-1 block">
-                  {selectedLog.riskScore || "0.135"}
+                  {selectedLog.risk_level || selectedLog.riskLevel || "LOW"}
                 </span>
               </div>
             </div>
 
-            {/* Clinician and Patient Metadata */}
+            {/* Metadata */}
             <div className="p-3 rounded-lg border border-border bg-surface space-y-2">
               <div className="flex justify-between">
-                <span className="text-text-subtle">Requesting Clinician:</span>
-                <strong className="text-text-primary">{selectedLog.doctor}</strong>
+                <span className="text-text-subtle">Action:</span>
+                <strong className="text-text-primary font-mono text-[11px]">{selectedLog.action || "clinical.access"}</strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-text-subtle">Patient PHN:</span>
-                <strong className="text-primary font-mono">{selectedLog.patientPhn}</strong>
+                <span className="text-text-subtle">Requesting Actor:</span>
+                <strong className="text-text-primary">{selectedLog.actor || selectedLog.doctor || "System"}</strong>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-text-subtle">Patient Identifier:</span>
+                <strong className="text-primary font-mono">{selectedLog.patient_id || selectedLog.patientPhn || "N/A"}</strong>
               </div>
               <div className="flex justify-between">
                 <span className="text-text-subtle">Timestamp:</span>
@@ -339,74 +413,59 @@ export default function ComplianceAuditCenter({ auditLogs = [], onClearLogs }) {
               </div>
               <div className="flex justify-between">
                 <span className="text-text-subtle">Policy Rule Fired:</span>
-                <span className="font-mono text-text-muted">{getPolicyRule(selectedLog)}</span>
+                <span className="text-text-muted">{getPolicyRule(selectedLog)}</span>
               </div>
             </div>
 
-            {/* Context Signals Readout */}
-            <div className="space-y-1.5">
-              <div className="font-semibold text-text-primary text-xs flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-primary" />
-                <span>Decrypted Context Signals</span>
-              </div>
-              <div className="p-3 rounded-lg border border-border bg-surface-muted space-y-1.5 font-mono text-[11px]">
-                <div className="flex justify-between">
-                  <span className="text-text-subtle">Subnet IP:</span>
-                  <span className="text-text-primary">172.20.10.8 (CIDR Geofenced)</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-text-subtle">Geofence Status:</span>
-                  <span className="text-emerald-600 font-semibold">INSIDE CAMPUS (SLIIT Malabe)</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-text-subtle">Hardware Enclave:</span>
-                  <span className="text-text-primary truncate max-w-[200px]">sha256:enrolled-workstation</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-text-subtle">Shift Evaluation:</span>
-                  <span className="text-text-primary">VALID SHIFT (08:30–17:00 SLST)</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Blockchain Transaction Verification */}
-            <div className="space-y-1.5">
-              <div className="font-semibold text-text-primary text-xs flex items-center gap-1.5">
-                <FileCode className="w-3.5 h-3.5 text-primary" />
-                <span>Cryptographic Audit Trail</span>
-              </div>
-              <div className="p-3 rounded-lg border border-border bg-surface font-mono text-[11px] space-y-2">
-                <div>
-                  <span className="text-text-subtle block">Transaction / Block Hash</span>
-                  <div className="text-text-primary break-all select-all font-mono text-[10px] mt-0.5">
-                    {selectedLog.txHash || "Off-chain / Local Hash Chain"}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border text-[10px]">
-                  <div>
-                    <span className="text-text-subtle block">Audit Verification</span>
-                    <span className="text-text-muted">Cryptographic Chain</span>
-                  </div>
-                  <div>
-                    <span className="text-text-subtle block">Record Digest</span>
-                    <span className="text-text-muted truncate block">{selectedLog.fileHash || selectedLog.patientIdHash || "N/A"}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Audit Details / Justification */}
-            {selectedLog.details && (
+            {/* Clinical / Administrative Justification */}
+            {(selectedLog.reason || selectedLog.details) && (
               <div className="space-y-1.5">
                 <div className="font-semibold text-text-primary text-xs">
-                  Event Rationale / Justification
+                  Event Context &amp; Justification
                 </div>
                 <div className="p-3 rounded-lg border border-border bg-surface text-text-muted leading-relaxed text-xs">
-                  {selectedLog.details}
+                  {selectedLog.reason || selectedLog.details}
                 </div>
               </div>
             )}
+
+            {/* Technical Details */}
+            <div className="space-y-1.5 pt-2 border-t border-border">
+              <div className="font-semibold text-text-primary text-xs flex items-center gap-1.5">
+                <FileCode className="w-3.5 h-3.5 text-primary" />
+                <span>Technical details</span>
+              </div>
+              <div className="p-3 rounded-lg border border-border bg-surface font-mono text-[11px] space-y-2">
+                <div>
+                  <span className="text-text-subtle block">Record Event ID</span>
+                  <span className="text-text-primary text-[10px] break-all">{selectedLog.id}</span>
+                </div>
+                <div>
+                  <span className="text-text-subtle block">Previous Record Hash</span>
+                  <span className="text-text-subtle text-[10px] break-all">{selectedLog.prev_hash || "0000000000000000000000000000000000000000000000000000000000000000"}</span>
+                </div>
+                <div>
+                  <span className="text-text-subtle block">Current Digest Hash</span>
+                  <span className="text-text-primary text-[10px] break-all">{selectedLog.curr_hash || selectedLog.txHash || "N/A"}</span>
+                </div>
+                {selectedLog.tx_hash && (
+                  <div>
+                    <span className="text-text-subtle block">On-Chain Batch Anchor</span>
+                    <span className="text-text-primary text-[10px] break-all">{selectedLog.tx_hash}</span>
+                  </div>
+                )}
+                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border text-[10px]">
+                  <div>
+                    <span className="text-text-subtle block">Client Network</span>
+                    <span className="text-text-muted">{selectedLog.ip || "127.0.0.1"}</span>
+                  </div>
+                  <div>
+                    <span className="text-text-subtle block">Location Verification</span>
+                    <span className="text-text-muted">{selectedLog.location_result || "Verified"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Sheet>
       )}

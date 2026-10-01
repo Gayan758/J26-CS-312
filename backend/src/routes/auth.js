@@ -4,6 +4,7 @@ const config = require("../config");
 const passwordService = require("../services/passwordService");
 const sessionService = require("../services/sessionService");
 const twoFactorService = require("../services/twoFactorService");
+const auditService = require("../services/auditService");
 const { authenticate, loginLimiter } = require("../middleware/auth");
 
 const router = express.Router();
@@ -140,6 +141,18 @@ router.post("/register", async (req, res) => {
       // Non-fatal email dispatch failure on registration
     }
 
+    auditService.logEvent({
+      actor: username,
+      role: "doctor",
+      action: "user.registration_submitted",
+      resource_type: "user",
+      resource_id: newDoctor.id,
+      outcome: "SUCCESS",
+      ip: req.ip,
+      request_id: req.id,
+      reason: "Clinician registration submitted"
+    });
+
     return res.status(201).json({
       message: "Doctor registered successfully with MedGuard EHR.",
       doctor: newDoctor,
@@ -165,16 +178,49 @@ router.post("/login", loginLimiter, async (req, res) => {
   const doctor = ehrDatabase.getDoctorByUsername(username) || ehrDatabase.getDoctorById(username);
 
   if (!doctor) {
+    auditService.logEvent({
+      actor: username || "unknown",
+      role: "unknown",
+      action: "auth.login_failure",
+      resource_type: "auth",
+      resource_id: username,
+      outcome: "FAILURE",
+      ip: req.ip,
+      request_id: req.id,
+      reason: "User not found"
+    });
     return res.status(401).json({ error: "Invalid username or password. Please verify your credentials." });
   }
 
   const isPasswordValid = await passwordService.comparePassword(password, doctor.password);
   if (!isPasswordValid) {
+    auditService.logEvent({
+      actor: username,
+      role: doctor.role || "Doctor",
+      action: "auth.login_failure",
+      resource_type: "auth",
+      resource_id: doctor.id,
+      outcome: "FAILURE",
+      ip: req.ip,
+      request_id: req.id,
+      reason: "Invalid password"
+    });
     return res.status(401).json({ error: "Invalid username or password. Please verify your credentials." });
   }
 
   // Enforce administrative suspension
   if (doctor.disabled || doctor.status === "disabled") {
+    auditService.logEvent({
+      actor: username,
+      role: doctor.role || "Doctor",
+      action: "auth.login_failure",
+      resource_type: "auth",
+      resource_id: doctor.id,
+      outcome: "DENIED",
+      ip: req.ip,
+      request_id: req.id,
+      reason: "Account suspended"
+    });
     return res.status(403).json({
       error: "Access Denied: Your account has been temporarily suspended by Hospital Administration. Please contact IT Security."
     });
@@ -266,6 +312,18 @@ router.post("/login", loginLimiter, async (req, res) => {
   const token = sessionService.createSessionToken(tokenPayload);
   sessionService.setSessionCookie(res, token);
 
+  auditService.logEvent({
+    actor: doctor.username,
+    role: doctor.role || "Doctor",
+    action: "auth.login_success",
+    resource_type: "auth",
+    resource_id: doctor.id,
+    outcome: "SUCCESS",
+    ip: req.ip,
+    request_id: req.id,
+    reason: "Doctor authenticated successfully"
+  });
+
   res.status(200).json({
     message: "Doctor authenticated successfully.",
     token,
@@ -290,6 +348,19 @@ router.get("/me", authenticate, (req, res) => {
  * Terminates the authenticated session and clears the HTTP-only cookie
  */
 router.post("/logout", (req, res) => {
+  if (req.user) {
+    auditService.logEvent({
+      actor: req.user.username || req.user.id,
+      role: req.user.role || "Doctor",
+      action: "auth.logout",
+      resource_type: "auth",
+      resource_id: req.user.id || "",
+      outcome: "SUCCESS",
+      ip: req.ip,
+      request_id: req.id,
+      reason: "User signed out"
+    });
+  }
   sessionService.clearSessionCookie(res);
   res.status(200).json({ message: "Signed out successfully." });
 });
@@ -321,6 +392,17 @@ router.post("/2fa/totp/verify", authenticate, (req, res) => {
 
     const isValid = twoFactorService.verifyTotp(code, secret);
     if (!isValid) {
+      auditService.logEvent({
+        actor: req.user.username,
+        role: req.user.role || "Doctor",
+        action: "auth.mfa_failure",
+        resource_type: "auth",
+        resource_id: req.user.id,
+        outcome: "FAILURE",
+        ip: req.ip,
+        request_id: req.id,
+        reason: "Invalid TOTP verification code"
+      });
       return res.status(400).json({
         error: "Invalid TOTP verification code. Please check your authenticator app and try again."
       });
@@ -328,6 +410,18 @@ router.post("/2fa/totp/verify", authenticate, (req, res) => {
 
     const ehrDatabase = require("../services/ehrDatabase");
     ehrDatabase.setDoctorTotpSecret(req.user.id, secret);
+
+    auditService.logEvent({
+      actor: req.user.username,
+      role: req.user.role || "Doctor",
+      action: "auth.mfa_success",
+      resource_type: "auth",
+      resource_id: req.user.id,
+      outcome: "SUCCESS",
+      ip: req.ip,
+      request_id: req.id,
+      reason: "TOTP 2FA enrolled successfully"
+    });
 
     return res.status(200).json({
       success: true,
@@ -351,6 +445,17 @@ router.post("/patient-login", loginLimiter, (req, res) => {
   const ehrDatabase = require("../services/ehrDatabase");
   const patient = ehrDatabase.getPatientByIdentifier(identifier);
   if (!patient) {
+    auditService.logEvent({
+      actor: identifier,
+      role: "Patient",
+      action: "auth.login_failure",
+      resource_type: "auth",
+      resource_id: identifier,
+      outcome: "FAILURE",
+      ip: req.ip,
+      request_id: req.id,
+      reason: "Patient not found by identifier"
+    });
     return res.status(404).json({ error: `No registered patient found matching "${identifier}". Please verify your PHN or NIC.` });
   }
 
@@ -364,6 +469,19 @@ router.post("/patient-login", loginLimiter, (req, res) => {
 
   const token = sessionService.createSessionToken(tokenPayload);
   sessionService.setSessionCookie(res, token);
+
+  auditService.logEvent({
+    actor: patient.id,
+    role: "Patient",
+    action: "auth.login_success",
+    resource_type: "auth",
+    resource_id: patient.id,
+    patient_id: patient.id,
+    outcome: "SUCCESS",
+    ip: req.ip,
+    request_id: req.id,
+    reason: "Patient authenticated to patient portal"
+  });
 
   return res.status(200).json({
     message: "Patient authenticated successfully.",
@@ -439,11 +557,34 @@ router.post("/verify-device", (req, res) => {
   const emailService = require("../services/emailService");
   const verification = emailService.verify2FAOtp(doctorId, otp);
   if (!verification.valid) {
+    auditService.logEvent({
+      actor: doctorId,
+      role: "Doctor",
+      action: "auth.mfa_failure",
+      resource_type: "device",
+      resource_id: fingerprint,
+      outcome: "FAILURE",
+      ip: req.ip,
+      request_id: req.id,
+      reason: "Invalid 2FA OTP for device trust enrollment"
+    });
     return res.status(401).json({ error: verification.error || "Invalid 2FA verification code. Please check your registered email." });
   }
 
   const ehrDatabase = require("../services/ehrDatabase");
   ehrDatabase.addTrustedDevice(doctorId, fingerprint);
+
+  auditService.logEvent({
+    actor: doctorId,
+    role: "Doctor",
+    action: "auth.mfa_success",
+    resource_type: "device",
+    resource_id: fingerprint,
+    outcome: "SUCCESS",
+    ip: req.ip,
+    request_id: req.id,
+    reason: "Device trusted via 2FA OTP"
+  });
 
   return res.status(200).json({
     success: true,

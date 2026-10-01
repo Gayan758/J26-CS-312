@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const config = require("../config");
+const logger = require("../utils/logger");
 
 class EmailService {
   constructor() {
@@ -140,7 +141,7 @@ class EmailService {
         dispatchResult.messageId = info.messageId;
       }
     } catch (err) {
-      console.warn("[EmailService] SMTP transport warning (falling back to audit log):", err.message);
+      logger.warn({ error: err.message }, "[EmailService] SMTP transport warning (falling back to audit log)");
     }
 
     const emailRecord = {

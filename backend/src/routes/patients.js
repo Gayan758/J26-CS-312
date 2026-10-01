@@ -9,6 +9,7 @@ const ipfsService = require("../services/ipfsService");
 const decryptionService = require("../services/decryptionService");
 const auditService = require("../services/auditService");
 const encryptionService = require("../services/encryptionService");
+const logger = require("../utils/logger");
 const { detectHospitalNetwork } = require("./auth");
 const { optionalAuthenticate } = require("../middleware/auth");
 
@@ -320,8 +321,8 @@ router.get("/:id", optionalAuthenticate, async (req, res) => {
       network: networkInfo
     });
   } catch (err) {
-    console.error("[PatientsRoute] Error fetching patient chart:", err);
-    return res.status(500).json({ error: err.message });
+    logger.error({ error: err.message, patientId: req.params.id }, "[PatientsRoute] Error fetching patient chart");
+    return res.status(500).json({ error: "Failed to retrieve patient medical chart" });
   }
 });
 
@@ -664,6 +665,19 @@ router.post("/:id/encounters/:encounterId/amend", optionalAuthenticate, (req, re
     const key = encryptionService.getPatientKey(patientId);
     ipfsService.storeEncryptedRecord(patientId, updatedPatient, key);
 
+    auditService.logEvent({
+      actor: req.user?.username || req.user?.name || "Attending Clinician",
+      role: req.user?.role || "Doctor",
+      action: "clinical.encounter_amended",
+      resource_type: "encounter",
+      resource_id: encounterId,
+      patient_id: patientId,
+      outcome: "SUCCESS",
+      ip: req.ip,
+      request_id: req.id,
+      reason: reason.trim()
+    });
+
     return res.status(200).json({
       status: "SUCCESS",
       message: `Encounter ${encounterId} amended to version ${amended.version}. Previous state preserved in immutable history.`,
@@ -717,6 +731,19 @@ router.post("/:id/prescriptions/:prescriptionId/amend", optionalAuthenticate, (r
     const updatedPatient = ehrDatabase.getPatientById(patientId);
     const key = encryptionService.getPatientKey(patientId);
     ipfsService.storeEncryptedRecord(patientId, updatedPatient, key);
+
+    auditService.logEvent({
+      actor: req.user?.username || req.user?.name || "Attending Physician",
+      role: req.user?.role || "Doctor",
+      action: "clinical.prescription_amended",
+      resource_type: "prescription",
+      resource_id: prescriptionId,
+      patient_id: patientId,
+      outcome: "SUCCESS",
+      ip: req.ip,
+      request_id: req.id,
+      reason: reason.trim()
+    });
 
     return res.status(200).json({
       status: "SUCCESS",

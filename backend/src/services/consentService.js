@@ -1,6 +1,7 @@
 const { ethers } = require("ethers");
 const crypto = require("crypto");
 const config = require("../config");
+const logger = require("../utils/logger");
 
 // ABI for ConsentRegistry
 const CONSENT_REGISTRY_ABI = [
@@ -13,20 +14,18 @@ const CONSENT_REGISTRY_ABI = [
 
 class ConsentService {
   constructor() {
-    this.provider = new ethers.JsonRpcProvider(config.ethRpcUrl);
+    this.provider = null;
     this.signer = null;
     this.contract = null;
 
-    if (config.ethSignerKey) {
+    if (config.ethSignerKey && config.ethSignerKey.length === 66 && config.consentRegistryAddress && ethers.isAddress(config.consentRegistryAddress)) {
       try {
+        this.provider = new ethers.JsonRpcProvider(config.ethRpcUrl, undefined, { staticNetwork: true });
         this.signer = new ethers.Wallet(config.ethSignerKey, this.provider);
-      } catch (e) {
-        this.signer = null;
+        this.contract = new ethers.Contract(config.consentRegistryAddress, CONSENT_REGISTRY_ABI, this.signer);
+      } catch {
+        this.contract = null;
       }
-    }
-
-    if (this.signer && config.consentRegistryAddress && ethers.isAddress(config.consentRegistryAddress)) {
-      this.contract = new ethers.Contract(config.consentRegistryAddress, CONSENT_REGISTRY_ABI, this.signer);
     }
 
     // In-memory store when contract is not deployed
@@ -80,7 +79,7 @@ class ConsentService {
         return receipt.hash || tx.hash;
       }
     } catch (err) {
-      console.warn("[ConsentService] On-chain setConsent failed:", err.message);
+      logger.warn({ error: err.message }, "[ConsentService] On-chain setConsent failed");
     }
 
     return null;
@@ -109,7 +108,7 @@ class ConsentService {
         }
       }
     } catch (err) {
-      console.warn("[ConsentService] On-chain releaseDecryptionKey failed, falling back to mock:", err.message);
+      logger.warn({ error: err.message }, "[ConsentService] On-chain releaseDecryptionKey failed, falling back to local");
     }
 
     // In-memory fallback (exact 32-byte key)

@@ -323,5 +323,40 @@ router.post("/devices/:fingerprint/revoke", (req, res) => {
   }
 });
 
+/**
+ * GET /api/admin/audit/verify
+ * Cryptographic ledger verification endpoint
+ * Sequentially computes SHA-256 hash chains from genesis block to current head
+ */
+router.get("/audit/verify", (req, res) => {
+  try {
+    const result = auditService.verifyIntegrity();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * GET /api/admin/audit
+ * Returns paginated, filterable compliance audit ledger records
+ */
+router.get("/audit", (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit || "100", 10);
+    const offset = parseInt(req.query.offset || "0", 10);
+    const action = req.query.action || null;
+    const actor = req.query.actor || null;
+
+    const logs = auditService.getAuditLogs({ limit, offset, action, actor });
+    res.status(200).json({
+      records: logs,
+      total: logs.length
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
 
