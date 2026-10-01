@@ -73,6 +73,10 @@ describe("MedGuard Backend Integration Tests", function () {
       expect(loginRes.status).to.equal(200);
       expect(loginRes.body).to.have.property("token");
       expect(loginRes.body.doctor.name).to.equal("Dr. Nuwan Senanayake, MD");
+
+      // Clean up ephemeral test doctor
+      const ehrDb = require("../src/services/ehrDatabase");
+      ehrDb.removeUser(regRes.body.doctor.id);
     });
 
     it("should capture real device coordinates on login and detect inside vs outside SLIIT Malabe", async function () {
@@ -458,6 +462,13 @@ describe("MedGuard Backend Integration Tests", function () {
       expect(passRes.status).to.equal(200);
       expect(passRes.body.success).to.be.true;
       expect(passRes.body.message).to.include("2FA verified");
+    });
+
+    after(() => {
+      if (registeredDoctor && registeredDoctor.id) {
+        const ehrDb = require("../src/services/ehrDatabase");
+        ehrDb.removeUser(registeredDoctor.id);
+      }
     });
   });
 });

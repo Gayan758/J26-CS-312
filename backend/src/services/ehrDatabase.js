@@ -440,9 +440,15 @@ class EhrDatabase {
   checkTrustedDevice(doctorId, fingerprint) {
     if (!doctorId || !fingerprint) return { trusted: false };
     const db = this._readData();
+
+    // Check hospital registered workstations
+    if (db.registeredDevices && db.registeredDevices[fingerprint] && db.registeredDevices[fingerprint].status === "approved") {
+      return { trusted: true };
+    }
+
     const knownDevices = db.knownDevices || [];
     const match = knownDevices.find(
-      (d) => (d.doctorId === doctorId || d.ethereumAddress === doctorId) && d.fingerprint === fingerprint && d.trusted
+      (d) => (d.doctorId === doctorId || d.ethereumAddress?.toLowerCase() === doctorId?.toLowerCase()) && d.fingerprint === fingerprint && d.trusted
     );
     if (match) return { trusted: true };
 

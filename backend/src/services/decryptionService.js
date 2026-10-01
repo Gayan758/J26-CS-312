@@ -42,26 +42,34 @@ class DecryptionService {
     try {
       return this._tryDecryptWithKey(encryptedBlob, primaryKeyBuffer);
     } catch (primaryErr) {
-      // 2. Migration Tolerance: If primary key fails authentication (e.g. legacy blob), attempt legacy key
+      // 2. Migration Tolerance: If primary key fails authentication (e.g. key mismatch or legacy blob), attempt modern and legacy keys
       if (encryptedBlob.patientId) {
+        // Attempt (a): Modern KEK-derived key
         try {
-          const legacyKey = crypto.createHash("sha256").update(`${encryptedBlob.patientId}-key`).digest();
-          const plaintext = this._tryDecryptWithKey(encryptedBlob, legacyKey);
-
-          // Transparent Migration: Re-encrypt and persist stored blob with modern KEK-derived key
+          const encryptionService = require("./encryptionService");
+          const modernKey = encryptionService.getPatientKey(encryptedBlob.patientId);
+          return this._tryDecryptWithKey(encryptedBlob, modernKey);
+        } catch {
+          // Attempt (b): Legacy key
           try {
-            const encryptionService = require("./encryptionService");
-            const ipfsService = require("./ipfsService");
-            const modernKey = encryptionService.getPatientKey(encryptedBlob.patientId);
-            ipfsService.storeEncryptedRecord(encryptedBlob.patientId, plaintext, modernKey);
-          } catch (migrateErr) {
-            logger.warn({ error: migrateErr.message }, "[DecryptionService] Blob migration re-encryption deferred");
-          }
+            const legacyKey = crypto.createHash("sha256").update(`${encryptedBlob.patientId}-key`).digest();
+            const plaintext = this._tryDecryptWithKey(encryptedBlob, legacyKey);
 
-          return plaintext;
-        } catch (legacyErr) {
-          // Both modern and legacy keys failed
-          throw new Error(`[DecryptionService] Cryptographic decryption failed: ${primaryErr.message}`);
+            // Transparent Migration: Re-encrypt and persist stored blob with modern KEK-derived key
+            try {
+              const encryptionService = require("./encryptionService");
+              const ipfsService = require("./ipfsService");
+              const modernKey = encryptionService.getPatientKey(encryptedBlob.patientId);
+              ipfsService.storeEncryptedRecord(encryptedBlob.patientId, plaintext, modernKey);
+            } catch (migrateErr) {
+              logger.warn({ error: migrateErr.message }, "[DecryptionService] Blob migration re-encryption deferred");
+            }
+
+            return plaintext;
+          } catch (legacyErr) {
+            // Both modern and legacy keys failed
+            throw new Error(`[DecryptionService] Cryptographic decryption failed: ${primaryErr.message}`);
+          }
         }
       }
 

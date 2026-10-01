@@ -26,6 +26,72 @@
       "registeredAt": "2026-09-01T08:00:00Z",
       "vitals": [
         {
+          "id": "vit-1790848805885",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-01T10:00:05.885Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
+          "id": "vit-1790848686555",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-01T09:58:06.555Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
+          "id": "vit-1790848168185",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-01T09:49:28.185Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
+          "id": "vit-1790848048153",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-01T09:47:28.153Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
+          "id": "vit-1790847757197",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-01T09:42:37.197Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
+          "id": "vit-1790847542512",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-01T09:39:02.512Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
           "id": "vit-1790828760955",
           "bp": "122/78",
           "hr": 70,
@@ -379,6 +445,280 @@
         }
       ],
       "encounters": [
+        {
+          "id": "enc-1790848807492",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-01T10:00:07.506Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T10:00:07.492Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-01T10:00:07.506Z"
+        },
+        {
+          "id": "enc-1790848805861",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T10:00:05.861Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
+        {
+          "id": "enc-1790848688161",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-01T09:58:08.171Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:58:08.161Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-01T09:58:08.171Z"
+        },
+        {
+          "id": "enc-1790848686527",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:58:06.527Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
+        {
+          "id": "enc-1790848168140",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:49:28.141Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
+        {
+          "id": "enc-1790848050869",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-01T09:47:30.891Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:47:30.869Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-01T09:47:30.891Z"
+        },
+        {
+          "id": "enc-1790848048116",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:47:28.116Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
+        {
+          "id": "enc-1790847759919",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-01T09:42:39.939Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:42:39.919Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-01T09:42:39.939Z"
+        },
+        {
+          "id": "enc-1790847757164",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:42:37.164Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
+        {
+          "id": "enc-1790847545256",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-01T09:39:05.281Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:39:05.256Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-01T09:39:05.281Z"
+        },
+        {
+          "id": "enc-1790847542481",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-01",
+          "createdAt": "2026-10-01T09:39:02.481Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
         {
           "id": "enc-1790828762902",
           "version": 2,
@@ -1000,6 +1340,96 @@
       ],
       "prescriptions": [
         {
+          "id": "rx-1790848805872",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-01T10:00:05.872Z",
+          "status": "Active"
+        },
+        {
+          "id": "rx-1790848686544",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-01T09:58:06.544Z",
+          "status": "Active"
+        },
+        {
+          "id": "rx-1790848168162",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-01T09:49:28.162Z",
+          "status": "Active"
+        },
+        {
+          "id": "rx-1790848048137",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-01T09:47:28.137Z",
+          "status": "Active"
+        },
+        {
+          "id": "rx-1790847757179",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-01T09:42:37.179Z",
+          "status": "Active"
+        },
+        {
+          "id": "rx-1790847542495",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-01T09:39:02.495Z",
+          "status": "Active"
+        },
+        {
           "id": "rx-1790828760940",
           "version": 1,
           "amendments": [],
@@ -1506,7 +1936,7 @@
           "modify": false
         }
       },
-      "consentUpdatedAt": "2026-10-01T04:26:02.166Z"
+      "consentUpdatedAt": "2026-10-01T10:00:06.958Z"
     },
     {
       "id": "patient-456",
@@ -4236,6 +4666,564 @@
       "encounters": [],
       "prescriptions": [],
       "labResults": []
+    },
+    {
+      "id": "patient-2530",
+      "patientId": "patient-2530",
+      "phn": "PHN-447645",
+      "nic": "851032481V",
+      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
+      "name": "Nimal Perera",
+      "patientName": "Nimal Perera",
+      "dob": "1985-04-12",
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Consultation",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:39:02.531Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-blind-1790847544756",
+      "patientId": "patient-blind-1790847544756",
+      "phn": "PHN-446858",
+      "nic": "9991790847544756V",
+      "nicHash": "44f0c2fb9f8003260b10a7e6246c3abc80e250ef1234ef205a81716b8ff621b6",
+      "name": "Blind Index Test Subject",
+      "patientName": "Blind Index Test Subject",
+      "gender": "Unspecified",
+      "bloodGroup": "B+",
+      "allergies": [],
+      "chronicConditions": [],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Clinic",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:39:04.760Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-7213",
+      "patientId": "patient-7213",
+      "phn": "PHN-505504",
+      "nic": "851032481V",
+      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
+      "name": "Nimal Perera",
+      "patientName": "Nimal Perera",
+      "dob": "1985-04-12",
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Consultation",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:42:37.213Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-blind-1790847759578",
+      "patientId": "patient-blind-1790847759578",
+      "phn": "PHN-569410",
+      "nic": "9991790847759578V",
+      "nicHash": "56a23f26382ab395fd9d4cfdd5aee95b9b42611f1fc512e86f768e9fac987fa9",
+      "name": "Blind Index Test Subject",
+      "patientName": "Blind Index Test Subject",
+      "gender": "Unspecified",
+      "bloodGroup": "B+",
+      "allergies": [],
+      "chronicConditions": [],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Clinic",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:42:39.582Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-8170",
+      "patientId": "patient-8170",
+      "phn": "PHN-545968",
+      "nic": "851032481V",
+      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
+      "name": "Nimal Perera",
+      "patientName": "Nimal Perera",
+      "dob": "1985-04-12",
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Consultation",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:47:28.170Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-blind-1790848050504",
+      "patientId": "patient-blind-1790848050504",
+      "phn": "PHN-801114",
+      "nic": "9991790848050504V",
+      "nicHash": "125c4a5cc306cf01cc970c549d01e47c855b80e6ac3ba2d6515e32510b5ec1bf",
+      "name": "Blind Index Test Subject",
+      "patientName": "Blind Index Test Subject",
+      "gender": "Unspecified",
+      "bloodGroup": "B+",
+      "allergies": [],
+      "chronicConditions": [],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Clinic",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:47:30.507Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-8200",
+      "patientId": "patient-8200",
+      "phn": "PHN-669857",
+      "nic": "851032481V",
+      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
+      "name": "Nimal Perera",
+      "patientName": "Nimal Perera",
+      "dob": "1985-04-12",
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Consultation",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:49:28.201Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-6565",
+      "patientId": "patient-6565",
+      "phn": "PHN-229556",
+      "nic": "851032481V",
+      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
+      "name": "Nimal Perera",
+      "patientName": "Nimal Perera",
+      "dob": "1985-04-12",
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Consultation",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:58:06.565Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-blind-1790848687982",
+      "patientId": "patient-blind-1790848687982",
+      "phn": "PHN-851976",
+      "nic": "9991790848687982V",
+      "nicHash": "3e80d0b2d3e72afcfd9741968edde78806d925a5f7d366a0dea939a09f99c10b",
+      "name": "Blind Index Test Subject",
+      "patientName": "Blind Index Test Subject",
+      "gender": "Unspecified",
+      "bloodGroup": "B+",
+      "allergies": [],
+      "chronicConditions": [],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Clinic",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T09:58:07.985Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-5895",
+      "patientId": "patient-5895",
+      "phn": "PHN-451931",
+      "nic": "851032481V",
+      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
+      "name": "Nimal Perera",
+      "patientName": "Nimal Perera",
+      "dob": "1985-04-12",
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "chronicConditions": [
+        "Hypertension"
+      ],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Consultation",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T10:00:05.895Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
+    },
+    {
+      "id": "patient-blind-1790848807285",
+      "patientId": "patient-blind-1790848807285",
+      "phn": "PHN-700713",
+      "nic": "9991790848807285V",
+      "nicHash": "0d50d2aae6ecdef5bbac33d2f9a1af29a9d8737247ebd609cacdcbf956370983",
+      "name": "Blind Index Test Subject",
+      "patientName": "Blind Index Test Subject",
+      "gender": "Unspecified",
+      "bloodGroup": "B+",
+      "allergies": [],
+      "chronicConditions": [],
+      "sensitivity": "low",
+      "consentStatus": true,
+      "triageQueue": "Outpatient General Clinic",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-10-01T10:00:07.288Z",
+      "assignedDoctorIds": [],
+      "assignedDoctorAddresses": [],
+      "consentedDoctors": [],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      },
+      "vitals": [],
+      "encounters": [],
+      "prescriptions": [],
+      "labResults": []
     }
   ],
   "accessHistory": [
@@ -4706,373 +5694,169 @@
       "patientId": "patient-123",
       "sensitivity": "medium",
       "timestamp": 1790842172249
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790846304576
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1790846319146
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790846328402
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1790846332245
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1790846343502
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1790846347254
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790846350599
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790846354737
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790846362698
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790846376358
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790846377241
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1790846381654
+    },
+    {
+      "doctorId": "0xdc69215b67693d933e77463b3c677a714431229b",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790846518105
+    },
+    {
+      "doctorId": "0xdc69215b67693d933e77463b3c677a714431229b",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790846527243
+    },
+    {
+      "doctorId": "0xdc69215b67693d933e77463b3c677a714431229b",
+      "patientId": "patient-9003",
+      "sensitivity": "low",
+      "timestamp": 1790846547088
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790847542451
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790847757139
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790848048085
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790848168113
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790848686505
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1790848805841
     }
   ],
   "staffTrackingDevices": [
     {
-      "deviceId": "dev-alice-01",
+      "deviceId": "device-doc-001",
       "doctorId": "doc-001",
       "doctorName": "Dr. Alice Vance, MD",
-      "deviceName": "Dr. Vance iPhone 15 Pro (Work)",
+      "deviceName": "Dr. Alice Vance Mobile",
       "osmandProtocolId": "alice_vance_mobile",
       "consentGiven": true,
-      "consentTimestamp": "2026-09-01T08:00:00Z",
+      "consentTimestamp": "2026-09-01T08:00:00.000Z",
       "consentVersion": "v1.0",
       "trackingEnabled": true,
-      "sosActive": false,
       "batteryLevel": 82,
+      "sosActive": false,
       "lastPosition": {
-        "lat": 6.917254737935247,
-        "lon": 79.8477692425168,
+        "lat": 6.9148,
+        "lon": 79.9734,
         "speed": 0,
-        "altitude": 18,
-        "accuracy": 82,
-        "timestamp": "2026-10-01T07:55:15.302Z"
+        "altitude": 18.5,
+        "accuracy": 5,
+        "timestamp": "2026-10-01T10:00:07.691Z"
       },
-      "lastReportTime": "2026-10-01T07:55:15.302Z",
-      "updatedAt": "2026-10-01T04:26:03.088Z"
+      "lastReportTime": "2026-10-01T10:00:07.647Z",
+      "updatedAt": "2026-10-01T10:00:07.708Z"
     },
     {
-      "deviceId": "dev-kasun-02",
+      "deviceId": "device-doc-002",
       "doctorId": "doc-002",
       "doctorName": "Dr. Kasun Perera, MBBS",
-      "deviceName": "Dr. Kasun Samsung Galaxy S24",
+      "deviceName": "Dr. Kasun Perera Mobile",
       "osmandProtocolId": "kasun_perera_mobile",
       "consentGiven": true,
-      "consentTimestamp": "2026-09-05T08:30:00Z",
+      "consentTimestamp": "2026-09-01T08:00:00.000Z",
       "consentVersion": "v1.0",
       "trackingEnabled": true,
-      "sosActive": false,
-      "batteryLevel": 62,
-      "lastPosition": {
-        "lat": 6.917225284449577,
-        "lon": 79.8477814561201,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 88,
-        "timestamp": "2026-10-01T08:05:54.039Z"
-      },
-      "lastReportTime": "2026-10-01T08:05:54.039Z"
-    },
-    {
-      "deviceId": "dev-sarah-03",
-      "doctorId": "doc-003",
-      "doctorName": "Dr. Sarah Jenkins, MD",
-      "deviceName": "Dr. Sarah Pixel 8 (Clinical Dispatch)",
-      "osmandProtocolId": "sarah_jenkins_mobile",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-10T09:00:00Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "sosActive": false,
-      "batteryLevel": 91,
-      "lastPosition": {
-        "lat": 6.9271,
-        "lon": 79.8612,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 12,
-        "timestamp": "2026-10-01T04:26:00.637Z"
-      },
-      "lastReportTime": "2026-10-01T04:26:00.637Z"
-    },
-    {
-      "deviceId": "device-doc-8933",
-      "doctorId": "doc-8933",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-8933",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-22T07:53:48.933Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-22T07:53:48.942Z"
-      },
-      "lastReportTime": "2026-09-22T07:53:48.942Z"
-    },
-    {
-      "deviceId": "device-doc-4996",
-      "doctorId": "doc-4996",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-4996",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-22T08:02:14.996Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-22T08:02:15.002Z"
-      },
-      "lastReportTime": "2026-09-22T08:02:15.002Z"
-    },
-    {
-      "deviceId": "device-doc-0456",
-      "doctorId": "doc-0456",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-0456",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-22T08:09:30.456Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-22T08:09:30.462Z"
-      },
-      "lastReportTime": "2026-09-22T08:09:30.462Z"
-    },
-    {
-      "deviceId": "device-doc-1780",
-      "doctorId": "doc-1780",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-1780",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-22T08:52:11.780Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-22T08:52:11.789Z"
-      },
-      "lastReportTime": "2026-09-22T08:52:11.789Z"
-    },
-    {
-      "deviceId": "device-doc-1240",
-      "doctorId": "doc-1240",
-      "doctorName": "Dr. Gayan Fernando",
-      "deviceName": "Dr. Gayan Fernando's Medical Device",
-      "osmandProtocolId": "osmand-doc-1240",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-22T09:05:41.241Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.917300371428572,
-        "lon": 79.84776180873673,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 77,
-        "timestamp": "2026-09-30T04:55:42.157Z"
-      },
-      "lastReportTime": "2026-09-30T04:55:42.157Z"
-    },
-    {
-      "deviceId": "device-doc-3185",
-      "doctorId": "doc-3185",
-      "doctorName": "Gayan vimukthi",
-      "deviceName": "Gayan vimukthi's Medical Device",
-      "osmandProtocolId": "osmand-doc-3185",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-22T09:14:33.185Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.916438971515058,
-        "lon": 79.84805660144364,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 73,
-        "timestamp": "2026-09-22T09:14:48.783Z"
-      },
-      "lastReportTime": "2026-09-22T09:14:48.783Z"
-    },
-    {
-      "deviceId": "device-doc-1414",
-      "doctorId": "doc-1414",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-1414",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-22T09:41:11.414Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-22T09:41:11.421Z"
-      },
-      "lastReportTime": "2026-09-22T09:41:11.421Z"
-    },
-    {
-      "deviceId": "device-doc-6112",
-      "doctorId": "doc-6112",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-6112",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T04:23:36.112Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-29T04:23:36.120Z"
-      },
-      "lastReportTime": "2026-09-29T04:23:36.120Z"
-    },
-    {
-      "deviceId": "device-doc-0932",
-      "doctorId": "doc-0932",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-0932",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T04:24:50.932Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-29T04:24:50.940Z"
-      },
-      "lastReportTime": "2026-09-29T04:24:50.940Z"
-    },
-    {
-      "deviceId": "device-doc-5738",
-      "doctorId": "doc-5738",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-5738",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T04:56:25.738Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-29T04:56:25.765Z"
-      },
-      "lastReportTime": "2026-09-29T04:56:25.765Z"
-    },
-    {
-      "deviceId": "device-doc-8703",
-      "doctorId": "doc-8703",
-      "doctorName": "Gayan Vimukthi",
-      "deviceName": "Gayan Vimukthi's Medical Device",
-      "osmandProtocolId": "osmand-doc-8703",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T05:55:48.705Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.917239579162354,
-        "lon": 79.84777107356172,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 73,
-        "timestamp": "2026-10-01T07:59:35.661Z"
-      },
-      "lastReportTime": "2026-10-01T07:59:35.661Z"
-    },
-    {
-      "deviceId": "device-doc-9691",
-      "doctorId": "doc-9691",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-9691",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T06:19:09.692Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-29T06:19:09.916Z"
-      },
-      "lastReportTime": "2026-09-29T06:19:09.916Z"
-    },
-    {
-      "deviceId": "device-doc-9436",
-      "doctorId": "doc-9436",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-9436",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T06:20:09.436Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-29T06:20:09.540Z"
-      },
-      "lastReportTime": "2026-09-29T06:20:09.540Z"
-    },
-    {
-      "deviceId": "device-doc-2563",
-      "doctorId": "doc-2563",
-      "doctorName": "Dr. Rohana Wijesinghe, MD",
-      "deviceName": "Dr. Rohana Wijesinghe, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-2563",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T06:20:12.563Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
+      "batteryLevel": 90,
       "sosActive": false,
       "lastPosition": {
         "lat": 6.9147,
@@ -5080,166 +5864,192 @@
         "speed": 0,
         "altitude": 18,
         "accuracy": 5,
-        "timestamp": "2026-09-29T06:20:12.563Z"
+        "timestamp": "2026-10-01T09:41:32.524Z"
       },
-      "lastReportTime": "2026-09-29T06:20:12.563Z"
-    },
-    {
-      "deviceId": "device-doc-0842",
-      "doctorId": "doc-0842",
-      "doctorName": "Amma",
-      "deviceName": "Amma's Medical Device",
-      "osmandProtocolId": "osmand-doc-0842",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T06:39:50.843Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.917251547344111,
-        "lon": 79.84777294842186,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 88,
-        "timestamp": "2026-09-29T07:33:37.529Z"
-      },
-      "lastReportTime": "2026-09-29T07:33:37.529Z"
-    },
-    {
-      "deviceId": "device-doc-9935",
-      "doctorId": "doc-9935",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-9935",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T07:13:09.935Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-29T07:13:09.977Z"
-      },
-      "lastReportTime": "2026-09-29T07:13:09.977Z"
-    },
-    {
-      "deviceId": "device-doc-2605",
-      "doctorId": "doc-2605",
-      "doctorName": "Dr. Rohana Wijesinghe, MD",
-      "deviceName": "Dr. Rohana Wijesinghe, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-2605",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-29T07:13:12.605Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 5,
-        "timestamp": "2026-09-29T07:13:12.605Z"
-      },
-      "lastReportTime": "2026-09-29T07:13:12.605Z"
-    },
-    {
-      "deviceId": "device-doc-5147",
-      "doctorId": "doc-5147",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-5147",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-30T04:32:25.147Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-30T04:32:25.206Z"
-      },
-      "lastReportTime": "2026-09-30T04:32:25.206Z"
-    },
-    {
-      "deviceId": "device-doc-8715",
-      "doctorId": "doc-8715",
-      "doctorName": "Dr. Rohana Wijesinghe, MD",
-      "deviceName": "Dr. Rohana Wijesinghe, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-8715",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-30T04:32:28.715Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 5,
-        "timestamp": "2026-09-30T04:32:28.715Z"
-      },
-      "lastReportTime": "2026-09-30T04:32:28.715Z"
-    },
-    {
-      "deviceId": "device-doc-1407",
-      "doctorId": "doc-1407",
-      "doctorName": "Dr. Nuwan Senanayake, MD",
-      "deviceName": "Dr. Nuwan Senanayake, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-1407",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-30T05:30:41.407Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 10,
-        "timestamp": "2026-09-30T05:30:41.464Z"
-      },
-      "lastReportTime": "2026-09-30T05:30:41.464Z"
-    },
-    {
-      "deviceId": "device-doc-4395",
-      "doctorId": "doc-4395",
-      "doctorName": "Dr. Rohana Wijesinghe, MD",
-      "deviceName": "Dr. Rohana Wijesinghe, MD's Medical Device",
-      "osmandProtocolId": "osmand-doc-4395",
-      "consentGiven": true,
-      "consentTimestamp": "2026-09-30T05:30:44.395Z",
-      "consentVersion": "v1.0",
-      "trackingEnabled": true,
-      "batteryLevel": 100,
-      "sosActive": false,
-      "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
-        "speed": 0,
-        "altitude": 18,
-        "accuracy": 5,
-        "timestamp": "2026-09-30T05:30:44.395Z"
-      },
-      "lastReportTime": "2026-09-30T05:30:44.395Z"
+      "lastReportTime": "2026-10-01T09:41:32.524Z"
     }
   ],
   "geofenceRiskEvents": [
+    {
+      "id": "geofence-evt-1790848807697-4533",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-01T10:00:07.697Z",
+      "retentionExpiresAt": "2026-11-30T10:00:07.697Z"
+    },
+    {
+      "id": "geofence-evt-1790848807661-3208",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-01T10:00:07.661Z",
+      "retentionExpiresAt": "2026-11-30T10:00:07.661Z"
+    },
+    {
+      "id": "geofence-evt-1790848688373-1456",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-01T09:58:08.373Z",
+      "retentionExpiresAt": "2026-11-30T09:58:08.373Z"
+    },
+    {
+      "id": "geofence-evt-1790848688329-8251",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-01T09:58:08.329Z",
+      "retentionExpiresAt": "2026-11-30T09:58:08.329Z"
+    },
+    {
+      "id": "geofence-evt-1790848051212-9969",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-01T09:47:31.212Z",
+      "retentionExpiresAt": "2026-11-30T09:47:31.212Z"
+    },
+    {
+      "id": "geofence-evt-1790848051157-8141",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-01T09:47:31.157Z",
+      "retentionExpiresAt": "2026-11-30T09:47:31.157Z"
+    },
+    {
+      "id": "geofence-evt-1790847760247-2182",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-01T09:42:40.247Z",
+      "retentionExpiresAt": "2026-11-30T09:42:40.247Z"
+    },
+    {
+      "id": "geofence-evt-1790847760197-3919",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-01T09:42:40.197Z",
+      "retentionExpiresAt": "2026-11-30T09:42:40.197Z"
+    },
+    {
+      "id": "geofence-evt-1790847545582-7638",
+      "deviceId": "dev-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Doctor",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by doc-001! Immediate dispatch requested.",
+      "createdAt": "2026-10-01T09:39:05.582Z",
+      "retentionExpiresAt": "2026-11-30T09:39:05.582Z"
+    },
+    {
+      "id": "geofence-evt-1790847545556-5933",
+      "deviceId": "alice_vance_mobile",
+      "doctorId": "doc-external",
+      "doctorName": "Staff Device (alice_vance_mobile)",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-01T09:39:05.556Z",
+      "retentionExpiresAt": "2026-11-30T09:39:05.556Z"
+    },
     {
       "id": "geofence-evt-1790828763066-4646",
       "deviceId": "dev-alice-01",
@@ -6197,6 +7007,106 @@
   ],
   "staffSafetyAuditLogs": [
     {
+      "id": "audit-1790848807700-6624",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-01T10:00:07.700Z"
+    },
+    {
+      "id": "audit-1790848807665-6390",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-01T10:00:07.665Z"
+    },
+    {
+      "id": "audit-1790848688378-2253",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-01T09:58:08.378Z"
+    },
+    {
+      "id": "audit-1790848688334-8500",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-01T09:58:08.334Z"
+    },
+    {
+      "id": "audit-1790848051216-5918",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-01T09:47:31.216Z"
+    },
+    {
+      "id": "audit-1790848051162-2083",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-01T09:47:31.162Z"
+    },
+    {
+      "id": "audit-1790847760252-1686",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-01T09:42:40.252Z"
+    },
+    {
+      "id": "audit-1790847760201-8364",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-01T09:42:40.201Z"
+    },
+    {
+      "id": "audit-1790847545587-7199",
+      "actorId": "doc-001",
+      "actorName": "Doctor",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-01T09:39:05.587Z"
+    },
+    {
+      "id": "audit-1790847545561-6738",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-external",
+      "justification": "Automated geofence departure alert: Staff Device (alice_vance_mobile) exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-01T09:39:05.561Z"
+    },
+    {
       "id": "audit-1790828763072-5257",
       "actorId": "doc-001",
       "actorName": "Dr. Alice Vance, MD",
@@ -6729,422 +7639,107 @@
   ],
   "knownDevices": [
     {
-      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-      "fingerprint": "86d6b097bc003f5e6c513609934afe57",
+      "doctorId": "doc-001",
+      "ethereumAddress": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+      "fingerprint": "sha256:alice-workstation-secure-enclave",
       "trusted": true,
-      "enrolledAt": "2026-09-22T06:57:07.191Z"
+      "enrolledAt": "2026-09-15T08:00:00.000Z",
+      "lastVerifiedAt": "2026-10-01T09:00:00.000Z"
     },
     {
-      "doctorId": "0xb755981ac4f1d7e14f62140f3875ade44adcd832",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790063628930",
+      "doctorId": "doc-001",
+      "ethereumAddress": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+      "fingerprint": "sha256:clinical-workstation-01",
       "trusted": true,
-      "enrolledAt": "2026-09-22T07:53:48.933Z"
+      "enrolledAt": "2026-09-15T08:00:00.000Z"
     },
     {
-      "doctorId": "0x63789c58e5f046067c06202e6d15142c60a28d6b",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790064134992",
-      "trusted": true,
-      "enrolledAt": "2026-09-22T08:02:14.996Z"
-    },
-    {
-      "doctorId": "0x4a634b72a9ffb919663bfab2d9fd5212bf74b38c",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790064570454",
-      "trusted": true,
-      "enrolledAt": "2026-09-22T08:09:30.456Z"
-    },
-    {
-      "doctorId": "0x96b7fb90f284383b7a1400cf696c88436504e5c0",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790067131775",
-      "trusted": true,
-      "enrolledAt": "2026-09-22T08:52:11.780Z"
-    },
-    {
-      "doctorId": "0x130d19799c5ca42f059caec0a20a9e80ec48d4e6",
-      "fingerprint": "sha256:enrolled-workstation-gayan",
-      "trusted": true,
-      "enrolledAt": "2026-09-22T09:05:41.241Z"
-    },
-    {
-      "doctorId": "0xdc69215b67693d933e77463b3c677a714431229b",
-      "fingerprint": "sha256:enrolled-workstation-gyan.jay",
-      "trusted": true,
-      "enrolledAt": "2026-09-22T09:14:33.185Z",
-      "lastVerifiedAt": "2026-09-22T09:14:48.787Z"
-    },
-    {
-      "doctorId": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
-      "fingerprint": "sha256:enrolled-workstation-sarah.jenkins",
-      "trusted": true,
-      "enrolledAt": "2026-09-22T09:18:32.867Z",
-      "lastVerifiedAt": "2026-09-29T07:32:46.517Z"
-    },
-    {
-      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "doctorId": "doc-002",
+      "ethereumAddress": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
       "fingerprint": "sha256:enrolled-workstation-kasun.perera",
       "trusted": true,
-      "enrolledAt": "2026-09-22T09:18:50.859Z",
-      "lastVerifiedAt": "2026-09-22T09:18:58.973Z"
+      "enrolledAt": "2026-09-15T08:00:00.000Z"
     },
     {
-      "doctorId": "0x4f22b5c6050cc3c32f1c2aa3a22f983c76b0c763",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790070071411",
+      "doctorId": "doc-003",
+      "ethereumAddress": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+      "fingerprint": "sha256:enrolled-workstation-sarah.jenkins",
       "trusted": true,
-      "enrolledAt": "2026-09-22T09:41:11.414Z"
+      "enrolledAt": "2026-09-15T08:00:00.000Z"
     },
     {
-      "doctorId": "0xae5a200f523db04e3511ae0a44fcc6773655b3fc",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790655816107",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T04:23:36.112Z"
-    },
-    {
-      "doctorId": "0x7a4488a850d4508b9b6fa993da5f9c9ab392680d",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790655890927",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T04:24:50.932Z"
-    },
-    {
-      "doctorId": "0x15f0f7c14ee4c1961fa8186a3c8c4bd2c16cdc5b",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790657785728",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T04:56:25.738Z"
-    },
-    {
-      "doctorId": "0x627a61fc6e013657c71c539da27f17efa6eff62e",
-      "fingerprint": "sha256:enrolled-workstation-gayanjay",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T05:55:48.705Z",
-      "lastVerifiedAt": "2026-09-29T08:22:59.813Z"
-    },
-    {
-      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-      "fingerprint": "sha256:enrolled-workstation-alice.vance",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T06:00:26.136Z"
-    },
-    {
-      "doctorId": "0x3fdb4aef679a8bef5503394550edfa1c2ce7ebc6",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790662747144",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T06:19:09.692Z"
-    },
-    {
-      "doctorId": "0x17b98a868080d2da95d6d908e5df28fd0a9cac34",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790662809341",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T06:20:09.436Z"
-    },
-    {
-      "doctorId": "0xecb06368693e76652b18b0ec527ccb339a3a4cd9",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790662809260",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T06:20:12.563Z"
-    },
-    {
-      "doctorId": "doc-2563",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T06:20:12.635Z"
-    },
-    {
-      "doctorId": "0xfdf23faf8189720c4ca4d3e2c497246173db6c81",
-      "fingerprint": "sha256:enrolled-workstation-amma",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T06:39:50.843Z",
-      "lastVerifiedAt": "2026-09-29T07:33:37.536Z"
-    },
-    {
-      "doctorId": "0xc10f0edb0a9b483a3fb2692ffa14bb32d2bb2483",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790665989853",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T07:13:09.935Z"
-    },
-    {
-      "doctorId": "0x7d62a37c6f5ecb8771baf6a5636a2b3030986d25",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790665989784",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T07:13:12.605Z"
-    },
-    {
-      "doctorId": "doc-2605",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-09-29T07:13:12.663Z"
-    },
-    {
-      "doctorId": "0x1c9af5115ec05a49932100bab069f3baad48c93d",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790742742717",
-      "trusted": true,
-      "enrolledAt": "2026-09-30T04:32:25.147Z"
-    },
-    {
-      "doctorId": "0x2a19d3b3a7f212f9dde67af1d91dffc4f0724777",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790742742108",
-      "trusted": true,
-      "enrolledAt": "2026-09-30T04:32:28.715Z"
-    },
-    {
-      "doctorId": "doc-8715",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-09-30T04:32:28.773Z"
-    },
-    {
-      "doctorId": "0x130d19799c5ca42f059caec0a20a9e80ec48d4e6",
+      "doctorId": "doc-1240",
       "fingerprint": "sha256:enrolled-workstation-gayan.fernando",
       "trusted": true,
       "enrolledAt": "2026-09-30T04:55:42.166Z"
     },
     {
-      "doctorId": "0x35ad3cb7bea212b02fcd5217637f9b6efd529a29",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790746241302",
+      "doctorId": "doc-88214",
+      "fingerprint": "sha256:enrolled-workstation-nuwan.senanayake",
       "trusted": true,
-      "enrolledAt": "2026-09-30T05:30:41.407Z"
+      "enrolledAt": "2026-10-01T03:00:00.000Z"
     },
     {
-      "doctorId": "0x0b6bdc68c257e6b9ea2e28ff21c3444c8317b929",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790746241250",
+      "doctorId": "doc-99412",
+      "fingerprint": "sha256:enrolled-workstation-rohana.wijesinghe",
       "trusted": true,
-      "enrolledAt": "2026-09-30T05:30:44.395Z"
-    },
-    {
-      "doctorId": "doc-4395",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-09-30T05:30:44.416Z"
-    },
-    {
-      "doctorId": "0x63f19ce716da234204b77577020319cf390e8aae",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790826299063",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:44:59.394Z"
-    },
-    {
-      "doctorId": "0xb658bb63ef9698694a5ff231b96b03b0270b461d",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790826297820",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:45:01.063Z"
-    },
-    {
-      "doctorId": "doc-1063",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:45:01.087Z"
-    },
-    {
-      "doctorId": "0xebf96cb0acedfc5e1e031ac0c1d913137f3f9a24",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790826395363",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:46:35.701Z"
-    },
-    {
-      "doctorId": "0xfe4b4b2d28e29c3c5958e098cb4e3d3c2c42160c",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790826394701",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:46:37.485Z"
-    },
-    {
-      "doctorId": "doc-7485",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:46:37.508Z"
-    },
-    {
-      "doctorId": "0xe1dfbedaf50fde6f37241a2b09dd9babc37244a7",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790826518539",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:48:38.897Z"
-    },
-    {
-      "doctorId": "0xf681ad7b25f3a35ab7298b49d4786ebd9e1fa5e1",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790826517718",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:48:40.679Z"
-    },
-    {
-      "doctorId": "doc-0679",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:48:40.700Z"
-    },
-    {
-      "doctorId": "0xe36ca58617d6d6cd27f67869c5805775766d1720",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790826960945",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:56:01.290Z"
-    },
-    {
-      "doctorId": "0x7c9cd5a73637f0d72babcd46cb6e95ca11cc2937",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790826960196",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:56:02.986Z"
-    },
-    {
-      "doctorId": "doc-2986",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T03:56:03.013Z"
-    },
-    {
-      "doctorId": "0xe5ab7d80e58f3faacd3efb660d96f29233bde069",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790827264230",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:01:04.600Z"
-    },
-    {
-      "doctorId": "0xf59bfc5020ec174b7b8ec7338f9d3993c3a9d81a",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790827263413",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:01:06.425Z"
-    },
-    {
-      "doctorId": "doc-6425",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:01:06.448Z"
-    },
-    {
-      "doctorId": "0x5d68a51ac0fe59c917d2e7a91143eece02bb4dd8",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790827425873",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:03:46.214Z"
-    },
-    {
-      "doctorId": "0xe72d5c799e41e69e8a64420d3ae71eb2a00ec124",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790827425039",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:03:47.975Z"
-    },
-    {
-      "doctorId": "doc-7975",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:03:47.998Z"
-    },
-    {
-      "doctorId": "0x272ad3cb640e564ae14e3118009aa1bbc5374e5d",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790828543514",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:22:23.831Z"
-    },
-    {
-      "doctorId": "0x56e24c47153b6a0b40a8f20be760c1fd602a8cdf",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790828542708",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:22:25.411Z"
-    },
-    {
-      "doctorId": "doc-5411",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:22:25.436Z"
-    },
-    {
-      "doctorId": "0x825b13b5ff3ff2c3b55b9af0fc87759b84689a8e",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790828669112",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:24:29.435Z"
-    },
-    {
-      "doctorId": "0xaad859632a0a68c9c59c8922b15240b50c433771",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790828668311",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:24:31.437Z"
-    },
-    {
-      "doctorId": "doc-1437",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:24:31.464Z"
-    },
-    {
-      "doctorId": "0xf7c312c80a4d4313a94fdeefbda37e0ee7dfc104",
-      "fingerprint": "sha256:enrolled-workstation-nuwan_1790828759234",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:25:59.575Z"
-    },
-    {
-      "doctorId": "0xea618865b09ec26a95f56e86ebb900c130643590",
-      "fingerprint": "sha256:enrolled-workstation-doc.test.1790828758376",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:26:01.282Z"
-    },
-    {
-      "doctorId": "doc-1282",
-      "fingerprint": "sha256:test-workstation-enclave-999",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T04:26:01.307Z"
-    },
-    {
-      "doctorId": "0xffefd67760e6dd0c9f7e6d01b982e5466a0a3e6c",
-      "fingerprint": "sha256:enrolled-workstation-gayan.g",
-      "trusted": true,
-      "enrolledAt": "2026-10-01T07:58:06.705Z"
+      "enrolledAt": "2026-10-01T03:00:00.000Z"
     }
   ],
   "doctors": [
     {
       "id": "doc-001",
-      "username": "alice.vance",
-      "password": "$2b$12$6lP3T7bARyY.g4TRGFStnOLVk3hdZjfWa3DU8eUSU.Hogwu6kC.da",
       "name": "Dr. Alice Vance, MD",
-      "slmcNumber": "SLMC-31842",
-      "specialty": "Consultant Cardiologist",
-      "ethereumAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "username": "alice.vance",
+      "password": "$2b$12$WfxTr6Mp/itRD4Uhxpcwn.aw9xpp8MHUNeA62fTiKC4LJ3TvmF8Uu",
+      "email": "alice.vance@hospital.local",
+      "slmcNumber": "SLMC-48291",
+      "specialty": "Internal Medicine & Nephrology",
       "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 123 4567",
-      "defaultDeviceFingerprint": "sha256:alice-workstation-secure-enclave",
       "role": "Doctor",
-      "registeredAt": "2026-01-10T08:00:00Z",
+      "status": "active",
+      "ethereumAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "defaultDeviceFingerprint": "sha256:clinical-workstation-01",
+      "_dev_seed": true,
       "lastKnownLocation": {
-        "latitude": 6.917254737935247,
-        "longitude": 79.8477692425168,
-        "accuracy": 82,
-        "distanceFromMalabeKm": 13.86,
+        "latitude": null,
+        "longitude": null,
+        "accuracy": 10,
+        "distanceFromMalabeKm": 0,
         "isInsideMalabe": false,
-        "campusName": "Outside Hospital Perimeter (13.86 km)",
-        "recordedAt": "2026-10-01T07:55:15.302Z"
-      },
-      "email": "alice.vance@sliit.lk"
+        "campusName": "Unverified Location (No GPS)",
+        "recordedAt": "2026-10-01T10:00:07.242Z"
+      }
     },
     {
       "id": "doc-002",
-      "username": "kasun.perera",
-      "password": "$2b$12$B3WqWu8vAzozlNx5bcU8jO7Z8ef/LiEUeLCyQxWme3LVxQFG4eJyK",
       "name": "Dr. Kasun Perera, MBBS",
-      "slmcNumber": "SLMC-42915",
-      "specialty": "Emergency Medicine Specialist",
-      "ethereumAddress": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-      "baseCampus": "Seylan Tower 1 Medical Clinic (Kollupitiya)",
-      "phone": "+94 71 987 6543",
-      "defaultDeviceFingerprint": "sha256:kasun-mdm-tablet",
-      "role": "Doctor",
-      "registeredAt": "2026-02-15T09:30:00Z",
-      "lastKnownLocation": {
-        "latitude": 6.917225284449577,
-        "longitude": 79.8477814561201,
-        "accuracy": 88,
-        "distanceFromMalabeKm": 13.86,
-        "isInsideMalabe": false,
-        "campusName": "Outside Hospital Perimeter (13.86 km)",
-        "recordedAt": "2026-10-01T08:05:54.038Z"
-      },
+      "username": "kasun.perera",
+      "password": "Password123!",
       "email": "it23270374@my.sliit.lk",
-      "emailUpdatedAt": "2026-10-01T08:06:35.753Z"
+      "slmcNumber": "SLMC-51042",
+      "specialty": "Emergency Medicine & Trauma",
+      "baseCampus": "Emergency Treatment Unit (ETU)",
+      "role": "Doctor",
+      "status": "active",
+      "ethereumAddress": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "defaultDeviceFingerprint": "sha256:etu-trauma-terminal",
+      "_dev_seed": true
     },
     {
       "id": "doc-003",
-      "username": "sarah.jenkins",
-      "password": "$2b$12$v1dUV0c4a0TTr98f2wMxr.lbKKXkO396tYpSikkqt9LSrWqGIAK0C",
       "name": "Dr. Sarah Jenkins, MD",
+      "username": "sarah.jenkins",
+      "password": "$2b$12$9skCz6/UIjJBTR60dlgIZ.KvGQ.aEKWGRiP9za/ZIGbRry72rwZZe",
+      "email": "sarah.jenkins@hospital.lk",
       "slmcNumber": "SLMC-55102",
       "specialty": "Visiting Neurologist",
-      "ethereumAddress": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
       "baseCampus": "External Specialist / On-Call",
-      "phone": "+94 76 555 1212",
-      "defaultDeviceFingerprint": "sha256:sarah-laptop",
       "role": "Doctor",
-      "registeredAt": "2026-03-01T11:00:00Z",
+      "status": "active",
+      "ethereumAddress": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "defaultDeviceFingerprint": "sha256:icu-respiratory-terminal",
+      "_dev_seed": true,
       "lastKnownLocation": {
         "latitude": 6.9271,
         "longitude": 79.8612,
@@ -7152,842 +7747,47 @@
         "distanceFromMalabeKm": 12.45,
         "isInsideMalabe": false,
         "campusName": "Outside Hospital Perimeter (12.45 km)",
-        "recordedAt": "2026-10-01T04:26:00.637Z"
-      },
-      "email": "sarah.jenkins@hospital.lk"
-    },
-    {
-      "id": "doc-8933",
-      "username": "nuwan_1790063628930",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0xb755981ac4f1d7e14f62140f3875ade44adcd832",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790063628930",
-      "role": "Doctor",
-      "registeredAt": "2026-09-22T07:53:48.933Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-22T07:53:48.942Z"
-      },
-      "email": "nuwan_1790063628930@sliit.lk"
-    },
-    {
-      "id": "doc-4996",
-      "username": "nuwan_1790064134992",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x63789c58e5f046067c06202e6d15142c60a28d6b",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790064134992",
-      "role": "Doctor",
-      "registeredAt": "2026-09-22T08:02:14.996Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-22T08:02:15.002Z"
-      },
-      "email": "nuwan_1790064134992@sliit.lk"
-    },
-    {
-      "id": "doc-0456",
-      "username": "nuwan_1790064570454",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x4a634b72a9ffb919663bfab2d9fd5212bf74b38c",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790064570454",
-      "role": "Doctor",
-      "registeredAt": "2026-09-22T08:09:30.456Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-22T08:09:30.462Z"
-      },
-      "email": "nuwan_1790064570454@sliit.lk"
-    },
-    {
-      "id": "doc-1780",
-      "username": "nuwan_1790067131775",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x96b7fb90f284383b7a1400cf696c88436504e5c0",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790067131775",
-      "role": "Doctor",
-      "registeredAt": "2026-09-22T08:52:11.780Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-22T08:52:11.789Z"
-      },
-      "email": "nuwan_1790067131775@sliit.lk"
+        "recordedAt": "2026-10-01T10:00:05.602Z"
+      }
     },
     {
       "id": "doc-1240",
+      "name": "Dr. Gayan Fernando",
       "username": "gayan.fernando",
       "password": "Password123!",
-      "name": "Dr. Gayan Fernando",
+      "email": "it23270374@my.sliit.lk",
       "slmcNumber": "SLMC-78901",
       "specialty": "General Surgery",
-      "ethereumAddress": "0x130d19799c5ca42f059caec0a20a9e80ec48d4e6",
       "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 123 4567",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-gayan",
       "role": "Doctor",
-      "registeredAt": "2026-09-22T09:05:41.240Z",
-      "lastKnownLocation": {
-        "latitude": 6.917300371428572,
-        "longitude": 79.84776180873673,
-        "accuracy": 77,
-        "distanceFromMalabeKm": 13.86,
-        "isInsideMalabe": false,
-        "campusName": "Outside SLIIT Malabe (13.86 km)",
-        "recordedAt": "2026-09-30T04:55:42.157Z"
-      },
-      "email": "it23270374@my.sliit.lk"
+      "status": "active",
+      "defaultDeviceFingerprint": "sha256:surgical-suite-terminal"
     },
     {
-      "id": "doc-3185",
-      "username": "gyan.jay",
-      "password": "gayan123",
-      "name": "Gayan vimukthi",
-      "slmcNumber": "SLMC-4340",
-      "specialty": "Consultant Cardiologist",
-      "ethereumAddress": "0xdc69215b67693d933e77463b3c677a714431229b",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "0774645550",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-gyan.jay",
-      "role": "Doctor",
-      "registeredAt": "2026-09-22T09:14:33.185Z",
-      "lastKnownLocation": {
-        "latitude": 6.916438971515058,
-        "longitude": 79.84805660144364,
-        "accuracy": 73,
-        "distanceFromMalabeKm": 13.83,
-        "isInsideMalabe": false,
-        "campusName": "Outside SLIIT Malabe (13.83 km)",
-        "recordedAt": "2026-09-22T09:14:48.783Z"
-      },
-      "email": "gyan.jay@sliit.lk"
-    },
-    {
-      "id": "doc-1414",
-      "username": "nuwan_1790070071411",
-      "password": "SecurePassword123!",
+      "id": "doc-88214",
       "name": "Dr. Nuwan Senanayake, MD",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x4f22b5c6050cc3c32f1c2aa3a22f983c76b0c763",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790070071411",
-      "role": "Doctor",
-      "registeredAt": "2026-09-22T09:41:11.414Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-22T09:41:11.421Z"
-      },
-      "email": "nuwan_1790070071411@sliit.lk"
-    },
-    {
-      "id": "doc-6112",
-      "username": "nuwan_1790655816107",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0xae5a200f523db04e3511ae0a44fcc6773655b3fc",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790655816107",
-      "role": "Doctor",
-      "registeredAt": "2026-09-29T04:23:36.112Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-29T04:23:36.120Z"
-      },
-      "email": "nuwan_1790655816107@sliit.lk"
-    },
-    {
-      "id": "doc-0932",
-      "username": "nuwan_1790655890927",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x7a4488a850d4508b9b6fa993da5f9c9ab392680d",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790655890927",
-      "role": "Doctor",
-      "registeredAt": "2026-09-29T04:24:50.932Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-29T04:24:50.940Z"
-      },
-      "email": "nuwan_1790655890927@sliit.lk"
-    },
-    {
-      "id": "doc-5738",
-      "username": "nuwan_1790657785728",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x15f0f7c14ee4c1961fa8186a3c8c4bd2c16cdc5b",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790657785728",
-      "role": "Doctor",
-      "registeredAt": "2026-09-29T04:56:25.738Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-29T04:56:25.765Z"
-      },
-      "email": "nuwan_1790657785728@sliit.lk"
-    },
-    {
-      "id": "doc-8703",
-      "username": "gayanjay",
-      "password": "gayan123",
-      "name": "Gayan Vimukthi",
-      "slmcNumber": "SLMC-758",
-      "specialty": "Consultant Cardiologist",
-      "ethereumAddress": "0x627a61fc6e013657c71c539da27f17efa6eff62e",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "0773634440",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-gayanjay",
-      "role": "Doctor",
-      "registeredAt": "2026-09-29T05:55:48.705Z",
-      "lastKnownLocation": {
-        "latitude": 6.917239579162354,
-        "longitude": 79.84777107356172,
-        "accuracy": 73,
-        "distanceFromMalabeKm": 13.86,
-        "isInsideMalabe": false,
-        "campusName": "Outside Hospital Perimeter (13.86 km)",
-        "recordedAt": "2026-10-01T07:59:35.661Z"
-      },
-      "email": "vimuktgayan@gmail.com",
-      "emailUpdatedAt": "2026-09-29T08:25:34.468Z"
-    },
-    {
-      "id": "doc-9691",
-      "username": "nuwan_1790662747144",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan_1790662747144@sliit.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x3fdb4aef679a8bef5503394550edfa1c2ce7ebc6",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790662747144",
-      "role": "Doctor",
-      "registeredAt": "2026-09-29T06:19:09.692Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-29T06:19:09.916Z"
-      }
-    },
-    {
-      "id": "doc-9436",
-      "username": "nuwan_1790662809341",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan_1790662809341@sliit.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x17b98a868080d2da95d6d908e5df28fd0a9cac34",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790662809341",
-      "role": "Doctor",
-      "registeredAt": "2026-09-29T06:20:09.436Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-29T06:20:09.540Z"
-      }
-    },
-    {
-      "id": "doc-2563",
-      "username": "doc.test.1790662809260",
+      "username": "nuwan.senanayake",
       "password": "Password123!",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790662809260@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0xecb06368693e76652b18b0ec527ccb339a3a4cd9",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790662809260",
-      "role": "Doctor",
-      "registeredAt": "2026-09-29T06:20:12.563Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-0842",
-      "username": "amma",
-      "password": "amma123",
-      "name": "Amma",
-      "slmcNumber": "SLMC-12345",
-      "specialty": "Consultant Cardiologist",
-      "ethereumAddress": "0xfdf23faf8189720c4ca4d3e2c497246173db6c81",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "0712115950",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-amma",
-      "role": "Doctor",
-      "registeredAt": "2026-09-29T06:39:50.843Z",
-      "lastKnownLocation": {
-        "latitude": 6.917251547344111,
-        "longitude": 79.84777294842186,
-        "accuracy": 88,
-        "distanceFromMalabeKm": 13.86,
-        "isInsideMalabe": false,
-        "campusName": "Outside SLIIT Malabe (13.86 km)",
-        "recordedAt": "2026-09-29T07:33:37.529Z"
-      },
-      "email": "amma@sliit.lk"
-    },
-    {
-      "id": "doc-9935",
-      "username": "nuwan_1790665989853",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan_1790665989853@sliit.lk",
+      "email": "nuwan.senanayake@hospital.lk",
       "slmcNumber": "SLMC-88214",
       "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0xc10f0edb0a9b483a3fb2692ffa14bb32d2bb2483",
       "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790665989853",
       "role": "Doctor",
-      "registeredAt": "2026-09-29T07:13:09.935Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-29T07:13:09.977Z"
-      }
+      "status": "active",
+      "defaultDeviceFingerprint": "sha256:neurology-clinic-terminal"
     },
     {
-      "id": "doc-2605",
-      "username": "doc.test.1790665989784",
+      "id": "doc-99412",
+      "name": "Dr. Rohana Wijesinghe, MD",
+      "username": "rohana.wijesinghe",
       "password": "Password123!",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790665989784@sliit.lk",
+      "email": "rohana.wijesinghe@hospital.lk",
       "slmcNumber": "SLMC-99412",
       "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0x7d62a37c6f5ecb8771baf6a5636a2b3030986d25",
       "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790665989784",
       "role": "Doctor",
-      "registeredAt": "2026-09-29T07:13:12.605Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-5147",
-      "username": "nuwan_1790742742717",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan_1790742742717@sliit.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x1c9af5115ec05a49932100bab069f3baad48c93d",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790742742717",
-      "role": "Doctor",
-      "registeredAt": "2026-09-30T04:32:25.147Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-30T04:32:25.206Z"
-      }
-    },
-    {
-      "id": "doc-8715",
-      "username": "doc.test.1790742742108",
-      "password": "Password123!",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790742742108@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0x2a19d3b3a7f212f9dde67af1d91dffc4f0724777",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790742742108",
-      "role": "Doctor",
-      "registeredAt": "2026-09-30T04:32:28.715Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-1407",
-      "username": "nuwan_1790746241302",
-      "password": "SecurePassword123!",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan_1790746241302@sliit.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x35ad3cb7bea212b02fcd5217637f9b6efd529a29",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790746241302",
-      "role": "Doctor",
-      "registeredAt": "2026-09-30T05:30:41.407Z",
-      "lastKnownLocation": {
-        "latitude": 6.9147,
-        "longitude": 79.9733,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": true,
-        "campusName": "SLIIT Malabe Campus Health Center",
-        "recordedAt": "2026-09-30T05:30:41.464Z"
-      }
-    },
-    {
-      "id": "doc-4395",
-      "username": "doc.test.1790746241250",
-      "password": "Password123!",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790746241250@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0x0b6bdc68c257e6b9ea2e28ff21c3444c8317b929",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790746241250",
-      "role": "Doctor",
-      "registeredAt": "2026-09-30T05:30:44.395Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-9394",
-      "username": "nuwan_1790826299063",
-      "password": "$2b$12$2qnY9pJ5Z8w9gf027t8Icu.WrcqhF8p1QqwU6x2IYud0m21ZY/j16",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x63f19ce716da234204b77577020319cf390e8aae",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790826299063",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T03:44:59.394Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T03:44:59.851Z"
-      }
-    },
-    {
-      "id": "doc-1063",
-      "username": "doc.test.1790826297820",
-      "password": "$2b$12$5197BjYg4NHha3gsy4gQuerr13LIQ9iAHGiHY7TIZRLlAPJJOMccq",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790826297820@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0xb658bb63ef9698694a5ff231b96b03b0270b461d",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790826297820",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T03:45:01.063Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-5701",
-      "username": "nuwan_1790826395363",
-      "password": "$2b$12$rt24xdvpdYtow7Ac.S7zAer7r3UijmfQ.O.sbcNjImQENa8dVrmDO",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0xebf96cb0acedfc5e1e031ac0c1d913137f3f9a24",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790826395363",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T03:46:35.701Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T03:46:36.084Z"
-      }
-    },
-    {
-      "id": "doc-7485",
-      "username": "doc.test.1790826394701",
-      "password": "$2b$12$NNZJUtwVXQ3uOPHQ05rMFOQeWA0NXXW5X8qBQrNP0iYmWTLqzO/UC",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790826394701@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0xfe4b4b2d28e29c3c5958e098cb4e3d3c2c42160c",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790826394701",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T03:46:37.485Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-8897",
-      "username": "nuwan_1790826518539",
-      "password": "$2b$12$yMJ5vAGghEKD.8mfwgjtQ.tv5MkQ4pqbJrBly55dtJhKDnooKxEYe",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0xe1dfbedaf50fde6f37241a2b09dd9babc37244a7",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790826518539",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T03:48:38.897Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T03:48:39.343Z"
-      }
-    },
-    {
-      "id": "doc-0679",
-      "username": "doc.test.1790826517718",
-      "password": "$2b$12$DwtxoEl2yW47CGuQ3FRMJecVw6Q2c/GNjq8EA99vHttt7OeP5z8Aq",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790826517718@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0xf681ad7b25f3a35ab7298b49d4786ebd9e1fa5e1",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790826517718",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T03:48:40.679Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-1290",
-      "username": "nuwan_1790826960945",
-      "password": "$2b$12$XW.uLIiKTaZAAh24smocAesSjqnI3rBI9NF3RWh6dcs7x0vj3bqrW",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0xe36ca58617d6d6cd27f67869c5805775766d1720",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790826960945",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T03:56:01.290Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T03:56:01.650Z"
-      }
-    },
-    {
-      "id": "doc-2986",
-      "username": "doc.test.1790826960196",
-      "password": "$2b$12$hvM5.FlIBVE9gWzfhcMEk.qmi3fiztc.ybTa7lGtzF7GhIoN..wXy",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790826960196@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0x7c9cd5a73637f0d72babcd46cb6e95ca11cc2937",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790826960196",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T03:56:02.986Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-4600",
-      "username": "nuwan_1790827264230",
-      "password": "$2b$12$xP/8dKpvZ8NeBmgvO15.bOt389JI3xMnQgpuIglZwiUhHvlWUeFNK",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0xe5ab7d80e58f3faacd3efb660d96f29233bde069",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790827264230",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:01:04.600Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T04:01:05.003Z"
-      }
-    },
-    {
-      "id": "doc-6425",
-      "username": "doc.test.1790827263413",
-      "password": "$2b$12$Tei2p5Bsr7GMd0eKzKAmJ.umq1tHsSitL3.z/fUVL.rKIe8gX14A.",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790827263413@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0xf59bfc5020ec174b7b8ec7338f9d3993c3a9d81a",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790827263413",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:01:06.425Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-6214",
-      "username": "nuwan_1790827425873",
-      "password": "$2b$12$zfb/OpwEYKPzsqG2Z.hWaOUe3vf5Vg1p4hB1a9aBAli4TExSVLgfW",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x5d68a51ac0fe59c917d2e7a91143eece02bb4dd8",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790827425873",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:03:46.214Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T04:03:46.608Z"
-      }
-    },
-    {
-      "id": "doc-7975",
-      "username": "doc.test.1790827425039",
-      "password": "$2b$12$9XP40xI4JgybwMdMpf9qquVUtchAp6SxQOafArROxLTJiOmQZpSYi",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790827425039@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0xe72d5c799e41e69e8a64420d3ae71eb2a00ec124",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790827425039",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:03:47.975Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-3831",
-      "username": "nuwan_1790828543514",
-      "password": "$2b$12$v7p6zNo83NlxK32pDSfZU.b2xi5LPO0ed/dgmLaH0mm/efxQRXrHq",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x272ad3cb640e564ae14e3118009aa1bbc5374e5d",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790828543514",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:22:23.831Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T04:22:24.232Z"
-      }
-    },
-    {
-      "id": "doc-5411",
-      "username": "doc.test.1790828542708",
-      "password": "$2b$12$3QMFwcSkrml3NhpK3K38EuAfVEJz8fgIQEvJtEfScJEMC9.uJLdD6",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790828542708@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0x56e24c47153b6a0b40a8f20be760c1fd602a8cdf",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790828542708",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:22:25.411Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-9435",
-      "username": "nuwan_1790828669112",
-      "password": "$2b$12$X3z3iXP9Xkmj.ANBVjmUJOasdQI5ISF1qtHc622y/pxJ4l7Wpyxzq",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0x825b13b5ff3ff2c3b55b9af0fc87759b84689a8e",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790828669112",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:24:29.435Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T04:24:29.943Z"
-      }
-    },
-    {
-      "id": "doc-1437",
-      "username": "doc.test.1790828668311",
-      "password": "$2b$12$pf76yzBoYe8ThURCoMHGq.gnvG5yVb1C3o329jpp46/lUiuWEM60G",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790828668311@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0xaad859632a0a68c9c59c8922b15240b50c433771",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790828668311",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:24:31.437Z",
-      "lastKnownLocation": null
-    },
-    {
-      "id": "doc-9575",
-      "username": "nuwan_1790828759234",
-      "password": "$2b$12$Z1YfwGZCqXN4Yms/WdfGCe3dNJQ7AWkeEbuPkCltHQUBMG8FNy7gm",
-      "name": "Dr. Nuwan Senanayake, MD",
-      "email": "nuwan.senanayake@hospital.lk",
-      "slmcNumber": "SLMC-88214",
-      "specialty": "Consultant Neurologist",
-      "ethereumAddress": "0xf7c312c80a4d4313a94fdeefbda37e0ee7dfc104",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 555 9999",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-nuwan_1790828759234",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:25:59.575Z",
-      "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
-        "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T04:25:59.938Z"
-      }
-    },
-    {
-      "id": "doc-1282",
-      "username": "doc.test.1790828758376",
-      "password": "$2b$12$bq.1kQjXu94BktbiLpYR6u0T9tdhnb72BTejVj2VND86loEQ1bPJK",
-      "name": "Dr. Rohana Wijesinghe, MD",
-      "email": "test.physician.1790828758376@sliit.lk",
-      "slmcNumber": "SLMC-99412",
-      "specialty": "Consultant Pulmonologist",
-      "ethereumAddress": "0xea618865b09ec26a95f56e86ebb900c130643590",
-      "baseCampus": "SLIIT Malabe Campus Health Center",
-      "phone": "+94 77 444 5555",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-doc.test.1790828758376",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T04:26:01.282Z",
-      "lastKnownLocation": null
+      "status": "active",
+      "defaultDeviceFingerprint": "sha256:pulmonology-unit-terminal"
     },
     {
       "id": "admin-243294",
@@ -8002,41 +7802,550 @@
       "phone": "",
       "registeredAt": "2026-10-01T07:04:03.295Z",
       "lastKnownLocation": {
-        "latitude": 6.917270681700118,
-        "longitude": 79.84776260684771,
-        "accuracy": 77,
+        "latitude": 6.917201327728676,
+        "longitude": 79.84778389530557,
+        "accuracy": 75,
         "distanceFromMalabeKm": 13.86,
         "isInsideMalabe": false,
         "campusName": "Outside Hospital Perimeter (13.86 km)",
-        "recordedAt": "2026-10-01T08:14:28.562Z"
-      }
-    },
-    {
-      "id": "doc-6705",
-      "username": "gayan.g",
-      "password": "$2b$12$lRVAeizu6YxI3atmG4iLXO3u3orIPvmkENij0kl02KVbUhNUPIM8m",
-      "name": "Gayan vimukthi",
-      "email": "it23270374@my.sliit.lk",
-      "slmcNumber": "123456789",
-      "specialty": "General Medicine",
-      "ethereumAddress": "0xffefd67760e6dd0c9f7e6d01b982e5466a0a3e6c",
-      "baseCampus": "Main Hospital FacilitY",
-      "phone": "0773634440",
-      "defaultDeviceFingerprint": "sha256:enrolled-workstation-gayan.g",
-      "role": "Doctor",
-      "registeredAt": "2026-10-01T07:58:06.705Z",
-      "lastKnownLocation": {
-        "latitude": 6.9172377995277445,
-        "longitude": 79.84777545643448,
-        "accuracy": 77,
-        "distanceFromMalabeKm": 13.86,
-        "isInsideMalabe": false,
-        "campusName": "Outside Hospital Perimeter (13.86 km)",
-        "recordedAt": "2026-10-01T07:58:21.154Z"
+        "recordedAt": "2026-10-01T09:23:40.179Z"
       }
     }
   ],
   "doctorSessions": [
+    {
+      "id": "sess-1790848807242",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:00:07.242Z"
+    },
+    {
+      "id": "sess-1790848806903",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:00:06.903Z"
+    },
+    {
+      "id": "sess-1790848805602",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:00:05.602Z"
+    },
+    {
+      "id": "sess-1790848805345",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:00:05.345Z"
+    },
+    {
+      "id": "sess-1790848805063",
+      "doctorId": "doc-4794",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:00:05.063Z"
+    },
+    {
+      "id": "sess-1790848804297",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T10:00:04.297Z"
+    },
+    {
+      "id": "sess-1790848687937",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:58:07.937Z"
+    },
+    {
+      "id": "sess-1790848687598",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:58:07.598Z"
+    },
+    {
+      "id": "sess-1790848686260",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:58:06.260Z"
+    },
+    {
+      "id": "sess-1790848685988",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:58:05.989Z"
+    },
+    {
+      "id": "sess-1790848685738",
+      "doctorId": "doc-5454",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:58:05.738Z"
+    },
+    {
+      "id": "sess-1790848684928",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:58:04.928Z"
+    },
+    {
+      "id": "sess-1790848167374",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:49:27.374Z"
+    },
+    {
+      "id": "sess-1790848167012",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:49:27.012Z"
+    },
+    {
+      "id": "sess-1790848166619",
+      "doctorId": "doc-6138",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:49:26.619Z"
+    },
+    {
+      "id": "sess-1790848165298",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:49:25.298Z"
+    },
+    {
+      "id": "sess-1790848050376",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:47:30.376Z"
+    },
+    {
+      "id": "sess-1790848049782",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:47:29.782Z"
+    },
+    {
+      "id": "sess-1790848047291",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:47:27.291Z"
+    },
+    {
+      "id": "sess-1790848046900",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:47:26.900Z"
+    },
+    {
+      "id": "sess-1790848046473",
+      "doctorId": "doc-6037",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:47:26.473Z"
+    },
+    {
+      "id": "sess-1790848045189",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:47:25.189Z"
+    },
+    {
+      "id": "sess-1790847759399",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:42:39.399Z"
+    },
+    {
+      "id": "sess-1790847758752",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:42:38.752Z"
+    },
+    {
+      "id": "sess-1790847756428",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:42:36.428Z"
+    },
+    {
+      "id": "sess-1790847756070",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:42:36.070Z"
+    },
+    {
+      "id": "sess-1790847755698",
+      "doctorId": "doc-5296",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:42:35.698Z"
+    },
+    {
+      "id": "sess-1790847754452",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:42:34.452Z"
+    },
+    {
+      "id": "sess-1790847544606",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:39:04.606Z"
+    },
+    {
+      "id": "sess-1790847543989",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:39:03.989Z"
+    },
+    {
+      "id": "sess-1790847541646",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:39:01.646Z"
+    },
+    {
+      "id": "sess-1790847541248",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:39:01.248Z"
+    },
+    {
+      "id": "sess-1790847540834",
+      "doctorId": "doc-0417",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:39:00.834Z"
+    },
+    {
+      "id": "sess-1790847539643",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-01T09:38:59.643Z"
+    },
+    {
+      "id": "sess-1790846798425",
+      "doctorId": "doc-6705",
+      "latitude": 6.917225284449577,
+      "longitude": 79.8477814561201,
+      "accuracy": 88,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T09:26:38.425Z"
+    },
+    {
+      "id": "sess-1790846782839",
+      "doctorId": "doc-8703",
+      "latitude": 6.917219747245984,
+      "longitude": 79.84777822837036,
+      "accuracy": 75,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T09:26:22.839Z"
+    },
+    {
+      "id": "sess-1790846620179",
+      "doctorId": "admin-243294",
+      "latitude": 6.917201327728676,
+      "longitude": 79.84778389530557,
+      "accuracy": 75,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T09:23:40.179Z"
+    },
+    {
+      "id": "sess-1790846559487",
+      "doctorId": "doc-0842",
+      "latitude": 6.917201327728676,
+      "longitude": 79.84778389530557,
+      "accuracy": 75,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T09:22:39.487Z"
+    },
+    {
+      "id": "sess-1790846516249",
+      "doctorId": "doc-3185",
+      "latitude": 6.917222644292321,
+      "longitude": 79.84777605626502,
+      "accuracy": 75,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T09:21:56.249Z"
+    },
+    {
+      "id": "sess-1790846285215",
+      "doctorId": "doc-002",
+      "latitude": 6.91724262435392,
+      "longitude": 79.84776928852966,
+      "accuracy": 75,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T09:18:05.215Z"
+    },
+    {
+      "id": "sess-1790845059723",
+      "doctorId": "doc-002",
+      "latitude": 6.917251547344111,
+      "longitude": 79.84777294842186,
+      "accuracy": 88,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T08:57:39.723Z"
+    },
     {
       "id": "sess-1790842468561",
       "doctorId": "admin-243294",
@@ -9689,7 +9998,17 @@
       "recordedAt": "2026-09-22T07:53:48.913Z"
     }
   ],
-  "sessionLocations": {},
+  "sessionLocations": {
+    "doc-001": {
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "recordedAt": "2026-10-01T09:49:27.012Z"
+    }
+  },
   "trustedDevices": {},
   "accessEvents": [],
   "settings": {
@@ -9753,6 +10072,252 @@
     }
   },
   "breakGlassEvents": [
+    {
+      "id": "bg-1790848807444",
+      "tokenId": "0x58a40e97e00af3ae5c71047360ddcaa94ec20f09aa97b4d48560efd7bc4ecd3c",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-01T10:00:07.444Z",
+      "expiresAt": "2026-10-01T14:00:07.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-01T10:00:07.455Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1790848807276",
+      "tokenId": "0xe421e38b5aa31650bbe9a75e9cb010ee92e08617cbd81ee433aecbc27120f024",
+      "patientId": "patient-456",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-01T10:00:07.276Z",
+      "expiresAt": "2026-10-01T14:00:07.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790848805790",
+      "tokenId": "0x9d9f1304c7b2294c2df2db94f90562ce2aea5f0368ea9def3e595b0dbf5b6cae",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-01T10:00:05.790Z",
+      "expiresAt": "2026-10-01T14:00:05.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790848688126",
+      "tokenId": "0x3be93f1d46e8081d2ffd0d39d5784a0137a1f6706de4eccec732d4022352ec22",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-01T09:58:08.126Z",
+      "expiresAt": "2026-10-01T13:58:08.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-01T09:58:08.137Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1790848687972",
+      "tokenId": "0xc373ab4ae10a51ac147d07402a3cc2a5aefb4394ba09ae03400b3c94b63b8ecb",
+      "patientId": "patient-456",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-01T09:58:07.972Z",
+      "expiresAt": "2026-10-01T13:58:07.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790848686453",
+      "tokenId": "0xc3a111adc064f62cae86ab4b43b985ca78e6c49760ac56706e46354aab53aca4",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-01T09:58:06.453Z",
+      "expiresAt": "2026-10-01T13:58:06.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790848167935",
+      "tokenId": "0x716b867a376f1cbee08d6e43d2c093e3d99f9019d239254f179cfd35eb104840",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-01T09:49:27.935Z",
+      "expiresAt": "2026-10-01T10:20:03.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790848050807",
+      "tokenId": "0xf8fcb7c712bc3ffd0586f117e2fd360c5c349a8c27d93855cc0c0409b43de753",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-01T09:47:30.807Z",
+      "expiresAt": "2026-10-01T10:18:02.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-01T09:47:30.828Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1790848050488",
+      "tokenId": "0x16303e046d65ac8219baf09fe1f11d829990dec4f7a4a087b3636e9a1d56e28a",
+      "patientId": "patient-456",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-01T09:47:30.488Z",
+      "expiresAt": "2026-10-01T13:47:30.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790848047889",
+      "tokenId": "0x6b65c081d985031081c758f21cc093dfb034d213aee982567e6cab37585c5cb8",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-01T09:47:27.889Z",
+      "expiresAt": "2026-10-01T10:17:56.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790847759866",
+      "tokenId": "0x3bbabb2769fcd1696082c5e84b5af94178eb0f205cc6ddbef5bb860724944bb9",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-01T09:42:39.866Z",
+      "expiresAt": "2026-10-01T10:13:04.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-01T09:42:39.884Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1790847759555",
+      "tokenId": "0x07ddeb346dc8a3ff15946b9637c1aebaaa06bb2858d2833e04606c27817a6147",
+      "patientId": "patient-456",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-01T09:42:39.555Z",
+      "expiresAt": "2026-10-01T13:42:39.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790847756980",
+      "tokenId": "0x0ecf0076f219a273f3201899037420c1f66e761df1b4ebb769d5ecb0dcacffe2",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-01T09:42:36.980Z",
+      "expiresAt": "2026-10-01T10:12:58.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790847545185",
+      "tokenId": "0x76b45cc7c6f1b11eb28c297358645a8f7298a7992fb8b61b214e59959fab3603",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-01T09:39:05.185Z",
+      "expiresAt": "2026-10-01T10:09:23.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-01T09:39:05.208Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1790847544739",
+      "tokenId": "0xf1bacd3c902efa06a764c17c90bc6e69214807e5f7f0d4fe0168de268f4c4439",
+      "patientId": "patient-456",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-01T09:39:04.739Z",
+      "expiresAt": "2026-10-01T13:39:04.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1790847542271",
+      "tokenId": "0x4f97387366d81a3db80d69cdd6c53615230e82f1366f28acdbac67e6b44dec64",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-01T09:39:02.271Z",
+      "expiresAt": "2026-10-01T10:09:17.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
     {
       "id": "bg-1790828762826",
       "tokenId": "0x19577f96078cb561383001e5e5b23a78b3c0f88aa2ea7ebad895adc820b5701e",
@@ -9932,6 +10497,61 @@
       "approvedAt": "2026-10-01T04:26:02.956Z",
       "revokedBy": "Administrator",
       "revokedAt": "2026-10-01T04:26:02.962Z"
+    },
+    "sha256:terminal-1790847545330": {
+      "fingerprint": "sha256:terminal-1790847545330",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-01T09:39:05.333Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-01T09:39:05.340Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-01T09:39:05.350Z"
+    },
+    "sha256:terminal-1790847759992": {
+      "fingerprint": "sha256:terminal-1790847759992",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-01T09:42:39.997Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-01T09:42:40.004Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-01T09:42:40.017Z"
+    },
+    "sha256:terminal-1790848050938": {
+      "fingerprint": "sha256:terminal-1790848050938",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-01T09:47:30.945Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-01T09:47:30.961Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-01T09:47:30.977Z"
+    },
+    "sha256:terminal-1790848688203": {
+      "fingerprint": "sha256:terminal-1790848688203",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-01T09:58:08.205Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-01T09:58:08.212Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-01T09:58:08.218Z"
+    },
+    "sha256:terminal-1790848807535": {
+      "fingerprint": "sha256:terminal-1790848807535",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-01T10:00:07.539Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-01T10:00:07.544Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-01T10:00:07.550Z"
     }
   }
 }
