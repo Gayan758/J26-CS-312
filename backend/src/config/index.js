@@ -33,6 +33,23 @@ module.exports = {
   smtpPass: process.env.SMTP_PASS || "",
   smtpFrom: process.env.SMTP_FROM || "MedGuard Clinical Security <security@medguard.sliit.lk>",
 
+  // Traccar GPS Telemetry Server (Audit 2 Integration)
+  traccarApiUrl: process.env.TRACCAR_API_URL || "http://127.0.0.1:8082",
+  traccarUser: process.env.TRACCAR_USER || "admin",
+  traccarPass: process.env.TRACCAR_PASS || "admin",
+
+  // Canonical Risk Weights & Decision Thresholds (Audit 3 Single Source of Truth)
+  riskWeights: {
+    w_t: parseFloat(process.env.MEDGUARD_WEIGHT_TIME || "0.15"),
+    w_l: parseFloat(process.env.MEDGUARD_WEIGHT_GEO || "0.35"),
+    w_d: parseFloat(process.env.MEDGUARD_WEIGHT_DEVICE || "0.25"),
+    w_b: parseFloat(process.env.MEDGUARD_WEIGHT_BEHAVIOR || "0.25"),
+    alpha: parseFloat(process.env.MEDGUARD_ALPHA_WEIGHTED || "0.7"),
+    beta: parseFloat(process.env.MEDGUARD_BETA_MAX || "0.3"),
+    lowThreshold: parseFloat(process.env.MEDGUARD_THRESHOLD_LOW || "0.30"),
+    mediumThreshold: parseFloat(process.env.MEDGUARD_THRESHOLD_MED || "0.65")
+  },
+
   validation,
   validateEnvironment
 };

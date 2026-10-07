@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {
   Users,
   UserCheck,
@@ -21,17 +22,32 @@ import {
   FileCheck,
   Stethoscope,
   X,
-  ExternalLink
+  ExternalLink,
+  Laptop
 } from "lucide-react";
 import Button from "./ui/Button";
 import StatusBadge from "./ui/StatusBadge";
 
 export default function UserManagement({ onShowToast }) {
+  const [activeAdminTab, setActiveAdminTab] = useState("users"); // "users" | "devices"
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+
+  // Trusted Devices State
+  const [devices, setDevices] = useState([]);
+  const [devicesLoading, setDevicesLoading] = useState(false);
+  const [isEnrollDeviceOpen, setIsEnrollDeviceOpen] = useState(false);
+  const [enrollDeviceForm, setEnrollDeviceForm] = useState({
+    name: "",
+    fingerprint: "",
+    userId: "",
+    approved: true
+  });
+  const [enrollSubmitting, setEnrollSubmitting] = useState(false);
+  const [capturingFp, setCapturingFp] = useState(false);
 
   // Dialog / Modal States
   const [resetModalUser, setResetModalUser] = useState(null);
@@ -83,9 +99,133 @@ export default function UserManagement({ onShowToast }) {
     setLoading(false);
   };
 
+  // Fetch registered workstation devices
+  const fetchDevices = async () => {
+    setDevicesLoading(true);
+    try {
+      const token = localStorage.getItem("medguard_doctor_token");
+      const res = await fetch("/api/admin/devices", {
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.devices && Array.isArray(data.devices)) {
+          setDevices(data.devices);
+          setDevicesLoading(false);
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn("Could not fetch devices:", err.message);
+    }
+    setDevices([]);
+    setDevicesLoading(false);
+  };
+
   useEffect(() => {
     fetchUsers();
+    fetchDevices();
   }, []);
+
+  useEffect(() => {
+    if (activeAdminTab === "devices") {
+      fetchDevices();
+    }
+  }, [activeAdminTab]);
+
+  const handleCaptureCurrentBrowserFingerprint = async () => {
+    setCapturingFp(true);
+    try {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      if (result?.visitorId) {
+        setEnrollDeviceForm((prev) => ({ ...prev, fingerprint: result.visitorId }));
+        toast("Current browser FingerprintJS visitor ID captured successfully.", "success");
+      } else {
+        toast("Unable to retrieve browser visitor ID.", "warning");
+      }
+    } catch (err) {
+      toast("Fingerprint extraction error: " + err.message, "error");
+    }
+    setCapturingFp(false);
+  };
+
+  const handleEnrollDeviceSubmit = async (e) => {
+    e.preventDefault();
+    if (!enrollDeviceForm.fingerprint.trim()) {
+      toast("Device fingerprint (Visitor ID) is required.", "error");
+      return;
+    }
+    setEnrollSubmitting(true);
+    const token = localStorage.getItem("medguard_doctor_token");
+    try {
+      const res = await fetch("/api/admin/devices", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({
+          fingerprint: enrollDeviceForm.fingerprint.trim(),
+          name: enrollDeviceForm.name.trim() || "Clinical Workstation",
+          userId: enrollDeviceForm.userId || undefined,
+          approved: enrollDeviceForm.approved
+        })
+      });
+      if (res.ok) {
+        toast("Workstation terminal enrolled successfully.", "success");
+        setIsEnrollDeviceOpen(false);
+        setEnrollDeviceForm({ name: "", fingerprint: "", userId: "", approved: true });
+        fetchDevices();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        toast(data.error || "Failed to enroll device.", "error");
+      }
+    } catch (err) {
+      toast("Network error enrolling device.", "error");
+    }
+    setEnrollSubmitting(false);
+  };
+
+  const handleApproveDevice = async (fp) => {
+    const token = localStorage.getItem("medguard_doctor_token");
+    try {
+      const res = await fetch(`/api/admin/devices/${encodeURIComponent(fp)}/approve`, {
+        method: "POST",
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
+      if (res.ok) {
+        toast("Workstation approved for clinical access.", "success");
+        fetchDevices();
+      } else {
+        toast("Failed to approve workstation.", "error");
+      }
+    } catch {
+      toast("Network error updating workstation.", "error");
+    }
+  };
+
+  const handleRevokeDevice = async (fp) => {
+    const token = localStorage.getItem("medguard_doctor_token");
+    try {
+      const res = await fetch(`/api/admin/devices/${encodeURIComponent(fp)}/revoke`, {
+        method: "POST",
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      });
+      if (res.ok) {
+        toast("Workstation authorization revoked.", "warning");
+        fetchDevices();
+      } else {
+        toast("Failed to revoke workstation.", "error");
+      }
+    } catch {
+      toast("Network error updating workstation.", "error");
+    }
+  };
 
   const toast = (msg, type = "info") => {
     if (onShowToast) onShowToast(msg, type);
@@ -307,31 +447,53 @@ export default function UserManagement({ onShowToast }) {
               variant="secondary"
               size="sm"
               icon={RefreshCw}
-              onClick={fetchUsers}
+              onClick={() => {
+                if (activeAdminTab === "devices") fetchDevices();
+                else fetchUsers();
+              }}
             >
               Refresh
             </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              icon={Plus}
-              onClick={() => {
-                setProvisionForm({
-                  name: "",
-                  username: "",
-                  password: "Password123!",
-                  email: "",
-                  slmcNumber: "",
-                  specialty: "Consultant Cardiologist",
-                  baseCampus: "SLIIT Malabe Campus Health Center",
-                  phone: "+94 77 123 4567",
-                  role: "Doctor"
-                });
-                setIsProvisionOpen(true);
-              }}
-            >
-              Provision Clinician
-            </Button>
+            {activeAdminTab === "users" ? (
+              <Button
+                variant="primary"
+                size="sm"
+                icon={Plus}
+                onClick={() => {
+                  setProvisionForm({
+                    name: "",
+                    username: "",
+                    password: "Password123!",
+                    email: "",
+                    slmcNumber: "",
+                    specialty: "Consultant Cardiologist",
+                    baseCampus: "SLIIT Malabe Campus Health Center",
+                    phone: "+94 77 123 4567",
+                    role: "Doctor"
+                  });
+                  setIsProvisionOpen(true);
+                }}
+              >
+                Provision Clinician
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                size="sm"
+                icon={Plus}
+                onClick={() => {
+                  setEnrollDeviceForm({
+                    name: "",
+                    fingerprint: "",
+                    userId: "",
+                    approved: true
+                  });
+                  setIsEnrollDeviceOpen(true);
+                }}
+              >
+                Enroll Workstation
+              </Button>
+            )}
           </div>
         </div>
 
@@ -388,7 +550,38 @@ export default function UserManagement({ onShowToast }) {
         </div>
       </div>
 
-      {/* 3. Filter & Search Controls */}
+      {/* 2.5 Admin Tab Switcher */}
+      <div className="flex items-center gap-2 border-b border-border pb-1">
+        <button
+          type="button"
+          onClick={() => setActiveAdminTab("users")}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition ${
+            activeAdminTab === "users"
+              ? "bg-primary text-white shadow-xs"
+              : "bg-surface-muted text-text-muted hover:text-text-primary"
+          }`}
+        >
+          <Users className="w-3.5 h-3.5" />
+          <span>Personnel Accounts ({users.length})</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveAdminTab("devices")}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition ${
+            activeAdminTab === "devices"
+              ? "bg-primary text-white shadow-xs"
+              : "bg-surface-muted text-text-muted hover:text-text-primary"
+          }`}
+        >
+          <Laptop className="w-3.5 h-3.5" />
+          <span>Trusted Workstation Terminals ({devices.length})</span>
+        </button>
+      </div>
+
+      {activeAdminTab === "users" && (
+        <>
+          {/* 3. Filter & Search Controls */}
       <div className="bg-surface rounded-lg border border-border p-3.5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
         <div className="relative flex-1 max-w-md">
           <Search className="w-4 h-4 text-text-subtle absolute left-3 top-1/2 -translate-y-1/2" />
@@ -649,6 +842,120 @@ export default function UserManagement({ onShowToast }) {
           </table>
         </div>
       </div>
+        </>
+      )}
+
+      {/* Trusted Workstation Terminals Panel */}
+      {activeAdminTab === "devices" && (
+        <div className="space-y-4">
+          <div className="bg-surface rounded-lg border border-border p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-semibold text-text-primary flex items-center gap-2">
+                <Laptop className="w-4 h-4 text-primary" />
+                <span>Authorized Clinical Workstation Registry</span>
+              </h2>
+              <p className="text-xs text-text-muted mt-0.5">
+                Workstations authenticated via FingerprintJS visitorId telemetry. Zero MAC address inspection.
+              </p>
+            </div>
+            <Button
+              variant="primary"
+              size="sm"
+              icon={Plus}
+              onClick={() => {
+                setEnrollDeviceForm({
+                  name: "",
+                  fingerprint: "",
+                  userId: "",
+                  approved: true
+                });
+                setIsEnrollDeviceOpen(true);
+              }}
+            >
+              Enroll Workstation
+            </Button>
+          </div>
+
+          <div className="bg-surface rounded-lg border border-border overflow-hidden">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="border-b border-border bg-surface-muted text-text-muted font-medium text-[11px] uppercase tracking-wider">
+                  <th className="py-3 px-4">Terminal Description</th>
+                  <th className="py-3 px-3">Fingerprint Identifier (Visitor ID)</th>
+                  <th className="py-3 px-3">Assigned Scope / Clinician</th>
+                  <th className="py-3 px-3">Trust Status</th>
+                  <th className="py-3 px-3">Enrolled At</th>
+                  <th className="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {devicesLoading ? (
+                  <tr>
+                    <td colSpan="6" className="py-8 text-center text-text-muted">
+                      Loading registered workstations...
+                    </td>
+                  </tr>
+                ) : devices.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="py-8 text-center text-text-muted">
+                      No clinical workstations enrolled yet. Click "Enroll Workstation" to register.
+                    </td>
+                  </tr>
+                ) : (
+                  devices.map((dev) => (
+                    <tr key={dev.fingerprint} className="hover:bg-surface-muted/50 transition">
+                      <td className="py-3 px-4">
+                        <div className="font-semibold text-text-primary text-xs">
+                          {dev.name || "Clinical Workstation"}
+                        </div>
+                      </td>
+                      <td className="py-3 px-3 font-mono text-[11px] text-text-primary">
+                        <span className="px-1.5 py-0.5 rounded bg-surface-muted border border-border">
+                          {dev.fingerprint}
+                        </span>
+                      </td>
+                      <td className="py-3 px-3 text-text-muted text-[11px]">
+                        {dev.userId || "Hospital-wide Clinical Workstation"}
+                      </td>
+                      <td className="py-3 px-3">
+                        {dev.status === "approved" ? (
+                          <StatusBadge variant="success" label="Approved" />
+                        ) : dev.status === "revoked" ? (
+                          <StatusBadge variant="critical" label="Revoked" />
+                        ) : (
+                          <StatusBadge variant="warning" label="Pending" />
+                        )}
+                      </td>
+                      <td className="py-3 px-3 text-text-subtle text-[11px]">
+                        {dev.approvedAt ? new Date(dev.approvedAt).toLocaleDateString() : (dev.registeredAt ? new Date(dev.registeredAt).toLocaleDateString() : "Active")}
+                      </td>
+                      <td className="py-3 px-4 text-right">
+                        {dev.status === "approved" ? (
+                          <button
+                            type="button"
+                            onClick={() => handleRevokeDevice(dev.fingerprint)}
+                            className="px-2 py-1 rounded text-[11px] font-medium bg-amber-500/10 text-amber-600 hover:bg-amber-500/20 transition"
+                          >
+                            Revoke Trust
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => handleApproveDevice(dev.fingerprint)}
+                            className="px-2 py-1 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 transition"
+                          >
+                            Approve Access
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* 5. Password Reset Modal */}
       {resetModalUser && (
@@ -907,6 +1214,122 @@ export default function UserManagement({ onShowToast }) {
                   disabled={provisionSubmitting || !provisionForm.name || !provisionForm.username}
                 >
                   {provisionSubmitting ? "Provisioning..." : "Complete Clinician Provisioning"}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {/* 8. Enroll Workstation Device Modal */}
+      {isEnrollDeviceOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-surface rounded-lg border border-border max-w-md w-full p-5 shadow-2xl animate-in zoom-in-95 duration-100">
+            <div className="flex items-center justify-between pb-3 border-b border-border">
+              <div className="flex items-center gap-2 text-text-primary font-semibold text-sm">
+                <Laptop className="w-4 h-4 text-primary" />
+                <span>Enroll Trusted Workstation Device</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsEnrollDeviceOpen(false)}
+                className="text-text-subtle hover:text-text-primary"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleEnrollDeviceSubmit} className="mt-4 space-y-3.5 text-xs">
+              <div>
+                <label className="font-medium text-text-primary block mb-1">
+                  Workstation Terminal Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Cardiology Consultation Room 3 Console"
+                  value={enrollDeviceForm.name}
+                  onChange={(e) => setEnrollDeviceForm({ ...enrollDeviceForm, name: e.target.value })}
+                  className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary text-xs focus:ring-1 focus:ring-primary focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="font-medium text-text-primary">
+                    Browser / Hardware Fingerprint (Visitor ID) *
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleCaptureCurrentBrowserFingerprint}
+                    disabled={capturingFp}
+                    className="text-[11px] text-primary hover:underline font-medium flex items-center gap-1"
+                  >
+                    <Laptop className="w-3 h-3" />
+                    <span>{capturingFp ? "Capturing..." : "Capture Current Browser"}</span>
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter FingerprintJS visitorId..."
+                  value={enrollDeviceForm.fingerprint}
+                  onChange={(e) => setEnrollDeviceForm({ ...enrollDeviceForm, fingerprint: e.target.value })}
+                  className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary font-mono text-xs focus:ring-1 focus:ring-primary focus:outline-none"
+                />
+                <p className="text-[11px] text-text-muted mt-1 leading-relaxed">
+                  MedGuard uses browser client-side entropy and hardware capability fingerprinting via FingerprintJS. MAC addresses are never collected or stored.
+                </p>
+              </div>
+
+              <div>
+                <label className="font-medium text-text-primary block mb-1">
+                  Assigned Personnel (Optional)
+                </label>
+                <select
+                  value={enrollDeviceForm.userId}
+                  onChange={(e) => setEnrollDeviceForm({ ...enrollDeviceForm, userId: e.target.value })}
+                  className="w-full px-3 py-1.5 rounded border border-border bg-surface text-text-primary text-xs focus:ring-1 focus:ring-primary focus:outline-none"
+                >
+                  <option value="">Hospital-wide Terminal (Shared)</option>
+                  {users
+                    .filter((u) => u.role?.toLowerCase() === "doctor")
+                    .map((doc) => (
+                      <option key={doc.id} value={doc.id}>
+                        {doc.name} (@{doc.username})
+                      </option>
+                    ))}
+                </select>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="immediateApprove"
+                  checked={enrollDeviceForm.approved}
+                  onChange={(e) => setEnrollDeviceForm({ ...enrollDeviceForm, approved: e.target.checked })}
+                  className="rounded border-border text-primary focus:ring-primary"
+                />
+                <label htmlFor="immediateApprove" className="text-xs text-text-primary font-medium cursor-pointer">
+                  Approve terminal immediately for clinical workstation bypass
+                </label>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setIsEnrollDeviceOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="sm"
+                  disabled={enrollSubmitting || !enrollDeviceForm.fingerprint.trim()}
+                >
+                  {enrollSubmitting ? "Enrolling..." : "Complete Workstation Enrollment"}
                 </Button>
               </div>
             </form>

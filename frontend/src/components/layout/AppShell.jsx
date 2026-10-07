@@ -495,7 +495,7 @@ export default function AppShell({
                           {doctorLocation?.campusName || "SLIIT Malabe Campus Health Center"}
                         </div>
                         <div className="font-mono text-[10px] text-text-subtle mt-0.5">
-                          IP: {contextStatus?.detectedIp || "172.20.10.8"} (CIDR Match) · Lat: {doctorLocation?.latitude?.toFixed(4) || "6.9147"}°
+                          IP: {contextStatus?.detectedIp || "172.20.10.8"} (CIDR Match) · Lat: {doctorLocation?.latitude != null ? `${doctorLocation.latitude.toFixed(4)}°` : "No GPS"}
                         </div>
                       </div>
                     </div>

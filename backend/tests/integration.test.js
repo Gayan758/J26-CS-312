@@ -318,7 +318,8 @@ describe("MedGuard Backend Integration Tests", function () {
         .get(`/api/patients/${patientId}`)
         .set("x-doctor-address", doctorAddress)
         .set("x-device-fingerprint", "sha256:alice-workstation-secure-enclave")
-        .set("x-forwarded-for", "10.100.1.25");
+        .set("x-forwarded-for", "10.100.1.25")
+        .set("x-request-timestamp", "2026-09-15T09:30:00Z");
 
       expect(res.status).to.equal(200);
       expect(res.body.status).to.equal("ALLOW");

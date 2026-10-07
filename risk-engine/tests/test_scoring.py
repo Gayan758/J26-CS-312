@@ -142,3 +142,65 @@ def test_real_location_outside_with_sensitive_record_triggers_high_risk():
     score, level, _ = compute_risk_score(r_t, r_l, r_d, r_b)
     assert score >= 0.65
     assert level == "HIGH"
+
+def test_all_subscores_zero_produces_zero_and_allow():
+    """
+    Specification Test: All sub-scores at 0 produce R = 0.0 and decision 'LOW' (ALLOW).
+    """
+    score, level, breakdown = compute_risk_score(0.0, 0.0, 0.0, 0.0)
+    assert score == 0.0
+    assert level == "LOW"
+    assert breakdown["weighted_component"] == 0.0
+    assert breakdown["max_component"] == 0.0
+
+def test_all_subscores_one_produces_one_and_block():
+    """
+    Specification Test: All sub-scores at 1 produce R = 1.0 and decision 'HIGH' (BLOCK).
+    """
+    score, level, breakdown = compute_risk_score(1.0, 1.0, 1.0, 1.0)
+    assert score == 1.0
+    assert level == "HIGH"
+    assert breakdown["weighted_component"] == 1.0
+    assert breakdown["max_component"] == 1.0
+
+def test_single_high_subscore_produces_mfa_required():
+    """
+    Specification Test: A single high sub-score (R_l = 1.0) with all others at 0 produces:
+    R = 0.7 * (0.35 * 1.0) + 0.3 * 1.0 = 0.245 + 0.3 = 0.545 -> 'MEDIUM' (MFA Required).
+    """
+    score, level, breakdown = compute_risk_score(0.0, 1.0, 0.0, 0.0)
+    assert abs(breakdown["weighted_component"] - 0.35) < 1e-4
+    assert breakdown["max_component"] == 1.0
+    # 0.545 evaluates to 0.54 or 0.55 depending on floating-point banker's rounding
+    assert score in (0.54, 0.55)
+    assert level == "MEDIUM"
+
+def test_exact_boundary_conditions_low_medium_high():
+    """
+    Specification Test: Exact decision threshold boundary conditions:
+      R < 0.30 -> Allow (LOW)
+      0.30 <= R < 0.65 -> MFA Required (MEDIUM)
+      R >= 0.65 -> Block (HIGH)
+    """
+    # 1. Just below low threshold (0.29)
+    # Using dummy weights/scores to produce score around 0.29:
+    # 0.7 * (0.29) + 0.3 * (0.29) = 0.29
+    s_low, l_low, _ = compute_risk_score(0.29, 0.29, 0.29, 0.29)
+    assert s_low == 0.29
+    assert l_low == "LOW"
+
+    # 2. Exactly at low threshold (0.30) -> MEDIUM (MFA Required)
+    s_med_start, l_med_start, _ = compute_risk_score(0.30, 0.30, 0.30, 0.30)
+    assert s_med_start == 0.30
+    assert l_med_start == "MEDIUM"
+
+    # 3. Just below high threshold (0.64) -> MEDIUM (MFA Required)
+    s_med_end, l_med_end, _ = compute_risk_score(0.64, 0.64, 0.64, 0.64)
+    assert s_med_end == 0.64
+    assert l_med_end == "MEDIUM"
+
+    # 4. Exactly at high threshold (0.65) -> HIGH (BLOCK)
+    s_high, l_high, _ = compute_risk_score(0.65, 0.65, 0.65, 0.65)
+    assert s_high == 0.65
+    assert l_high == "HIGH"
+

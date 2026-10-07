@@ -146,17 +146,40 @@ class RiskService {
       else if (sens === "restricted" || sens === "psychiatric") r_b = 0.85;
     }
 
-    // Weights: w_t=0.15, w_l=0.35, w_d=0.25, w_b=0.25
-    const weighted_component = (0.15 * r_t) + (0.35 * r_l) + (0.25 * r_d) + (0.25 * r_b);
+    // Weights from central configuration: w_t=0.15, w_l=0.35, w_d=0.25, w_b=0.25 (Sum: 1.0)
+    const rw = config.riskWeights || {
+      w_t: 0.15,
+      w_l: 0.35,
+      w_d: 0.25,
+      w_b: 0.25,
+      alpha: 0.7,
+      beta: 0.3,
+      lowThreshold: 0.30,
+      mediumThreshold: 0.65
+    };
+
+    // 1. Separate named intermediate variable: weighted average component
+    const weighted_component = (rw.w_t * r_t) + (rw.w_l * r_l) + (rw.w_d * r_d) + (rw.w_b * r_b);
+
+    // 2. Separate named intermediate variable: maximum sub-score component
     const max_component = Math.max(r_t, r_l, r_d, r_b);
-    const final_score = (0.7 * weighted_component) + (0.3 * max_component);
 
-    const lowThreshold = settings?.riskThresholds?.lowThreshold ?? 0.30;
-    const medThreshold = settings?.riskThresholds?.mediumThreshold ?? 0.65;
+    // 3. Blended combination: R = 0.7 * weighted + 0.3 * max
+    const raw_final_score = (rw.alpha * weighted_component) + (rw.beta * max_component);
+    const final_score = Math.max(0.0, Math.min(1.0, raw_final_score));
 
+    const lowThreshold = settings?.riskThresholds?.lowThreshold ?? rw.lowThreshold;
+    const medThreshold = settings?.riskThresholds?.mediumThreshold ?? rw.mediumThreshold;
+
+    // Exact threshold classification: R < 0.30 -> LOW (Allow), 0.30 <= R < 0.65 -> MEDIUM (MFA), R >= 0.65 -> HIGH (Block)
     let risk_level = "LOW";
-    if (final_score > medThreshold) risk_level = "HIGH";
-    else if (final_score > lowThreshold) risk_level = "MEDIUM";
+    if (final_score >= medThreshold) {
+      risk_level = "HIGH";
+    } else if (final_score >= lowThreshold) {
+      risk_level = "MEDIUM";
+    } else {
+      risk_level = "LOW";
+    }
 
     return {
       risk_score: parseFloat(final_score.toFixed(2)),

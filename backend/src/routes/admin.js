@@ -299,6 +299,36 @@ router.get("/devices", (req, res) => {
 });
 
 /**
+ * POST /api/admin/devices
+ * Administrator enrolls a workstation terminal by FingerprintJS visitorId
+ */
+router.post("/devices", (req, res) => {
+  try {
+    const authorizationService = require("../services/authorizationService");
+    if (req.user) {
+      const auth = authorizationService.authorize(req.user, "manage_devices");
+      if (!auth.allowed) return res.status(403).json({ error: auth.reason });
+    }
+
+    const { fingerprint, name, userId, approved } = req.body;
+    if (!fingerprint) {
+      return res.status(400).json({ error: "Fingerprint identifier is required." });
+    }
+
+    const cleanFp = String(fingerprint).trim();
+    ehrDatabase.registerDevice(cleanFp, name || "Enrolled Clinical Workstation", userId);
+    if (approved !== false) {
+      ehrDatabase.approveDevice(cleanFp, req.user?.name || "Hospital Administrator");
+    }
+
+    const dev = ehrDatabase.getRegisteredDevices().find((d) => d.fingerprint === cleanFp);
+    res.status(201).json({ success: true, device: dev });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
  * POST /api/admin/devices/:fingerprint/approve
  * Administrator approves a registered workstation terminal
  */

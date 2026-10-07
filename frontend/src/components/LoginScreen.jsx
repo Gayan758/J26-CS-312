@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {
   Shield,
   Lock,
@@ -43,8 +44,31 @@ export default function LoginScreen({ onLoginSuccess, onPatientLogin }) {
   // Real Geolocation (acquired strictly from browser API without hardcoded coordinates)
   const [deviceLocation, setDeviceLocation] = useState(null);
 
+  // Real Device Trust: FingerprintJS visitorId
+  const [deviceFingerprint, setDeviceFingerprint] = useState("");
+
   useEffect(() => {
     document.title = "Sign In · MedGuard EHR";
+  }, []);
+
+  // Initialize FingerprintJS visitorId
+  useEffect(() => {
+    let isMounted = true;
+    async function initFingerprint() {
+      try {
+        const fp = await FingerprintJS.load();
+        const result = await fp.get();
+        if (isMounted && result?.visitorId) {
+          setDeviceFingerprint(result.visitorId);
+        }
+      } catch (_) {
+        // Fallback gracefully if client blocks fingerprinting
+      }
+    }
+    initFingerprint();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -78,7 +102,9 @@ export default function LoginScreen({ onLoginSuccess, onPatientLogin }) {
         body: JSON.stringify({
           username: username.trim(),
           password,
-          coordinates: deviceLocation
+          coordinates: deviceLocation,
+          fingerprint: deviceFingerprint || undefined,
+          deviceFingerprint: deviceFingerprint || undefined
         })
       });
 
@@ -122,7 +148,8 @@ export default function LoginScreen({ onLoginSuccess, onPatientLogin }) {
           baseCampus: regCampus,
           username: regUsername.trim().toLowerCase(),
           password: regPassword,
-          phone: regPhone.trim()
+          phone: regPhone.trim(),
+          deviceFingerprint: deviceFingerprint || undefined
         })
       });
 

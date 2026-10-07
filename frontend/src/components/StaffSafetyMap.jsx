@@ -182,8 +182,8 @@ export default function StaffSafetyMap({ doctor, onShowToast }) {
   const handleTriggerSOS = async () => {
     if (!doctor) return;
     try {
-      const lat = doctor.lastKnownLocation?.latitude || 6.9147;
-      const lon = doctor.lastKnownLocation?.longitude || 79.9733;
+      const lat = doctor.lastKnownLocation?.latitude ?? null;
+      const lon = doctor.lastKnownLocation?.longitude ?? null;
       const token = localStorage.getItem("medguard_doctor_token");
       const res = await fetch("/api/tracking/sos", {
         method: "POST",

@@ -166,7 +166,8 @@ router.post("/register", registerLimiter, async (req, res) => {
  * Doctor authentication with real coordinates capture & persistent session location
  */
 router.post("/login", loginLimiter, async (req, res) => {
-  const { username, password, coordinates, deviceFingerprint } = req.body;
+  const { username, password, coordinates, deviceFingerprint, fingerprint } = req.body;
+  const activeFingerprint = (fingerprint || deviceFingerprint || "").trim();
 
   if (!username || !password) {
     return res.status(400).json({ error: "Username and password are required." });
@@ -293,9 +294,12 @@ router.post("/login", loginLimiter, async (req, res) => {
     });
   }
 
-  // Enroll device fingerprint if supplied
-  if (deviceFingerprint) {
-    ehrDatabase.addTrustedDevice(doctor.ethereumAddress || doctor.id, deviceFingerprint);
+  // Device Fingerprint verification & enrollment (FingerprintJS visitorId, strictly zero MAC address)
+  let isDeviceTrusted = false;
+  if (activeFingerprint) {
+    const checkResult = ehrDatabase.checkTrustedDevice(doctor.ethereumAddress || doctor.id, activeFingerprint);
+    isDeviceTrusted = Boolean(checkResult && checkResult.trusted);
+    ehrDatabase.addTrustedDevice(doctor.ethereumAddress || doctor.id, activeFingerprint);
   }
 
   const tokenPayload = {
@@ -307,7 +311,7 @@ router.post("/login", loginLimiter, async (req, res) => {
     specialty: doctor.specialty || "General Medicine",
     ethereumAddress: doctor.ethereumAddress || "",
     baseCampus: doctor.baseCampus || "",
-    defaultDeviceFingerprint: doctor.defaultDeviceFingerprint || "",
+    defaultDeviceFingerprint: doctor.defaultDeviceFingerprint || activeFingerprint || "",
     role: doctor.role || "Doctor",
     lastKnownLocation: locationInfo
   };
@@ -331,7 +335,9 @@ router.post("/login", loginLimiter, async (req, res) => {
     message: "Doctor authenticated successfully.",
     token,
     doctor: tokenPayload,
-    locationInfo
+    locationInfo,
+    deviceFingerprint: activeFingerprint,
+    isDeviceTrusted
   });
 });
 

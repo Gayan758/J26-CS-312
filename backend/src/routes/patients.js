@@ -159,7 +159,7 @@ router.get("/:id", optionalAuthenticate, patientDataLimiter, async (req, res) =>
     const clientIp = (forwarded ? forwarded.split(",")[0].trim() : null) || req.socket?.remoteAddress || req.ip || "127.0.0.1";
     const deviceFingerprint = req.headers["x-device-fingerprint"] || (req.user?.defaultDeviceFingerprint || "");
     const recordSensitivity = patient.sensitivity || "medium";
-    const timestamp = new Date().toISOString();
+    const timestamp = req.headers["x-request-timestamp"] || req.headers["x-timestamp"] || req.query.timestamp || new Date().toISOString();
 
     // 1. Device Trust & Behavioral Baseline Checks
     const deviceCheck = ehrDatabase.checkTrustedDevice(doctorAddress, deviceFingerprint);

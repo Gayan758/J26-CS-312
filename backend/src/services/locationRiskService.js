@@ -1,7 +1,5 @@
-/**
- * Location Risk Service (MedGuard Section 4.2)
- * Live GPS scoring via Traccar / OsmAnd distance calculation.
- */
+const axios = require("axios");
+const config = require("../config");
 
 const TRUSTED_LOCATIONS = [
   {
@@ -44,6 +42,43 @@ function isWithinTrustedShift(serverTimestamp = new Date()) {
 }
 
 async function getLatestPosition(traccarDeviceId) {
+  if (!traccarDeviceId) return null;
+
+  // 1. Query real Traccar REST API endpoint (${TRACCAR_BASE}/api/positions?deviceId=...)
+  const traccarBase = (config.traccarApiUrl || process.env.TRACCAR_API_URL || "").replace(/\/+$/, "");
+  if (traccarBase) {
+    try {
+      const auth = (config.traccarUser && config.traccarPass) ? {
+        username: config.traccarUser,
+        password: config.traccarPass
+      } : undefined;
+
+      const url = `${traccarBase}/api/positions?deviceId=${encodeURIComponent(traccarDeviceId)}`;
+      const response = await axios.get(url, {
+        auth,
+        timeout: 3000,
+        headers: { Accept: "application/json" }
+      });
+
+      const positions = response.data;
+      if (Array.isArray(positions)) {
+        if (positions.length === 0) {
+          // Traccar returns zero positions for device -> no position found (R_l = 1.0)
+          return null;
+        }
+        const latest = positions[positions.length - 1];
+        return {
+          latitude: latest.latitude,
+          longitude: latest.longitude,
+          fixTime: latest.fixTime || latest.deviceTime || latest.serverTime
+        };
+      }
+    } catch (err) {
+      // Traccar server unreachable or API error; fallback to stored device position
+    }
+  }
+
+  // 2. Telemetry database fallback
   const ehrDatabase = require("./ehrDatabase");
   const device = ehrDatabase.getStaffDeviceById(traccarDeviceId);
   if (device && device.lastPosition) {
@@ -59,7 +94,13 @@ async function getLatestPosition(traccarDeviceId) {
 async function computeLocationRisk(traccarDeviceId, directPosition = null) {
   const position = directPosition || (await getLatestPosition(traccarDeviceId));
 
-  if (!position || position.latitude === undefined || position.longitude === undefined) {
+  if (
+    !position ||
+    position.latitude === undefined ||
+    position.longitude === undefined ||
+    position.latitude === null ||
+    position.longitude === null
+  ) {
     return { R_l: 1.0, locationName: "Unknown", stale: true, distanceMeters: null };
   }
 
