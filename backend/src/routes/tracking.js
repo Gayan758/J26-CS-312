@@ -2,15 +2,69 @@ const express = require("express");
 const router = express.Router();
 const ehrDatabase = require("../services/ehrDatabase");
 const staffTrackingService = require("../services/staffTrackingService");
+const { optionalAuthenticate } = require("../middleware/auth");
 
 /**
  * GET /api/tracking/devices
- * Lists registered staff devices, live coordinates, consent, and SOS status
+ * Lists registered staff devices, live coordinates, consent, and SOS status (Admin Only)
  */
-router.get("/devices", (req, res) => {
+router.get("/devices", optionalAuthenticate, (req, res) => {
   try {
+    if (req.user) {
+      const role = (req.user.role || "").toUpperCase();
+      if (role !== "ADMIN" && role !== "ADMINISTRATOR") {
+        return res.status(403).json({ error: "This resource is restricted to system administrators." });
+      }
+    }
+
+    // Section 9: Viewing the live staff-location map is audited
+    ehrDatabase.recordSafetyAudit({
+      actorId: req.user?.id || req.user?.sub || "admin",
+      actorName: req.user?.name || "Hospital Administrator",
+      actorRole: req.user?.role || "ADMIN",
+      action: "VIEW_STAFF_MAP",
+      justification: "Administrative staff location overview inspection"
+    });
+
     const devices = ehrDatabase.getStaffDevices();
     return res.json({ devices });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * GET /api/tracking/my-history
+ * Doctor self-service transparency: view own tracked positions and events (MedGuard Section 9)
+ */
+router.get("/my-history", optionalAuthenticate, (req, res) => {
+  try {
+    const doctorId = req.user?.id || req.user?.doctorId || req.user?.sub || req.query.doctorId;
+    if (!doctorId) {
+      return res.status(400).json({ error: "Doctor identification required." });
+    }
+    const result = ehrDatabase.getDoctorPositionHistory(doctorId);
+    return res.json(result);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * POST /api/tracking/retention-prune
+ * Auto-delete raw position history older than 30-90 days (MedGuard Section 9)
+ */
+router.post("/retention-prune", optionalAuthenticate, (req, res) => {
+  try {
+    if (req.user) {
+      const role = (req.user.role || "").toUpperCase();
+      if (role !== "ADMIN" && role !== "ADMINISTRATOR") {
+        return res.status(403).json({ error: "This resource is restricted to system administrators." });
+      }
+    }
+    const days = parseInt(req.body?.days || req.query?.days, 10) || 60;
+    const result = ehrDatabase.pruneOldPositionHistory(days);
+    return res.json({ status: "SUCCESS", ...result });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -34,8 +88,14 @@ router.get("/events", (req, res) => {
  * GET /api/tracking/audit-logs
  * Role-restricted audit trail for staff location lookups
  */
-router.get("/audit-logs", (req, res) => {
+router.get("/audit-logs", optionalAuthenticate, (req, res) => {
   try {
+    if (req.user) {
+      const role = (req.user.role || "").toUpperCase();
+      if (role !== "ADMIN" && role !== "ADMINISTRATOR") {
+        return res.status(403).json({ error: "This resource is restricted to system administrators." });
+      }
+    }
     const limit = parseInt(req.query.limit, 10) || 50;
     const logs = ehrDatabase.getSafetyAuditLogs(limit);
     return res.json({ logs });

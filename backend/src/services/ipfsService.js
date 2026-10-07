@@ -96,6 +96,38 @@ class IpfsService {
 
     throw new Error(`[IpfsService] Record not found in decentralized storage for patientId: ${patientId}`);
   }
+
+  async fetch(fileHashOrPatientId) {
+    if (!fileHashOrPatientId) {
+      throw new Error("[IpfsService] fetch requires a fileHash CID or patientId");
+    }
+
+    // Direct fetch by patientId if available
+    try {
+      return await this.fetchEncryptedBlob(fileHashOrPatientId);
+    } catch (_) {
+      // If not found by patientId, search by fileHash CID
+      for (const [, blob] of this.blobStore.entries()) {
+        if (blob.fileHash === fileHashOrPatientId) return blob;
+      }
+
+      if (fs.existsSync(IPFS_REPO_DIR)) {
+        const files = fs.readdirSync(IPFS_REPO_DIR);
+        for (const file of files) {
+          if (file.endsWith(".json")) {
+            try {
+              const content = JSON.parse(fs.readFileSync(path.join(IPFS_REPO_DIR, file), "utf8"));
+              if (content.fileHash === fileHashOrPatientId) {
+                return content;
+              }
+            } catch (_) {}
+          }
+        }
+      }
+
+      throw new Error(`[IpfsService] Blob not found for identifier: ${fileHashOrPatientId}`);
+    }
+  }
 }
 
 module.exports = new IpfsService();

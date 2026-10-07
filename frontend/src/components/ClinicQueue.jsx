@@ -27,7 +27,7 @@ export default function ClinicQueue({
   onRefreshQueue
 }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState("all"); // "all" | "critical" | "specialist" | "outpatient"
+  const [filterType, setFilterType] = useState("all"); // "all" | "er_trauma" | "outpatient"
   const [isCompact, setIsCompact] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const searchInputRef = useRef(null);
@@ -50,7 +50,7 @@ export default function ClinicQueue({
     setTimeout(() => setIsRefreshing(false), 500);
   };
 
-  // Filter logic
+  // Filter logic (Section 6.3: All / ER Trauma / Outpatient)
   const filteredPatients = patients.filter((p) => {
     const term = searchTerm.toLowerCase();
     const matchesSearch =
@@ -62,25 +62,17 @@ export default function ClinicQueue({
 
     if (!matchesSearch) return false;
 
-    if (filterType === "critical") {
+    if (filterType === "er_trauma") {
       return p.statusType === "emergency";
     }
-    if (filterType === "specialist") {
-      return p.statusType === "specialist" || (p.department || "").toLowerCase().includes("clinic") || (p.department || "").toLowerCase().includes("nephrology");
-    }
     if (filterType === "outpatient") {
-      return p.statusType !== "emergency" && !((p.department || "").toLowerCase().includes("nephrology"));
+      return p.statusType !== "emergency";
     }
     return true;
   });
 
-  const criticalCount = patients.filter((p) => p.statusType === "emergency").length;
-  const specialistCount = patients.filter(
-    (p) => p.statusType === "specialist" || (p.department || "").toLowerCase().includes("clinic") || (p.department || "").toLowerCase().includes("nephrology")
-  ).length;
-  const outpatientCount = patients.filter(
-    (p) => p.statusType !== "emergency" && !((p.department || "").toLowerCase().includes("nephrology"))
-  ).length;
+  const erTraumaCount = patients.filter((p) => p.statusType === "emergency").length;
+  const outpatientCount = patients.filter((p) => p.statusType !== "emergency").length;
 
   // Compute patient age from DOB
   const calculateAge = (dobString) => {
@@ -263,7 +255,7 @@ export default function ClinicQueue({
                 onClick={() => onOpenBreakGlass(row)}
                 title="Emergency RAP Override"
               >
-                ER Override
+                ER Break-Glass
               </Button>
             )}
 
@@ -274,7 +266,7 @@ export default function ClinicQueue({
               iconPosition="right"
               onClick={() => onOpenChart(row)}
             >
-              Open Record
+              Open Medical Record
             </Button>
           </div>
         );
@@ -305,6 +297,7 @@ export default function ClinicQueue({
         {/* Right: Segmented Filters, Density Toggle, Admit Button */}
         <div className="flex items-center gap-2 flex-wrap">
           {/* Segmented Filter Control */}
+          {/* Segmented Filter Control (Section 6.3: All / ER Trauma / Outpatient) */}
           <div className="inline-flex rounded border border-border bg-surface-muted p-0.5 text-xs select-none">
             <button
               type="button"
@@ -319,26 +312,15 @@ export default function ClinicQueue({
             </button>
             <button
               type="button"
-              onClick={() => setFilterType("critical")}
+              onClick={() => setFilterType("er_trauma")}
               className={`px-2.5 py-1 rounded-xs font-medium transition flex items-center gap-1.5 ${
-                filterType === "critical"
+                filterType === "er_trauma"
                   ? "bg-surface text-critical font-semibold shadow-xs"
                   : "text-text-muted hover:text-text-primary"
               }`}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-critical" />
-              <span>Critical ({criticalCount})</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setFilterType("specialist")}
-              className={`px-2.5 py-1 rounded-xs font-medium transition ${
-                filterType === "specialist"
-                  ? "bg-surface text-text-primary font-semibold shadow-xs"
-                  : "text-text-muted hover:text-text-primary"
-              }`}
-            >
-              Specialist ({specialistCount})
+              <span>ER Trauma ({erTraumaCount})</span>
             </button>
             <button
               type="button"

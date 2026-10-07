@@ -277,6 +277,18 @@ class EhrDatabase {
     return newPatient;
   }
 
+  deletePatient(patientId) {
+    const db = this._readData();
+    if (!db.patients) return false;
+    const initialLen = db.patients.length;
+    db.patients = db.patients.filter((p) => p.id !== patientId && p.patientId !== patientId);
+    if (db.patients.length !== initialLen) {
+      this._writeData(db);
+      return true;
+    }
+    return false;
+  }
+
   addEncounter(patientId, encounter) {
     const db = this._readData();
     const patient = db.patients.find((p) => p.id === patientId);
@@ -620,6 +632,49 @@ class EhrDatabase {
   getSafetyAuditLogs(limit = 50) {
     const db = this._readData();
     return (db.staffSafetyAuditLogs || []).slice(0, limit);
+  }
+
+  getDoctorPositionHistory(doctorId) {
+    const db = this._readData();
+    const events = (db.geofenceRiskEvents || []).filter(
+      (e) => e.doctorId === doctorId || e.deviceId === doctorId
+    );
+    const device = this.getStaffDeviceById(doctorId);
+    return {
+      doctorId,
+      history: events,
+      events,
+      device: device
+        ? {
+            deviceId: device.deviceId,
+            doctorName: device.doctorName,
+            trackingEnabled: device.trackingEnabled,
+            consentGiven: device.consentGiven,
+            lastPosition: device.lastPosition,
+            lastReportTime: device.lastReportTime
+          }
+        : null
+    };
+  }
+
+  pruneOldPositionHistory(retentionDays = 60) {
+    const db = this._readData();
+    const cutoff = Date.now() - retentionDays * 24 * 60 * 60 * 1000;
+    let pruned = 0;
+
+    if (db.geofenceRiskEvents) {
+      const initialCount = db.geofenceRiskEvents.length;
+      db.geofenceRiskEvents = db.geofenceRiskEvents.filter((e) => {
+        const time = new Date(e.createdAt || 0).getTime();
+        return time >= cutoff;
+      });
+      pruned += initialCount - db.geofenceRiskEvents.length;
+    }
+
+    if (pruned > 0) {
+      this._writeData(db);
+    }
+    return { pruned, retentionDays };
   }
 
   _getDefaultStaffDevices() {

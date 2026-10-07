@@ -268,6 +268,38 @@ describe("MedGuard Backend Integration Tests", function () {
       expect(readLog).to.not.be.undefined;
       expect(readLog.isBreakGlass).to.be.true;
     });
+
+    it("should activate Break-Glass for two different patient IDs back-to-back in the same session, returning distinct records each time", async function () {
+      // Test back-to-back activation for patient-123 and patient-456
+      const res1 = await request(app)
+        .post("/api/break-glass/activate")
+        .send({
+          doctor_address: doctorAddress,
+          patientId: "patient-123",
+          justification: "Acute cardiac arrest, emergency resuscitation protocol active in ICU."
+        });
+
+      expect(res1.status).to.equal(200);
+      expect(res1.body).to.have.property("record");
+      expect(res1.body.record.patientName || res1.body.record.name).to.equal("John Doe");
+
+      const res2 = await request(app)
+        .post("/api/break-glass/activate")
+        .send({
+          doctor_address: doctorAddress,
+          patientId: "patient-456",
+          justification: "Massive hemorrhage following polytrauma, emergency surgical override."
+        });
+
+      expect(res2.status).to.equal(200);
+      expect(res2.body).to.have.property("record");
+      expect(res2.body.record.patientName || res2.body.record.name).to.equal("Jane Trauma-Smith");
+
+      // Verify that records never cross-contaminated
+      expect(res1.body.record.name || res1.body.record.patientName).to.not.equal(
+        res2.body.record.name || res2.body.record.patientName
+      );
+    });
   });
 
   describe("5. Clinical EHR Workflows & Chart Management", function () {
@@ -471,4 +503,70 @@ describe("MedGuard Backend Integration Tests", function () {
       }
     });
   });
+
+  describe("8. Role-Gating & Access Policy (Section 8)", function () {
+    let doctorToken;
+    let adminToken;
+
+    before(async function () {
+      const jwt = require("jsonwebtoken");
+      const config = require("../src/config");
+      doctorToken = jwt.sign(
+        { id: "doc-001", username: "sarah.jenkins", role: "doctor", name: "Dr. Sarah Jenkins" },
+        config.jwtSecret,
+        { expiresIn: "1h" }
+      );
+      adminToken = jwt.sign(
+        { id: "admin-001", username: "admin", role: "admin", name: "System Administrator" },
+        config.jwtSecret,
+        { expiresIn: "1h" }
+      );
+    });
+
+    it("should return 403 when non-admin doctor attempts to access /api/staff-safety/devices", async function () {
+      const res = await request(app)
+        .get("/api/staff-safety/devices")
+        .set("Authorization", `Bearer ${doctorToken}`);
+      expect(res.status).to.equal(403);
+      expect(res.body.error).to.include("restricted to system administrators");
+    });
+
+    it("should return 403 when non-admin doctor attempts to access /api/compliance/audit-logs", async function () {
+      const res = await request(app)
+        .get("/api/compliance/audit-logs")
+        .set("Authorization", `Bearer ${doctorToken}`);
+      expect(res.status).to.equal(403);
+      expect(res.body.error).to.include("restricted to system administrators");
+    });
+
+    it("should return 403 when non-admin doctor attempts to access /api/admin/users", async function () {
+      const res = await request(app)
+        .get("/api/admin/users")
+        .set("Authorization", `Bearer ${doctorToken}`);
+      expect(res.status).to.equal(403);
+      expect(res.body.error).to.include("restricted to system administrators");
+    });
+
+    it("should allow admin access to /api/compliance and /api/staff-safety", async function () {
+      const resComp = await request(app)
+        .get("/api/compliance/audit-logs")
+        .set("Authorization", `Bearer ${adminToken}`);
+      expect(resComp.status).to.equal(200);
+
+      const resStaff = await request(app)
+        .get("/api/staff-safety/devices")
+        .set("Authorization", `Bearer ${adminToken}`);
+      expect(resStaff.status).to.equal(200);
+    });
+
+    it("should provide self-service transparency via GET /api/tracking/my-history for doctors", async function () {
+      const res = await request(app)
+        .get("/api/tracking/my-history?doctorId=doc-001")
+        .set("Authorization", `Bearer ${doctorToken}`);
+      expect(res.status).to.equal(200);
+      expect(res.body).to.have.property("doctorId", "doc-001");
+      expect(res.body).to.have.property("history");
+    });
+  });
 });
+

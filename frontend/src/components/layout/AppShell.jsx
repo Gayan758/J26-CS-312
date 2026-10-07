@@ -182,7 +182,7 @@ export default function AppShell({
         },
         {
           id: "audit",
-          label: "Hospital Compliance Ledger",
+          label: "Hospital Compliance & Audit",
           icon: Database
         },
         {
@@ -201,28 +201,17 @@ export default function AppShell({
         },
         {
           id: "chart",
-          label: "Patient Chart (EMR)",
+          label: "Patient Medical Chart (EMR)",
           icon: FileText
-        },
-        {
-          id: "audit",
-          label: "Hospital Compliance Ledger",
-          icon: Database
-        },
-        {
-          id: "tracking",
-          label: "Staff Safety & Location",
-          icon: Radio,
-          badgeDot: true
         }
       ];
 
   const viewTitles = {
     users: "User Management & Access Governance",
     queue: "Clinic Queue & Triage",
-    chart: "Patient Chart",
-    audit: "Hospital Compliance Ledger",
-    tracking: "Staff Safety & Real-Time Location"
+    chart: "Patient Medical Chart (EMR)",
+    audit: "Hospital Compliance & Audit",
+    tracking: "Staff Safety & Location"
   };
 
   return (

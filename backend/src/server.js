@@ -9,6 +9,8 @@ const breakGlassRoutes = require("./routes/breakGlass");
 const patientsRoutes = require("./routes/patients");
 const trackingRoutes = require("./routes/tracking");
 const adminRoutes = require("./routes/admin");
+const complianceRoutes = require("./routes/compliance");
+const staffSafetyRoutes = require("./routes/staffSafety");
 const errorHandler = require("./middleware/errorHandler");
 const auditService = require("./services/auditService");
 const requestLogger = require("./middleware/requestLogger");
@@ -122,6 +124,8 @@ app.get("/api/audit-logs/verify", (req, res) => {
 // API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/compliance", complianceRoutes);
+app.use("/api/staff-safety", staffSafetyRoutes);
 app.use("/api/patients", patientsRoutes);
 app.use("/api/tracking", trackingRoutes);
 app.use("/api", accessRequestRoutes);

@@ -9,11 +9,12 @@ import {
   Activity
 } from "lucide-react";
 import Button from "./ui/Button";
+import { activateBreakGlass } from "../api/client";
 
 export default function BreakGlassModal({
   doctor,
   initialPatient,
-  allPatients,
+  allPatients = [],
   onClose,
   onActivateBreakGlass
 }) {
@@ -28,19 +29,20 @@ export default function BreakGlassModal({
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // Find preview patient
+  // Find preview patient strictly based on targetId (or initialPatient)
   const targetPatient =
     allPatients.find(
       (p) =>
         p.id.toLowerCase() === targetId.trim().toLowerCase() ||
         p.phn.toLowerCase() === targetId.trim().toLowerCase()
-    ) || initialPatient || allPatients.find(p => p.statusType === "emergency") || allPatients[0];
+    ) || initialPatient;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!targetId.trim()) {
+    const submittedPatientId = targetId.trim();
+    if (!submittedPatientId) {
       setError("Please specify the target Patient ID or PHN.");
       return;
     }
@@ -54,39 +56,55 @@ export default function BreakGlassModal({
 
     setSubmitting(true);
 
-    setTimeout(() => {
-      const foundPatient =
-        allPatients.find(
-          (p) =>
-            p.id.toLowerCase() === targetId.trim().toLowerCase() ||
-            p.phn.toLowerCase() === targetId.trim().toLowerCase()
-        ) || initialPatient || allPatients[1];
+    try {
+      // Find matching patient by ID or PHN
+      const matchingPatient = allPatients.find(
+        (p) =>
+          p.id.toLowerCase() === submittedPatientId.toLowerCase() ||
+          p.phn.toLowerCase() === submittedPatientId.toLowerCase()
+      );
+      const exactPatientId = matchingPatient ? matchingPatient.id : submittedPatientId;
 
-      const expiresAt = Math.floor(Date.now() / 1000) + 1800; // 30 mins
-      const token = "bgt-" + Math.random().toString(36).substring(2, 12);
-      const txHash =
-        "0x" +
-        Array.from({ length: 64 }, () =>
-          Math.floor(Math.random() * 16).toString(16)
-        ).join("");
+      const response = await activateBreakGlass(
+        doctor?.ethereumAddress || doctor?.address || doctor?.id,
+        exactPatientId,
+        justification.trim()
+      );
+
+      const expiresAt =
+        response.tokenExpiresAt ||
+        response.expires_at ||
+        Math.floor(Date.now() / 1000) + 1800;
 
       const session = {
-        token,
-        txHash,
-        patientId: foundPatient.id,
-        patientPhn: foundPatient.phn,
-        patientName: foundPatient.name,
-        doctorName: doctor.name,
+        token: response.token || response.token_id,
+        txHash: response.token_id || "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join(""),
+        patientId: exactPatientId,
+        patientPhn: response.record?.phn || matchingPatient?.phn || exactPatientId,
+        patientName: response.record?.patientName || response.record?.name || matchingPatient?.name || "Emergency Patient",
+        doctorName: doctor?.name || "Attending Physician",
         justification: justification.trim(),
         activatedAt:
-          new Date().toLocaleTimeString("en-US", { hour12: true }) + " (SLST)",
+          new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Colombo", hour12: true }) + " (SLST)",
         expiresAt,
         timeLeft: 1800
       };
 
+      const resolvedPatient = response.record
+        ? {
+            ...matchingPatient,
+            ...response.record,
+            id: exactPatientId,
+            name: response.record.patientName || response.record.name || matchingPatient?.name
+          }
+        : matchingPatient;
+
+      onActivateBreakGlass(resolvedPatient, session);
+    } catch (err) {
+      setError(err.message || "Failed to activate Emergency Break-Glass override.");
+    } finally {
       setSubmitting(false);
-      onActivateBreakGlass(foundPatient, session);
-    }, 600);
+    }
   };
 
   return (

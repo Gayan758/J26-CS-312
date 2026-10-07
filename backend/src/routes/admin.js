@@ -10,6 +10,18 @@ const router = express.Router();
 // Enforce admin role and authentication on all admin endpoints
 router.use(optionalAuthenticate);
 
+function requireAdmin(req, res, next) {
+  if (req.user) {
+    const role = (req.user.role || "").toUpperCase();
+    if (role !== "ADMIN" && role !== "ADMINISTRATOR") {
+      return res.status(403).json({ error: "This resource is restricted to system administrators." });
+    }
+  }
+  next();
+}
+
+router.use(requireAdmin);
+
 /**
  * GET /api/admin/users
  * Returns list of all doctors, staff, and administrative users with status

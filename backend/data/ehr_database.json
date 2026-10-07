@@ -26,6 +26,50 @@
       "registeredAt": "2026-09-01T08:00:00Z",
       "vitals": [
         {
+          "id": "vit-1791355135236",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-07T06:38:55.236Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
+          "id": "vit-1791354979738",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-07T06:36:19.738Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
+          "id": "vit-1791354860623",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-07T06:34:20.623Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
+          "id": "vit-1791352671278",
+          "bp": "122/78",
+          "hr": 70,
+          "rr": 15,
+          "spo2": 99,
+          "temp": "36.7 C",
+          "glucose": "105 mg/dL",
+          "recordedAt": "2026-10-07T05:57:51.278Z",
+          "recordedBy": "Staff Nurse"
+        },
+        {
           "id": "vit-1790852092999",
           "bp": "122/78",
           "hr": 70,
@@ -456,6 +500,210 @@
         }
       ],
       "encounters": [
+        {
+          "id": "enc-1791355138141",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-07T06:38:58.160Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-07",
+          "createdAt": "2026-10-07T06:38:58.141Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-07T06:38:58.160Z"
+        },
+        {
+          "id": "enc-1791355135192",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-07",
+          "createdAt": "2026-10-07T06:38:55.192Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
+        {
+          "id": "enc-1791354982631",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-07T06:36:22.650Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-07",
+          "createdAt": "2026-10-07T06:36:22.631Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-07T06:36:22.650Z"
+        },
+        {
+          "id": "enc-1791354979701",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-07",
+          "createdAt": "2026-10-07T06:36:19.701Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
+        {
+          "id": "enc-1791354863695",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-07T06:34:23.708Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-07",
+          "createdAt": "2026-10-07T06:34:23.695Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-07T06:34:23.709Z"
+        },
+        {
+          "id": "enc-1791354860590",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-07",
+          "createdAt": "2026-10-07T06:34:20.590Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
+        {
+          "id": "enc-1791352673941",
+          "version": 2,
+          "amendments": [
+            {
+              "amendedAt": "2026-10-07T05:57:53.961Z",
+              "amendedBy": "Attending Clinician",
+              "reason": "Clarified medication regimen following patient tolerance review.",
+              "previousSoap": {
+                "subjective": "Cough lasting 3 weeks",
+                "objective": "Lungs clear to auscultation",
+                "assessment": "Post-viral bronchial hyperreactivity",
+                "plan": "Inhaled bronchodilator as needed"
+              }
+            }
+          ],
+          "date": "2026-10-07",
+          "createdAt": "2026-10-07T05:57:53.941Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Persistent dry cough",
+          "soap": {
+            "subjective": "Cough lasting 3 weeks",
+            "objective": "Lungs clear to auscultation",
+            "assessment": "Post-viral bronchial hyperreactivity",
+            "plan": "Inhaled corticosteroid + bronchodilator trial for 14 days"
+          },
+          "diagnosisIcd10": [
+            "J45.9"
+          ],
+          "updatedAt": "2026-10-07T05:57:53.961Z"
+        },
+        {
+          "id": "enc-1791352671245",
+          "version": 1,
+          "amendments": [],
+          "date": "2026-10-07",
+          "createdAt": "2026-10-07T05:57:51.245Z",
+          "doctorName": "Dr. Alice Vance, MD",
+          "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "chiefComplaint": "Follow-up blood sugar check",
+          "soap": {
+            "subjective": "Patient adhering to low carb diet.",
+            "objective": "Random blood glucose 110 mg/dL, BP 124/80.",
+            "assessment": "Diabetes mellitus under optimal management.",
+            "plan": "Maintain current therapy. Repeat labs in 6 months."
+          },
+          "diagnosisIcd10": [
+            "E11.9"
+          ]
+        },
         {
           "id": "enc-1790852094585",
           "version": 2,
@@ -1402,6 +1650,66 @@
       ],
       "prescriptions": [
         {
+          "id": "rx-1791355135217",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-07T06:38:55.217Z",
+          "status": "Active"
+        },
+        {
+          "id": "rx-1791354979721",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-07T06:36:19.721Z",
+          "status": "Active"
+        },
+        {
+          "id": "rx-1791354860609",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-07T06:34:20.609Z",
+          "status": "Active"
+        },
+        {
+          "id": "rx-1791352671262",
+          "version": 1,
+          "amendments": [],
+          "drugName": "Atorvastatin Calcium",
+          "dosage": "20mg",
+          "route": "Oral",
+          "frequency": "Once daily at bedtime",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with water before sleep.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-10-07T05:57:51.262Z",
+          "status": "Active"
+        },
+        {
           "id": "rx-1790852092987",
           "version": 1,
           "amendments": [],
@@ -2013,7 +2321,7 @@
           "modify": false
         }
       },
-      "consentUpdatedAt": "2026-10-01T10:54:54.068Z"
+      "consentUpdatedAt": "2026-10-07T06:38:56.862Z"
     },
     {
       "id": "patient-456",
@@ -2398,42 +2706,90 @@
       }
     },
     {
-      "id": "patient-4506",
-      "patientId": "patient-4506",
-      "phn": "PHN-660268",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
+      "id": "patient-501",
+      "patientId": "patient-501",
+      "phn": "PHN-331045",
+      "nic": "197205401923",
+      "name": "Anura Senaviratne",
+      "patientName": "Anura Senaviratne",
+      "dob": "1972-05-14",
       "gender": "Male",
       "bloodGroup": "O+",
       "allergies": [
-        "Sulfa drugs"
+        "ACE Inhibitors (Angioedema)"
       ],
       "chronicConditions": [
-        "Hypertension"
+        "Ischemic Heart Disease",
+        "Hyperlipidemia"
       ],
-      "sensitivity": "low",
+      "sensitivity": "medium",
       "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
+      "triageQueue": "Cardiology Review Clinic (Room 2)",
+      "statusType": "specialist",
+      "department": "Cardiology Review Clinic (Room 2)",
       "emergencyStatus": "Stable",
       "criticalAlert": "",
-      "registeredAt": "2026-09-16T02:38:54.506Z",
+      "registeredAt": "2026-03-10T08:30:00Z",
       "vitals": [
         {
-          "bp": "120/80",
+          "id": "vit-501",
+          "bp": "126/82",
           "hr": 72,
           "rr": 16,
           "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-16T02:38:54.505Z",
-          "recordedBy": "Admissions Nurse"
+          "temp": "36.7 C",
+          "glucose": "104 mg/dL",
+          "recordedAt": "2026-09-18T08:45:00Z",
+          "recordedBy": "Cardiology Triage"
         }
       ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
+      "encounters": [
+        {
+          "id": "enc-501",
+          "date": "2026-09-18",
+          "doctorName": "Dr. Alice Vance, MD",
+          "chiefComplaint": "Routine 6-month post-angioplasty follow-up",
+          "soap": {
+            "subjective": "No chest pain or dyspnea on exertion.",
+            "objective": "Normal heart sounds S1/S2. BP 126/82.",
+            "assessment": "Stable post-PTCA coronary artery disease.",
+            "plan": "Continue dual antiplatelet therapy and statin."
+          }
+        }
+      ],
+      "prescriptions": [
+        {
+          "id": "rx-501",
+          "drugName": "Clopidogrel 75mg",
+          "dosage": "75mg",
+          "route": "Oral",
+          "frequency": "Once daily",
+          "duration": "90 days",
+          "refills": 2,
+          "instructions": "Take with morning meal.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-09-18T09:00:00Z",
+          "status": "Active"
+        }
+      ],
+      "labResults": [
+        {
+          "id": "lab-501",
+          "testName": "Lipid Profile",
+          "orderedDate": "2026-09-18",
+          "completedDate": "2026-09-19",
+          "status": "Final",
+          "results": [
+            {
+              "parameter": "LDL Cholesterol",
+              "value": "72",
+              "unit": "mg/dL",
+              "normalRange": "< 100",
+              "flag": "NORMAL"
+            }
+          ]
+        }
+      ],
       "assignedDoctorIds": [
         "doc-001"
       ],
@@ -2467,42 +2823,207 @@
       }
     },
     {
-      "id": "patient-3709",
-      "patientId": "patient-3709",
-      "phn": "PHN-737124",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
+      "id": "patient-502",
+      "patientId": "patient-502",
+      "phn": "PHN-442190",
+      "nic": "198159302184",
+      "name": "Malini Wickramasinghe",
+      "patientName": "Malini Wickramasinghe",
+      "dob": "1981-09-22",
+      "gender": "Female",
+      "bloodGroup": "A-",
       "allergies": [
-        "Sulfa drugs"
+        "Codeine (Severe Nausea)"
       ],
       "chronicConditions": [
-        "Hypertension"
+        "Rheumatoid Arthritis",
+        "Osteopenia"
       ],
       "sensitivity": "low",
       "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
+      "triageQueue": "Outpatient General Consultation (Room 4)",
+      "statusType": "outpatient",
+      "department": "Outpatient General Consultation (Room 4)",
       "emergencyStatus": "Stable",
       "criticalAlert": "",
-      "registeredAt": "2026-09-16T02:45:23.709Z",
+      "registeredAt": "2026-04-12T10:15:00Z",
       "vitals": [
         {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
+          "id": "vit-502",
+          "bp": "118/74",
+          "hr": 68,
+          "rr": 15,
+          "spo2": 99,
           "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-16T02:45:23.708Z",
-          "recordedBy": "Admissions Nurse"
+          "glucose": "96 mg/dL",
+          "recordedAt": "2026-09-20T10:30:00Z",
+          "recordedBy": "OPD Nurse"
         }
       ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
+      "encounters": [
+        {
+          "id": "enc-502",
+          "date": "2026-09-20",
+          "doctorName": "Dr. Sarah Jenkins, MD",
+          "chiefComplaint": "Morning joint stiffness and bilateral hand pain",
+          "soap": {
+            "subjective": "Stiffness lasts > 45 mins every morning.",
+            "objective": "Mild swelling proximal interphalangeal joints bilateral hands.",
+            "assessment": "Seropositive Rheumatoid Arthritis flare.",
+            "plan": "Adjust DMARD regimen and order ESR/CRP."
+          }
+        }
+      ],
+      "prescriptions": [
+        {
+          "id": "rx-502",
+          "drugName": "Methotrexate 15mg",
+          "dosage": "15mg",
+          "route": "Oral",
+          "frequency": "Once weekly",
+          "duration": "90 days",
+          "refills": 3,
+          "instructions": "Take on Sundays only with folic acid supplementation.",
+          "prescribedBy": "Dr. Sarah Jenkins, MD",
+          "prescribedAt": "2026-09-20T10:45:00Z",
+          "status": "Active"
+        }
+      ],
+      "labResults": [
+        {
+          "id": "lab-502",
+          "testName": "Inflammatory Markers (ESR & CRP)",
+          "orderedDate": "2026-09-20",
+          "completedDate": "2026-09-21",
+          "status": "Final",
+          "results": [
+            {
+              "parameter": "C-Reactive Protein",
+              "value": "18.4",
+              "unit": "mg/L",
+              "normalRange": "< 5.0",
+              "flag": "HIGH"
+            }
+          ]
+        }
+      ],
+      "assignedDoctorIds": [
+        "doc-003"
+      ],
+      "assignedDoctorAddresses": [
+        "0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+      ],
+      "consentedDoctors": [
+        "Dr. Sarah Jenkins, MD"
+      ],
+      "granularPermissions": {
+        "vitals": {
+          "view": true,
+          "modify": true
+        },
+        "soap": {
+          "view": true,
+          "modify": true
+        },
+        "prescriptions": {
+          "view": true,
+          "modify": true
+        },
+        "labs": {
+          "view": true,
+          "modify": false
+        },
+        "sensitiveRecords": {
+          "view": false,
+          "modify": false
+        }
+      }
+    },
+    {
+      "id": "patient-503",
+      "patientId": "patient-503",
+      "phn": "PHN-665812",
+      "nic": "196923401123",
+      "name": "Chaminda Rathnayake",
+      "patientName": "Chaminda Rathnayake",
+      "dob": "1969-04-18",
+      "gender": "Male",
+      "bloodGroup": "B-",
+      "allergies": [
+        "Ciprofloxacin (Tendinitis)"
+      ],
+      "chronicConditions": [
+        "Polycystic Kidney Disease",
+        "Hypertension"
+      ],
+      "sensitivity": "medium",
+      "consentStatus": true,
+      "triageQueue": "Nephrology Specialist Clinic (Room 5)",
+      "statusType": "specialist",
+      "department": "Nephrology Specialist Clinic (Room 5)",
+      "emergencyStatus": "Stable",
+      "criticalAlert": "",
+      "registeredAt": "2026-05-02T11:00:00Z",
+      "vitals": [
+        {
+          "id": "vit-503",
+          "bp": "134/86",
+          "hr": 76,
+          "rr": 18,
+          "spo2": 97,
+          "temp": "36.6 C",
+          "glucose": "112 mg/dL",
+          "recordedAt": "2026-09-21T11:15:00Z",
+          "recordedBy": "Renal Unit Nurse"
+        }
+      ],
+      "encounters": [
+        {
+          "id": "enc-503",
+          "date": "2026-09-21",
+          "doctorName": "Dr. Alice Vance, MD",
+          "chiefComplaint": "Annual renal ultrasound review and blood pressure check",
+          "soap": {
+            "subjective": "Reports occasional dull flank ache. No macroscopic hematuria.",
+            "objective": "Palpable bilateral renal masses. No peripheral edema.",
+            "assessment": "Autosomal Dominant Polycystic Kidney Disease, moderate renal impairment.",
+            "plan": "Strict blood pressure control target < 130/80. Maintain hydration."
+          }
+        }
+      ],
+      "prescriptions": [
+        {
+          "id": "rx-503",
+          "drugName": "Telmisartan 40mg",
+          "dosage": "40mg",
+          "route": "Oral",
+          "frequency": "Once daily in the morning",
+          "duration": "90 days",
+          "refills": 3,
+          "instructions": "Monitor blood pressure regularly.",
+          "prescribedBy": "Dr. Alice Vance, MD",
+          "prescribedAt": "2026-09-21T11:30:00Z",
+          "status": "Active"
+        }
+      ],
+      "labResults": [
+        {
+          "id": "lab-503",
+          "testName": "Renal Function Panel",
+          "orderedDate": "2026-09-21",
+          "completedDate": "2026-09-22",
+          "status": "Final",
+          "results": [
+            {
+              "parameter": "Serum Creatinine",
+              "value": "1.45",
+              "unit": "mg/dL",
+              "normalRange": "0.7 - 1.3",
+              "flag": "HIGH"
+            }
+          ]
+        }
+      ],
       "assignedDoctorIds": [
         "doc-001"
       ],
@@ -2536,50 +3057,97 @@
       }
     },
     {
-      "id": "patient-7085",
-      "patientId": "patient-7085",
-      "phn": "PHN-160331",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
+      "id": "patient-504",
+      "patientId": "patient-504",
+      "phn": "PHN-992341",
+      "nic": "199014203875",
+      "name": "Dhammika Fernando",
+      "patientName": "Dhammika Fernando",
+      "dob": "1990-02-10",
       "gender": "Male",
       "bloodGroup": "O+",
       "allergies": [
-        "Sulfa drugs"
+        "No Known Drug Allergies (NKDA)"
       ],
       "chronicConditions": [
-        "Hypertension"
+        "Gastroesophageal Reflux Disease (GERD)"
       ],
       "sensitivity": "low",
       "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
+      "triageQueue": "Outpatient General Consultation (Room 2)",
+      "statusType": "outpatient",
+      "department": "Outpatient General Consultation (Room 2)",
       "emergencyStatus": "Stable",
       "criticalAlert": "",
-      "registeredAt": "2026-09-16T03:07:17.085Z",
+      "registeredAt": "2026-06-15T14:20:00Z",
       "vitals": [
         {
-          "bp": "120/80",
-          "hr": 72,
+          "id": "vit-504",
+          "bp": "120/78",
+          "hr": 70,
           "rr": 16,
           "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-16T03:07:17.084Z",
-          "recordedBy": "Admissions Nurse"
+          "temp": "36.5 C",
+          "glucose": "92 mg/dL",
+          "recordedAt": "2026-09-22T14:30:00Z",
+          "recordedBy": "OPD Nurse"
         }
       ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
+      "encounters": [
+        {
+          "id": "enc-504",
+          "date": "2026-09-22",
+          "doctorName": "Dr. Kasun Perera, MBBS",
+          "chiefComplaint": "Epigastric burning sensation worsening at night",
+          "soap": {
+            "subjective": "Reports acid regurgitation after meals. Denies melena or weight loss.",
+            "objective": "Soft abdomen, mild epigastric tenderness. Normal bowel sounds.",
+            "assessment": "Gastroesophageal Reflux Disease with Erosive Gastritis.",
+            "plan": "Start 8-week proton pump inhibitor trial and dietary modification."
+          }
+        }
+      ],
+      "prescriptions": [
+        {
+          "id": "rx-504",
+          "drugName": "Esomeprazole 40mg",
+          "dosage": "40mg",
+          "route": "Oral",
+          "frequency": "Once daily 30 minutes before breakfast",
+          "duration": "60 days",
+          "refills": 1,
+          "instructions": "Do not crush or chew capsule.",
+          "prescribedBy": "Dr. Kasun Perera, MBBS",
+          "prescribedAt": "2026-09-22T14:45:00Z",
+          "status": "Active"
+        }
+      ],
+      "labResults": [
+        {
+          "id": "lab-504",
+          "testName": "H. Pylori Stool Antigen",
+          "orderedDate": "2026-09-22",
+          "completedDate": "2026-09-23",
+          "status": "Final",
+          "results": [
+            {
+              "parameter": "H. Pylori Antigen",
+              "value": "Negative",
+              "unit": "",
+              "normalRange": "Negative",
+              "flag": "NORMAL"
+            }
+          ]
+        }
+      ],
       "assignedDoctorIds": [
-        "doc-001"
+        "doc-002"
       ],
       "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+        "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
       ],
       "consentedDoctors": [
-        "Dr. Alice Vance, MD"
+        "Dr. Kasun Perera, MBBS"
       ],
       "granularPermissions": {
         "vitals": {
@@ -2605,1407 +3173,95 @@
       }
     },
     {
-      "id": "patient-0329",
-      "patientId": "patient-0329",
-      "phn": "PHN-983802",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
+      "id": "patient-505",
+      "patientId": "patient-505",
+      "phn": "PHN-114902",
+      "nic": "199572104938",
+      "name": "Nirosha Karunaratne",
+      "patientName": "Nirosha Karunaratne",
+      "dob": "1995-12-05",
+      "gender": "Female",
+      "bloodGroup": "A+",
       "allergies": [
-        "Sulfa drugs"
+        "Cephalosporins (Severe Anaphylaxis)"
       ],
       "chronicConditions": [
-        "Hypertension"
+        "None reported"
       ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-16T03:09:30.329Z",
+      "sensitivity": "restricted",
+      "consentStatus": false,
+      "triageQueue": "Emergency Trauma Bay 2 (Resuscitation)",
+      "statusType": "emergency",
+      "department": "Emergency Trauma Bay 2 (Resuscitation)",
+      "emergencyStatus": "CRITICAL / UNCONSCIOUS (GCS 6)",
+      "criticalAlert": "CRITICAL ALLERGY: Cephalosporins (Anaphylaxis)! Do not administer cefazolin or ceftriaxone.",
+      "registeredAt": "2026-09-24T05:10:00Z",
       "vitals": [
         {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-16T03:09:30.328Z",
-          "recordedBy": "Admissions Nurse"
+          "id": "vit-505",
+          "bp": "90/58",
+          "hr": 122,
+          "rr": 24,
+          "spo2": 92,
+          "temp": "35.8 C",
+          "glucose": "84 mg/dL",
+          "recordedAt": "2026-09-24T05:25:00Z",
+          "recordedBy": "ER Trauma Team"
         }
       ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-7149",
-      "patientId": "patient-7149",
-      "phn": "PHN-267900",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T04:24:07.149Z",
-      "vitals": [
+      "encounters": [
         {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T04:24:07.147Z",
-          "recordedBy": "Admissions Nurse"
+          "id": "enc-505",
+          "date": "2026-09-24",
+          "doctorName": "Dr. Kasun Perera, MBBS",
+          "chiefComplaint": "Industrial fall from height (4 meters), altered sensorium, abdominal rigidity",
+          "soap": {
+            "subjective": "Co-workers transported patient. Unresponsive upon ER arrival.",
+            "objective": "GCS 6 (E2V2M2). Distended rigid abdomen with left upper quadrant contusion. Hypotensive 90/58.",
+            "assessment": "Blunt abdominal trauma with acute hemoperitoneum and splenic laceration.",
+            "plan": "Urgent FAST ultrasound. Emergency laparotomy prep. Strict avoidance of cephalosporin antibiotics."
+          }
         }
       ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-5716",
-      "patientId": "patient-5716",
-      "phn": "PHN-178727",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T05:50:45.716Z",
-      "vitals": [
+      "prescriptions": [
         {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T05:50:45.715Z",
-          "recordedBy": "Admissions Nurse"
+          "id": "rx-505",
+          "drugName": "Tranexamic Acid 1g IV",
+          "dosage": "1g",
+          "route": "Intravenous",
+          "frequency": "STAT loading dose over 10 mins",
+          "duration": "1 dose",
+          "refills": 0,
+          "instructions": "Antifibrinolytic for major trauma hemorrhage.",
+          "prescribedBy": "Dr. Kasun Perera, MBBS",
+          "prescribedAt": "2026-09-24T05:30:00Z",
+          "status": "Active"
         }
       ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-8377",
-      "patientId": "patient-8377",
-      "phn": "PHN-940366",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T06:32:18.377Z",
-      "vitals": [
+      "labResults": [
         {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T06:32:18.376Z",
-          "recordedBy": "Admissions Nurse"
+          "id": "lab-505",
+          "testName": "Emergency Trauma Blood Panel",
+          "orderedDate": "2026-09-24",
+          "completedDate": "2026-09-24",
+          "status": "Final",
+          "results": [
+            {
+              "parameter": "Hemoglobin",
+              "value": "7.8",
+              "unit": "g/dL",
+              "normalRange": "12.0 - 15.5",
+              "flag": "LOW"
+            }
+          ]
         }
       ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
       "assignedDoctorIds": [
-        "doc-001"
+        "doc-002"
       ],
       "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+        "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
       ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-5345",
-      "patientId": "patient-5345",
-      "phn": "PHN-859667",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T06:33:25.345Z",
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T06:33:25.344Z",
-          "recordedBy": "Admissions Nurse"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-7265",
-      "patientId": "patient-7265",
-      "phn": "PHN-285009",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T06:45:07.265Z",
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T06:45:07.262Z",
-          "recordedBy": "Admissions Nurse"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-1337",
-      "patientId": "patient-1337",
-      "phn": "PHN-604743",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T07:53:51.337Z",
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T07:53:51.335Z",
-          "recordedBy": "Admissions Nurse"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-7269",
-      "patientId": "patient-7269",
-      "phn": "PHN-768688",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T08:02:17.269Z",
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T08:02:17.268Z",
-          "recordedBy": "Admissions Nurse"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-2552",
-      "patientId": "patient-2552",
-      "phn": "PHN-927503",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T08:09:32.552Z",
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T08:09:32.550Z",
-          "recordedBy": "Admissions Nurse"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-4265",
-      "patientId": "patient-4265",
-      "phn": "PHN-787578",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T08:52:14.265Z",
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T08:52:14.260Z",
-          "recordedBy": "Admissions Nurse"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-4017",
-      "patientId": "patient-4017",
-      "phn": "PHN-987806",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-22T09:41:14.017Z",
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-22T09:41:14.016Z",
-          "recordedBy": "Admissions Nurse"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": [],
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Dr. Alice Vance, MD"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      }
-    },
-    {
-      "id": "patient-6389",
-      "patientId": "patient-6389",
-      "phn": "PHN-610727",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-29T04:23:36.389Z",
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Attending Physician"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-29T04:23:36.387Z",
-          "recordedBy": "Admissions Clinician"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-1222",
-      "patientId": "patient-1222",
-      "phn": "PHN-249335",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-29T04:24:51.222Z",
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Attending Physician"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-29T04:24:51.220Z",
-          "recordedBy": "Admissions Clinician"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-6309",
-      "patientId": "patient-6309",
-      "phn": "PHN-968977",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-29T04:56:26.309Z",
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Attending Physician"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-29T04:56:26.306Z",
-          "recordedBy": "Admissions Clinician"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-9003",
-      "patientId": "patient-9003",
-      "phn": "PHN-442533",
-      "nic": "123456789",
-      "name": "Test1",
-      "patientName": "Test1",
-      "dob": "1992-06-15",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Test1"
-      ],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-29T05:58:29.003Z",
-      "assignedDoctorIds": [
-        "doc-8703"
-      ],
-      "assignedDoctorAddresses": [
-        "0x627a61fc6e013657c71c539da27f17efa6eff62e"
-      ],
-      "consentedDoctors": [
-        "Gayan Vimukthi"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": true
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-29T05:58:28.998Z",
-          "recordedBy": "Gayan Vimukthi"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-3904",
-      "patientId": "patient-3904",
-      "phn": "PHN-710334",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-29T06:19:13.904Z",
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Attending Physician"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-29T06:19:13.897Z",
-          "recordedBy": "Admissions Clinician"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-2530",
-      "patientId": "patient-2530",
-      "phn": "PHN-701159",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-29T06:20:12.530Z",
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Attending Physician"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-29T06:20:12.522Z",
-          "recordedBy": "Admissions Clinician"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-2588",
-      "patientId": "patient-2588",
-      "phn": "PHN-658383",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-29T07:13:12.588Z",
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Attending Physician"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-29T07:13:12.584Z",
-          "recordedBy": "Admissions Clinician"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-8700",
-      "patientId": "patient-8700",
-      "phn": "PHN-645509",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-30T04:32:28.700Z",
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Attending Physician"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-30T04:32:28.696Z",
-          "recordedBy": "Admissions Clinician"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-4388",
-      "patientId": "patient-4388",
-      "phn": "PHN-737782",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-09-30T05:30:44.389Z",
-      "assignedDoctorIds": [
-        "doc-001"
-      ],
-      "assignedDoctorAddresses": [
-        "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
-      ],
-      "consentedDoctors": [
-        "Attending Physician"
-      ],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [
-        {
-          "bp": "120/80",
-          "hr": 72,
-          "rr": 16,
-          "spo2": 98,
-          "temp": "36.8 C",
-          "glucose": "95 mg/dL",
-          "recordedAt": "2026-09-30T05:30:44.387Z",
-          "recordedBy": "Admissions Clinician"
-        }
-      ],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-0777",
-      "patientId": "patient-0777",
-      "phn": "PHN-382122",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T03:45:00.777Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
       "consentedDoctors": [],
       "granularPermissions": {
         "vitals": {
@@ -4028,120 +3284,12 @@
           "view": false,
           "modify": false
         }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
+      }
     },
     {
-      "id": "patient-7214",
-      "patientId": "patient-7214",
-      "phn": "PHN-671232",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T03:46:37.214Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-0377",
-      "patientId": "patient-0377",
-      "phn": "PHN-569122",
-      "nic": "851032481V",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T03:48:40.377Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-2650",
-      "patientId": "patient-2650",
-      "phn": "PHN-417536",
+      "id": "patient-1295",
+      "patientId": "patient-1295",
+      "phn": "PHN-694408",
       "nic": "851032481V",
       "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
       "name": "Nimal Perera",
@@ -4160,7 +3308,7 @@
       "triageQueue": "Outpatient General Consultation",
       "emergencyStatus": "Stable",
       "criticalAlert": "",
-      "registeredAt": "2026-10-01T03:56:02.650Z",
+      "registeredAt": "2026-10-07T05:57:51.295Z",
       "assignedDoctorIds": [],
       "assignedDoctorAddresses": [],
       "consentedDoctors": [],
@@ -4192,11 +3340,11 @@
       "labResults": []
     },
     {
-      "id": "patient-blind-1790826964340",
-      "patientId": "patient-blind-1790826964340",
-      "phn": "PHN-608064",
-      "nic": "9991790826964340V",
-      "nicHash": "ccdbbc3c5efe09ea98a11a9e60e8a39cdeedf0da573f435bafb994fa3693bcfd",
+      "id": "patient-blind-1791352673525",
+      "patientId": "patient-blind-1791352673525",
+      "phn": "PHN-690337",
+      "nic": "9991791352673525V",
+      "nicHash": "6bf39f38bc134099d713ce03942cbe8555ed55efa9803f24209c7f077d067aa4",
       "name": "Blind Index Test Subject",
       "patientName": "Blind Index Test Subject",
       "gender": "Unspecified",
@@ -4208,7 +3356,7 @@
       "triageQueue": "Outpatient General Clinic",
       "emergencyStatus": "Stable",
       "criticalAlert": "",
-      "registeredAt": "2026-10-01T03:56:04.343Z",
+      "registeredAt": "2026-10-07T05:57:53.531Z",
       "assignedDoctorIds": [],
       "assignedDoctorAddresses": [],
       "consentedDoctors": [],
@@ -4240,9 +3388,9 @@
       "labResults": []
     },
     {
-      "id": "patient-6078",
-      "patientId": "patient-6078",
-      "phn": "PHN-487182",
+      "id": "patient-0637",
+      "patientId": "patient-0637",
+      "phn": "PHN-118071",
       "nic": "851032481V",
       "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
       "name": "Nimal Perera",
@@ -4261,7 +3409,7 @@
       "triageQueue": "Outpatient General Consultation",
       "emergencyStatus": "Stable",
       "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:01:06.079Z",
+      "registeredAt": "2026-10-07T06:34:20.637Z",
       "assignedDoctorIds": [],
       "assignedDoctorAddresses": [],
       "consentedDoctors": [],
@@ -4293,57 +3441,9 @@
       "labResults": []
     },
     {
-      "id": "patient-blind-1790827268027",
-      "patientId": "patient-blind-1790827268027",
-      "phn": "PHN-652738",
-      "nic": "9991790827268027V",
-      "nicHash": "00e0d8902c05e2314664d7351895e9929f13cc9a1cb91f4f25aa58b3eaf28ff7",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:01:08.030Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-7618",
-      "patientId": "patient-7618",
-      "phn": "PHN-382480",
+      "id": "patient-9751",
+      "patientId": "patient-9751",
+      "phn": "PHN-461504",
       "nic": "851032481V",
       "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
       "name": "Nimal Perera",
@@ -4362,7 +3462,7 @@
       "triageQueue": "Outpatient General Consultation",
       "emergencyStatus": "Stable",
       "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:03:47.619Z",
+      "registeredAt": "2026-10-07T06:36:19.752Z",
       "assignedDoctorIds": [],
       "assignedDoctorAddresses": [],
       "consentedDoctors": [],
@@ -4394,57 +3494,9 @@
       "labResults": []
     },
     {
-      "id": "patient-blind-1790827429268",
-      "patientId": "patient-blind-1790827429268",
-      "phn": "PHN-834366",
-      "nic": "9991790827429268V",
-      "nicHash": "5e9d25893b6e857ad138e42fadb6c0b03c21c836fc7dfc6cb3c0f56ba7a53ba2",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:03:49.271Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-5144",
-      "patientId": "patient-5144",
-      "phn": "PHN-201587",
+      "id": "patient-5253",
+      "patientId": "patient-5253",
+      "phn": "PHN-419308",
       "nic": "851032481V",
       "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
       "name": "Nimal Perera",
@@ -4463,916 +3515,7 @@
       "triageQueue": "Outpatient General Consultation",
       "emergencyStatus": "Stable",
       "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:22:25.144Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790828546717",
-      "patientId": "patient-blind-1790828546717",
-      "phn": "PHN-314874",
-      "nic": "9991790828546717V",
-      "nicHash": "43ba926d3f468fffc8f54000a5f07fecaedd66dcca7db7e832acd7245a5c85e9",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:22:26.720Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-1103",
-      "patientId": "patient-1103",
-      "phn": "PHN-947580",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:24:31.104Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790828672719",
-      "patientId": "patient-blind-1790828672719",
-      "phn": "PHN-411235",
-      "nic": "9991790828672719V",
-      "nicHash": "63ad8d8c5710d8a40d5d16f33425cb4111e239846c1c95dc30725909cb24ba9c",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:24:32.723Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-0974",
-      "patientId": "patient-0974",
-      "phn": "PHN-445501",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:26:00.974Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790828762609",
-      "patientId": "patient-blind-1790828762609",
-      "phn": "PHN-149419",
-      "nic": "9991790828762609V",
-      "nicHash": "cb4268fea60bcb683487384951e9137ea0d025aed0eeaaa384cb763362d83543",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T04:26:02.614Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-2530",
-      "patientId": "patient-2530",
-      "phn": "PHN-447645",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:39:02.531Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790847544756",
-      "patientId": "patient-blind-1790847544756",
-      "phn": "PHN-446858",
-      "nic": "9991790847544756V",
-      "nicHash": "44f0c2fb9f8003260b10a7e6246c3abc80e250ef1234ef205a81716b8ff621b6",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:39:04.760Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-7213",
-      "patientId": "patient-7213",
-      "phn": "PHN-505504",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:42:37.213Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790847759578",
-      "patientId": "patient-blind-1790847759578",
-      "phn": "PHN-569410",
-      "nic": "9991790847759578V",
-      "nicHash": "56a23f26382ab395fd9d4cfdd5aee95b9b42611f1fc512e86f768e9fac987fa9",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:42:39.582Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-8170",
-      "patientId": "patient-8170",
-      "phn": "PHN-545968",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:47:28.170Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790848050504",
-      "patientId": "patient-blind-1790848050504",
-      "phn": "PHN-801114",
-      "nic": "9991790848050504V",
-      "nicHash": "125c4a5cc306cf01cc970c549d01e47c855b80e6ac3ba2d6515e32510b5ec1bf",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:47:30.507Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-8200",
-      "patientId": "patient-8200",
-      "phn": "PHN-669857",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:49:28.201Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-6565",
-      "patientId": "patient-6565",
-      "phn": "PHN-229556",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:58:06.565Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790848687982",
-      "patientId": "patient-blind-1790848687982",
-      "phn": "PHN-851976",
-      "nic": "9991790848687982V",
-      "nicHash": "3e80d0b2d3e72afcfd9741968edde78806d925a5f7d366a0dea939a09f99c10b",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T09:58:07.985Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-5895",
-      "patientId": "patient-5895",
-      "phn": "PHN-451931",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T10:00:05.895Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790848807285",
-      "patientId": "patient-blind-1790848807285",
-      "phn": "PHN-700713",
-      "nic": "9991790848807285V",
-      "nicHash": "0d50d2aae6ecdef5bbac33d2f9a1af29a9d8737247ebd609cacdcbf956370983",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T10:00:07.288Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-3012",
-      "patientId": "patient-3012",
-      "phn": "PHN-537842",
-      "nic": "851032481V",
-      "nicHash": "700706fc86e1cfd50664d121445c6ef94e573add368815c02c8f423e2c7e8f48",
-      "name": "Nimal Perera",
-      "patientName": "Nimal Perera",
-      "dob": "1985-04-12",
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "allergies": [
-        "Sulfa drugs"
-      ],
-      "chronicConditions": [
-        "Hypertension"
-      ],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Consultation",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T10:54:53.012Z",
-      "assignedDoctorIds": [],
-      "assignedDoctorAddresses": [],
-      "consentedDoctors": [],
-      "granularPermissions": {
-        "vitals": {
-          "view": true,
-          "modify": true
-        },
-        "soap": {
-          "view": true,
-          "modify": true
-        },
-        "prescriptions": {
-          "view": true,
-          "modify": true
-        },
-        "labs": {
-          "view": true,
-          "modify": false
-        },
-        "sensitiveRecords": {
-          "view": false,
-          "modify": false
-        }
-      },
-      "vitals": [],
-      "encounters": [],
-      "prescriptions": [],
-      "labResults": []
-    },
-    {
-      "id": "patient-blind-1790852094374",
-      "patientId": "patient-blind-1790852094374",
-      "phn": "PHN-160155",
-      "nic": "9991790852094374V",
-      "nicHash": "bfa615d11b4440a27973f9abc80965d534837b060ada6c852581dc21b88dfc07",
-      "name": "Blind Index Test Subject",
-      "patientName": "Blind Index Test Subject",
-      "gender": "Unspecified",
-      "bloodGroup": "B+",
-      "allergies": [],
-      "chronicConditions": [],
-      "sensitivity": "low",
-      "consentStatus": true,
-      "triageQueue": "Outpatient General Clinic",
-      "emergencyStatus": "Stable",
-      "criticalAlert": "",
-      "registeredAt": "2026-10-01T10:54:54.378Z",
+      "registeredAt": "2026-10-07T06:38:55.254Z",
       "assignedDoctorIds": [],
       "assignedDoctorAddresses": [],
       "consentedDoctors": [],
@@ -6004,6 +4147,60 @@
       "patientId": "patient-123",
       "sensitivity": "medium",
       "timestamp": 1790852092957
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1791347747745
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1791347756296
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-321",
+      "sensitivity": "high",
+      "timestamp": 1791347816279
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1791349459865
+    },
+    {
+      "doctorId": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "patientId": "patient-456",
+      "sensitivity": "restricted",
+      "timestamp": 1791349464368
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1791352671158
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1791354860440
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1791354979558
+    },
+    {
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "patientId": "patient-123",
+      "sensitivity": "medium",
+      "timestamp": 1791355135051
     }
   ],
   "staffTrackingDevices": [
@@ -6025,10 +4222,10 @@
         "speed": 0,
         "altitude": 18.5,
         "accuracy": 5,
-        "timestamp": "2026-10-01T10:54:54.789Z"
+        "timestamp": "2026-10-07T06:38:58.457Z"
       },
-      "lastReportTime": "2026-10-01T10:54:54.745Z",
-      "updatedAt": "2026-10-01T10:54:54.805Z"
+      "lastReportTime": "2026-10-07T06:38:58.394Z",
+      "updatedAt": "2026-10-07T06:38:58.481Z"
     },
     {
       "deviceId": "device-doc-002",
@@ -6043,17 +4240,179 @@
       "batteryLevel": 90,
       "sosActive": false,
       "lastPosition": {
-        "lat": 6.9147,
-        "lon": 79.9733,
+        "lat": 6.9171995417367125,
+        "lon": 79.84779084701928,
         "speed": 0,
         "altitude": 18,
-        "accuracy": 5,
-        "timestamp": "2026-10-01T09:41:32.524Z"
+        "accuracy": 86,
+        "timestamp": "2026-10-07T05:02:56.455Z"
       },
-      "lastReportTime": "2026-10-01T09:41:32.524Z"
+      "lastReportTime": "2026-10-07T05:02:56.455Z"
     }
   ],
   "geofenceRiskEvents": [
+    {
+      "id": "geofence-evt-1791355138467-2065",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-07T06:38:58.467Z",
+      "retentionExpiresAt": "2026-12-06T06:38:58.467Z"
+    },
+    {
+      "id": "geofence-evt-1791355138414-4830",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-07T06:38:58.414Z",
+      "retentionExpiresAt": "2026-12-06T06:38:58.414Z"
+    },
+    {
+      "id": "geofence-evt-1791354982927-7140",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-07T06:36:22.927Z",
+      "retentionExpiresAt": "2026-12-06T06:36:22.927Z"
+    },
+    {
+      "id": "geofence-evt-1791354982876-9380",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-07T06:36:22.876Z",
+      "retentionExpiresAt": "2026-12-06T06:36:22.876Z"
+    },
+    {
+      "id": "geofence-evt-1791354864124-4374",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-07T06:34:24.124Z",
+      "retentionExpiresAt": "2026-12-06T06:34:24.124Z"
+    },
+    {
+      "id": "geofence-evt-1791354864064-9204",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-07T06:34:24.064Z",
+      "retentionExpiresAt": "2026-12-06T06:34:24.064Z"
+    },
+    {
+      "id": "geofence-evt-1791352674324-5676",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.9148,
+      "longitude": 79.9734,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-07T05:57:54.324Z",
+      "retentionExpiresAt": "2026-12-06T05:57:54.324Z"
+    },
+    {
+      "id": "geofence-evt-1791352674272-5152",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "hospital-perimeter",
+      "geofenceName": "Hospital Campus Perimeter",
+      "eventType": "GEOFENCE_EXIT",
+      "latitude": 6.9312,
+      "longitude": 79.9821,
+      "distanceFromBaseKm": 2.076,
+      "calculatedRiskScore": 0.62,
+      "riskLevel": "MEDIUM",
+      "securityNotified": false,
+      "securityReason": "",
+      "createdAt": "2026-10-07T05:57:54.272Z",
+      "retentionExpiresAt": "2026-12-06T05:57:54.272Z"
+    },
+    {
+      "id": "geofence-evt-1791347841289-7391",
+      "deviceId": "device-doc-001",
+      "doctorId": "doc-001",
+      "doctorName": "Dr. Alice Vance, MD",
+      "geofenceId": "sos-emergency",
+      "geofenceName": "Emergency SOS Distress Beacon",
+      "eventType": "SOS_TRIGGERED",
+      "latitude": 6.917284033753588,
+      "longitude": 79.84777591973149,
+      "distanceFromBaseKm": 0,
+      "calculatedRiskScore": 0.99,
+      "riskLevel": "CRITICAL",
+      "securityNotified": true,
+      "securityReason": "EMERGENCY SOS: Panic beacon activated by Dr. Alice Vance, MD! Immediate dispatch requested.",
+      "createdAt": "2026-10-07T04:37:21.289Z",
+      "retentionExpiresAt": "2026-12-06T04:37:21.289Z"
+    },
     {
       "id": "geofence-evt-1790852094794-4205",
       "deviceId": "device-doc-001",
@@ -7227,6 +5586,150 @@
   ],
   "staffSafetyAuditLogs": [
     {
+      "id": "audit-1791355138472-7236",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-07T06:38:58.472Z"
+    },
+    {
+      "id": "audit-1791355138419-3251",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-07T06:38:58.419Z"
+    },
+    {
+      "id": "audit-1791355138377-7874",
+      "actorId": "admin",
+      "actorName": "Hospital Administrator",
+      "actorRole": "ADMIN",
+      "action": "VIEW_STAFF_MAP",
+      "justification": "Administrative staff location overview inspection",
+      "timestamp": "2026-10-07T06:38:58.377Z"
+    },
+    {
+      "id": "audit-1791355135698-2118",
+      "actorId": "admin-001",
+      "actorName": "System Administrator",
+      "actorRole": "admin",
+      "action": "VIEW_STAFF_MAP",
+      "justification": "Administrative staff location overview inspection",
+      "timestamp": "2026-10-07T06:38:55.698Z"
+    },
+    {
+      "id": "audit-1791354982932-1515",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-07T06:36:22.932Z"
+    },
+    {
+      "id": "audit-1791354982882-3602",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-07T06:36:22.882Z"
+    },
+    {
+      "id": "audit-1791354982845-7791",
+      "actorId": "admin",
+      "actorName": "Hospital Administrator",
+      "actorRole": "ADMIN",
+      "action": "VIEW_STAFF_MAP",
+      "justification": "Administrative staff location overview inspection",
+      "timestamp": "2026-10-07T06:36:22.845Z"
+    },
+    {
+      "id": "audit-1791354980207-2421",
+      "actorId": "admin-001",
+      "actorName": "System Administrator",
+      "actorRole": "admin",
+      "action": "VIEW_STAFF_MAP",
+      "justification": "Administrative staff location overview inspection",
+      "timestamp": "2026-10-07T06:36:20.207Z"
+    },
+    {
+      "id": "audit-1791354864128-9580",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-07T06:34:24.128Z"
+    },
+    {
+      "id": "audit-1791354864068-7468",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-07T06:34:24.068Z"
+    },
+    {
+      "id": "audit-1791354864019-3029",
+      "actorId": "admin",
+      "actorName": "Hospital Administrator",
+      "actorRole": "ADMIN",
+      "action": "VIEW_STAFF_MAP",
+      "justification": "Administrative staff location overview inspection",
+      "timestamp": "2026-10-07T06:34:24.019Z"
+    },
+    {
+      "id": "audit-1791354861130-2940",
+      "actorId": "admin-001",
+      "actorName": "System Administrator",
+      "actorRole": "admin",
+      "action": "VIEW_STAFF_MAP",
+      "justification": "Administrative staff location overview inspection",
+      "timestamp": "2026-10-07T06:34:21.130Z"
+    },
+    {
+      "id": "audit-1791352674332-7295",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-07T05:57:54.332Z"
+    },
+    {
+      "id": "audit-1791352674276-2167",
+      "actorId": "system-traccar-geofence",
+      "actorName": "Traccar Geofence Service",
+      "actorRole": "Automated Dispatch Monitor",
+      "action": "GEOFENCE_EXIT_ALERT",
+      "targetDoctorId": "doc-001",
+      "justification": "Automated geofence departure alert: Dr. Alice Vance, MD exited Hospital Campus Perimeter (2.076 km, Risk: MEDIUM)",
+      "timestamp": "2026-10-07T05:57:54.276Z"
+    },
+    {
+      "id": "audit-1791347841297-2027",
+      "actorId": "doc-001",
+      "actorName": "Dr. Alice Vance, MD",
+      "actorRole": "Clinical Staff Member",
+      "action": "SOS_TRIGGERED",
+      "targetDoctorId": "doc-001",
+      "justification": "Staff emergency SOS beacon triggered",
+      "timestamp": "2026-10-07T04:37:21.297Z"
+    },
+    {
       "id": "audit-1790852094798-5617",
       "actorId": "doc-001",
       "actorName": "Dr. Alice Vance, MD",
@@ -7948,14 +6451,14 @@
         "distanceFromMalabeKm": 0,
         "isInsideMalabe": false,
         "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T10:54:54.331Z"
+        "recordedAt": "2026-10-07T06:38:57.368Z"
       }
     },
     {
       "id": "doc-002",
       "name": "Dr. Kasun Perera, MBBS",
       "username": "kasun.perera",
-      "password": "Password123!",
+      "password": "$2b$12$rvPqxf3QVPJOxp9TRWMT1.v1XvjRXOt/9/z/jxuxvCGfU41g37ZfG",
       "email": "it23270374@my.sliit.lk",
       "slmcNumber": "SLMC-51042",
       "specialty": "Emergency Medicine & Trauma",
@@ -7964,7 +6467,16 @@
       "status": "active",
       "ethereumAddress": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
       "defaultDeviceFingerprint": "sha256:etu-trauma-terminal",
-      "_dev_seed": true
+      "_dev_seed": true,
+      "lastKnownLocation": {
+        "latitude": 6.9171995417367125,
+        "longitude": 79.84779084701928,
+        "accuracy": 86,
+        "distanceFromMalabeKm": 13.86,
+        "isInsideMalabe": false,
+        "campusName": "Outside Hospital Perimeter (13.86 km)",
+        "recordedAt": "2026-10-07T05:02:56.454Z"
+      }
     },
     {
       "id": "doc-003",
@@ -7987,7 +6499,7 @@
         "distanceFromMalabeKm": 12.45,
         "isInsideMalabe": false,
         "campusName": "Outside Hospital Perimeter (12.45 km)",
-        "recordedAt": "2026-10-01T10:54:52.662Z"
+        "recordedAt": "2026-10-07T06:38:53.891Z"
       }
     },
     {
@@ -8042,17 +6554,407 @@
       "phone": "",
       "registeredAt": "2026-10-01T07:04:03.295Z",
       "lastKnownLocation": {
-        "latitude": null,
-        "longitude": null,
-        "accuracy": 10,
-        "distanceFromMalabeKm": 0,
+        "latitude": 6.917293142333538,
+        "longitude": 79.8477682101405,
+        "accuracy": 82,
+        "distanceFromMalabeKm": 13.86,
         "isInsideMalabe": false,
-        "campusName": "Unverified Location (No GPS)",
-        "recordedAt": "2026-10-01T10:52:38.749Z"
+        "campusName": "Outside Hospital Perimeter (13.86 km)",
+        "recordedAt": "2026-10-07T05:00:02.520Z"
       }
     }
   ],
   "doctorSessions": [
+    {
+      "id": "sess-1791355137368",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:38:57.368Z"
+    },
+    {
+      "id": "sess-1791355136781",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:38:56.781Z"
+    },
+    {
+      "id": "sess-1791355133891",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:38:53.891Z"
+    },
+    {
+      "id": "sess-1791355133521",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:38:53.521Z"
+    },
+    {
+      "id": "sess-1791355133104",
+      "doctorId": "doc-2670",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:38:53.104Z"
+    },
+    {
+      "id": "sess-1791355131866",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:38:51.866Z"
+    },
+    {
+      "id": "sess-1791354981903",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:36:21.903Z"
+    },
+    {
+      "id": "sess-1791354981315",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:36:21.315Z"
+    },
+    {
+      "id": "sess-1791354978405",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:36:18.405Z"
+    },
+    {
+      "id": "sess-1791354977964",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:36:17.964Z"
+    },
+    {
+      "id": "sess-1791354977607",
+      "doctorId": "doc-7207",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:36:17.607Z"
+    },
+    {
+      "id": "sess-1791354976459",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:36:16.459Z"
+    },
+    {
+      "id": "sess-1791354862902",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:34:22.902Z"
+    },
+    {
+      "id": "sess-1791354862263",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:34:22.263Z"
+    },
+    {
+      "id": "sess-1791354858933",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:34:18.933Z"
+    },
+    {
+      "id": "sess-1791354858529",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:34:18.529Z"
+    },
+    {
+      "id": "sess-1791354858094",
+      "doctorId": "doc-7557",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:34:18.094Z"
+    },
+    {
+      "id": "sess-1791354856688",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T06:34:16.688Z"
+    },
+    {
+      "id": "sess-1791352673388",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T05:57:53.388Z"
+    },
+    {
+      "id": "sess-1791352672787",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T05:57:52.787Z"
+    },
+    {
+      "id": "sess-1791352670272",
+      "doctorId": "doc-003",
+      "latitude": 6.9271,
+      "longitude": 79.8612,
+      "accuracy": 12,
+      "distanceFromMalabeKm": 12.45,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (12.45 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T05:57:50.272Z"
+    },
+    {
+      "id": "sess-1791352669901",
+      "doctorId": "doc-001",
+      "latitude": 6.9147,
+      "longitude": 79.9733,
+      "accuracy": 6,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": true,
+      "campusName": "SLIIT Malabe Campus Health Center",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T05:57:49.901Z"
+    },
+    {
+      "id": "sess-1791352669551",
+      "doctorId": "doc-9157",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T05:57:49.551Z"
+    },
+    {
+      "id": "sess-1791352668399",
+      "doctorId": "doc-001",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "",
+      "recordedAt": "2026-10-07T05:57:48.399Z"
+    },
+    {
+      "id": "sess-1791349376454",
+      "doctorId": "doc-002",
+      "latitude": 6.9171995417367125,
+      "longitude": 79.84779084701928,
+      "accuracy": 86,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-07T05:02:56.454Z"
+    },
+    {
+      "id": "sess-1791349343219",
+      "doctorId": "doc-001",
+      "latitude": 6.917263956699202,
+      "longitude": 79.84777303657889,
+      "accuracy": 83,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-07T05:02:23.219Z"
+    },
+    {
+      "id": "sess-1791349202520",
+      "doctorId": "admin-243294",
+      "latitude": 6.917293142333538,
+      "longitude": 79.8477682101405,
+      "accuracy": 82,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-07T05:00:02.520Z"
+    },
+    {
+      "id": "sess-1791347735083",
+      "doctorId": "doc-001",
+      "latitude": 6.917284033753588,
+      "longitude": 79.84777591973149,
+      "accuracy": 96,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-07T04:35:35.083Z"
+    },
+    {
+      "id": "sess-1790852624484",
+      "doctorId": "admin-243294",
+      "latitude": 6.917281292699115,
+      "longitude": 79.84776063893807,
+      "accuracy": 74,
+      "distanceFromMalabeKm": 13.86,
+      "isInsideMalabe": false,
+      "campusName": "Outside Hospital Perimeter (13.86 km)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "recordedAt": "2026-10-01T11:03:44.484Z"
+    },
+    {
+      "id": "sess-1790852470881",
+      "doctorId": "admin-243294",
+      "latitude": null,
+      "longitude": null,
+      "accuracy": 10,
+      "distanceFromMalabeKm": 0,
+      "isInsideMalabe": false,
+      "campusName": "Unverified Location (No GPS)",
+      "ipAddress": "::ffff:127.0.0.1",
+      "userAgent": "node",
+      "recordedAt": "2026-10-01T11:01:10.881Z"
+    },
     {
       "id": "sess-1790852094331",
       "doctorId": "doc-001",
@@ -10417,6 +9319,292 @@
   },
   "breakGlassEvents": [
     {
+      "id": "bg-1791355137907",
+      "tokenId": "0xeb99afefdeae8ddad9379c933ec2ef6893cda4be4ceb95de3a431f1f2cb3434d",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-07T06:38:57.907Z",
+      "expiresAt": "2026-10-07T10:38:57.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-07T06:38:58.101Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1791355137476",
+      "tokenId": "0x7db82c31cad0ee889739c65122a8c19e538caed4f8d00e5d47f776bbb74e0699",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-07T06:38:57.476Z",
+      "expiresAt": "2026-10-07T10:38:57.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791355134950",
+      "tokenId": "0xaff86856cd07fcee1b13de88527bf85f3d65beb6038b763bcd6d60c27eff08cf",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Massive hemorrhage following polytrauma, emergency surgical override.",
+      "grantedAt": "2026-10-07T06:38:54.950Z",
+      "expiresAt": "2026-10-07T10:38:54.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791355134726",
+      "tokenId": "0x9c4c80457e571bc3bf7c4773fed426cafa4308166da47503f363d6c79d9405f6",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Acute cardiac arrest, emergency resuscitation protocol active in ICU.",
+      "grantedAt": "2026-10-07T06:38:54.726Z",
+      "expiresAt": "2026-10-07T10:38:54.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791355134358",
+      "tokenId": "0xab8d5e5319ea0b7c6435353035458602a9bd095597397bfa437196fb32ad8618",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-07T06:38:54.358Z",
+      "expiresAt": "2026-10-07T10:38:54.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791354982447",
+      "tokenId": "0x6251674c11ab6fd187194924a02317d92e375c0b26d8a07767e3364d2305f491",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-07T06:36:22.447Z",
+      "expiresAt": "2026-10-07T10:36:22.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-07T06:36:22.598Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1791354982011",
+      "tokenId": "0xa2c157dcf40ca3f2af85e261fe006f15d23b9993caf8a0a2d6215b672ea37f47",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-07T06:36:22.011Z",
+      "expiresAt": "2026-10-07T10:36:21.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791354979457",
+      "tokenId": "0xa1fb5e7917f0a347da9a13e887a6ba2341dba04dcd90be2a345ff21e7498f9b6",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Massive hemorrhage following polytrauma, emergency surgical override.",
+      "grantedAt": "2026-10-07T06:36:19.457Z",
+      "expiresAt": "2026-10-07T10:36:19.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791354979240",
+      "tokenId": "0xaceed5f75539826324150c1bd6e25167741fc5ec47bc88dd8b626041c164fcfc",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Acute cardiac arrest, emergency resuscitation protocol active in ICU.",
+      "grantedAt": "2026-10-07T06:36:19.240Z",
+      "expiresAt": "2026-10-07T10:36:19.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791354978856",
+      "tokenId": "0x1da456545406b23e7d4b5e415d11b6a316914e17c73798f7731175baf569bee8",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-07T06:36:18.856Z",
+      "expiresAt": "2026-10-07T10:36:18.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791354863542",
+      "tokenId": "0x9a464f5f43639e070c207f22b076a90032066d77e622bf0d40c26f7eea14cb9e",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-07T06:34:23.542Z",
+      "expiresAt": "2026-10-07T10:34:23.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-07T06:34:23.665Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1791354863029",
+      "tokenId": "0x3a9b303ff481b8faba406af44feb287e189d6084bc388253881f3efbc1b7bc69",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-07T06:34:23.029Z",
+      "expiresAt": "2026-10-07T10:34:22.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791354860363",
+      "tokenId": "0x6f43920cf6328be9d8a4cfb066cb50a1a2ceda3d21c49b1b8ebf0681c8a781b7",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Massive hemorrhage following polytrauma, emergency surgical override.",
+      "grantedAt": "2026-10-07T06:34:20.363Z",
+      "expiresAt": "2026-10-07T10:34:20.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791354860143",
+      "tokenId": "0x6955df8a55db03736ca9301859d6d4f0ad8a3db1f195ce3d1fa738e8720bb220",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Acute cardiac arrest, emergency resuscitation protocol active in ICU.",
+      "grantedAt": "2026-10-07T06:34:20.143Z",
+      "expiresAt": "2026-10-07T10:34:20.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791354859755",
+      "tokenId": "0x71df85a915f31bc55bd9e84622dee14d10e9bb3d639069cf9af48e0fb9b543f1",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-07T06:34:19.755Z",
+      "expiresAt": "2026-10-07T10:34:19.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791352673872",
+      "tokenId": "0xbf83af95008247d1a11b509c32a70aa013f738795f94816f935a8754bc106b86",
+      "patientId": "patient-123",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest requiring immediate pharmacological intervention.",
+      "grantedAt": "2026-10-07T05:57:53.872Z",
+      "expiresAt": "2026-10-07T09:57:53.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "JUSTIFIED",
+      "reviewedBy": "Chief Compliance Officer",
+      "reviewedAt": "2026-10-07T05:57:53.890Z",
+      "reviewDecision": "JUSTIFIED",
+      "reviewNotes": "Clinical necessity corroborated by acute cardiac protocol logs."
+    },
+    {
+      "id": "bg-1791352673506",
+      "tokenId": "0xf109bc780f885e45f6c124c6bf79e125536253a71b1f4d6eb3c0f44e6543be59",
+      "patientId": "patient-456",
+      "justification": "Acute hemodynamic shock in trauma resuscitation room",
+      "grantedAt": "2026-10-07T05:57:53.506Z",
+      "expiresAt": "2026-10-07T09:57:53.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
+      "id": "bg-1791352670981",
+      "tokenId": "0x4056c37994ff62ef604f3088e1d1ba365988ccda40183ea4ee09640cdc496714",
+      "patientId": "patient-456",
+      "doctorId": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "doctorAddress": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "justification": "Patient in acute cardiac arrest in ER, anaphylaxis suspected, allergy history vital.",
+      "grantedAt": "2026-10-07T05:57:50.981Z",
+      "expiresAt": "2026-10-07T09:57:50.000Z",
+      "status": "ACTIVE",
+      "reviewStatus": "PENDING_REVIEW",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "reviewDecision": null,
+      "reviewNotes": null
+    },
+    {
       "id": "bg-1790852094546",
       "tokenId": "0xba26a94cd78532caf517f7e22be605d4969caf2071d20c7884ecd3392e87cd24",
       "patientId": "patient-123",
@@ -10953,6 +10141,50 @@
       "approvedAt": "2026-10-01T10:54:54.637Z",
       "revokedBy": "Administrator",
       "revokedAt": "2026-10-01T10:54:54.646Z"
+    },
+    "sha256:terminal-1791352674026": {
+      "fingerprint": "sha256:terminal-1791352674026",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-07T05:57:54.029Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-07T05:57:54.037Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-07T05:57:54.047Z"
+    },
+    "sha256:terminal-1791354863770": {
+      "fingerprint": "sha256:terminal-1791354863770",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-07T06:34:23.778Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-07T06:34:23.803Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-07T06:34:23.817Z"
+    },
+    "sha256:terminal-1791354982690": {
+      "fingerprint": "sha256:terminal-1791354982690",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-07T06:36:22.694Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-07T06:36:22.701Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-07T06:36:22.708Z"
+    },
+    "sha256:terminal-1791355138205": {
+      "fingerprint": "sha256:terminal-1791355138205",
+      "name": "Emergency Triage iPad",
+      "userId": "doc-001",
+      "status": "revoked",
+      "registeredAt": "2026-10-07T06:38:58.208Z",
+      "approvedBy": "Administrator",
+      "approvedAt": "2026-10-07T06:38:58.218Z",
+      "revokedBy": "Administrator",
+      "revokedAt": "2026-10-07T06:38:58.228Z"
     }
   }
 }

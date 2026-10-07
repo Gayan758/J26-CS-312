@@ -66,7 +66,7 @@ class RiskService {
 
     let r_t = 0.80; // Off-shift default
     if (slstMinutes >= startShift && slstMinutes <= endShift) {
-      r_t = 0.10; // On-shift
+      r_t = 0.05; // On-shift (MedGuard Section 4.1: R_t = 0.05 : 0.8)
     }
 
     // 2. Geolocation & Network Risk: Match against configured sites and CIDR ranges

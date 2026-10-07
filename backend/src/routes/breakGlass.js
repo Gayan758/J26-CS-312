@@ -15,7 +15,8 @@ const router = express.Router();
  */
 router.post("/break-glass/activate", breakGlassLimiter, optionalAuthenticate, validateDoctorIdentity, async (req, res, next) => {
   try {
-    const { doctor_address, patient_id, justification } = req.body;
+    const { doctor_address, justification } = req.body;
+    const patientId = req.body.patientId || req.body.patient_id;
 
     if (req.user) {
       const role = (req.user.role || "").toLowerCase();
@@ -24,28 +25,48 @@ router.post("/break-glass/activate", breakGlassLimiter, optionalAuthenticate, va
       }
     }
 
-    if (!patient_id) {
-      return res.status(400).json({ error: "Missing required patient_id" });
+    if (!patientId) {
+      return res.status(400).json({ error: "Patient ID and a justification (min. 20 chars) are required." });
     }
 
-    if (!justification || justification.trim().length < 15) {
-      return res.status(400).json({ error: "Mandatory emergency justification must be at least 15 characters." });
+    if (!justification || justification.trim().length < 20) {
+      return res.status(400).json({
+        error: "Patient ID and a mandatory emergency justification (min. 20 chars, at least 15 characters required) are required."
+      });
     }
 
-    // 1. Activate on-chain BreakGlassRegistry token (4 hours TTL)
+    const doctorAddress = doctor_address || req.doctor?.address || req.user?.address || req.user?.ethereumAddress || req.user?.id;
+
+    // 1. Activate on-chain BreakGlassRegistry token
     const activation = await breakGlassService.activateEmergencyOverride({
-      doctorAddress: doctor_address,
-      patientId: patient_id,
+      doctorAddress,
+      patientId,
       justification: justification.trim()
     });
 
     const accessDecisionId = "0x" + crypto.randomBytes(32).toString("hex");
 
-    // 2. Log break-glass activation to AccessAuditLog and flag compliance alert
+    // 2. Fetch encrypted blob for THIS EXACT patientId (no divergence)
+    const encryptedBlob = await ipfsService.fetchEncryptedBlob(patientId);
+    if (!encryptedBlob) {
+      return res.status(404).json({ error: `No record found for patient ID ${patientId}.` });
+    }
+
+    // 3. Release decryption key for THIS EXACT patientId
+    const releasedKey = await consentService.releaseDecryptionKey(
+      doctorAddress,
+      patientId,
+      accessDecisionId
+    );
+
+    // 4. Decrypt blob
+    const plaintextRecord = decryptionService.decrypt(encryptedBlob, releasedKey);
+
+    // 5. Log audit decision with THIS EXACT patientId
     await auditService.logDecision({
       accessDecisionId,
-      requester: doctor_address,
-      patientId: patient_id,
+      requester: doctorAddress,
+      patientId: patientId,
       riskLevel: "CRITICAL",
       decision: "BREAK_GLASS_ACTIVATE",
       isBreakGlass: true,
@@ -57,7 +78,9 @@ router.post("/break-glass/activate", breakGlassLimiter, optionalAuthenticate, va
       token_id: activation.tokenId,
       token: activation.jwt,
       expires_at: activation.expiresAt,
-      justification: activation.justification
+      tokenExpiresAt: activation.expiresAt,
+      justification: activation.justification,
+      record: plaintextRecord
     });
   } catch (err) {
     next(err);

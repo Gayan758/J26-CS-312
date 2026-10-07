@@ -103,6 +103,9 @@ describe("Phase 3 - Database, Storage, Migrations & Field Encryption", function 
       expect(foundByNic).to.not.be.null;
       expect(foundByNic.id).to.equal(dummyId);
       expect(foundByNic.nicHash).to.equal(encryptionService.computeBlindIndex(uniqueNic));
+
+      // Clean up test patient so database retains only synthetic patients
+      ehrDatabase.deletePatient(dummyId);
     });
   });
 

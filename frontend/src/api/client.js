@@ -169,6 +169,7 @@ export async function activateBreakGlass(doctorAddress, patientId, justification
     body: JSON.stringify({
       doctor_address: doctorAddress,
       patient_id: patientId,
+      patientId: patientId,
       justification
     })
   });

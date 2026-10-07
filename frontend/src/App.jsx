@@ -481,15 +481,61 @@ export default function App() {
 
       {/* Tab 3: Hospital Compliance & Blockchain Audit Ledger */}
       {activeTab === "audit" && (
-        <ComplianceAuditCenter
-          auditLogs={auditLogs}
-          onClearLogs={() => setAuditLogs([])}
-        />
+        userRole === "admin" ? (
+          <ComplianceAuditCenter
+            auditLogs={auditLogs}
+            onClearLogs={() => setAuditLogs([])}
+          />
+        ) : (
+          <div className="bg-surface rounded-lg border border-border p-8 text-center max-w-xl mx-auto my-12 space-y-3">
+            <div className="w-12 h-12 rounded-full bg-critical-bg text-critical flex items-center justify-center mx-auto">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
+            <h2 className="text-base font-semibold text-text-primary">
+              Hospital Compliance & Audit Restricted
+            </h2>
+            <p className="text-xs text-text-muted leading-relaxed">
+              Hospital-wide compliance ledger and cryptographic audit verification are restricted to system administrators.
+            </p>
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setActiveTab("queue")}
+                className="px-4 py-2 rounded bg-primary text-white text-xs font-medium hover:bg-primary-hover transition"
+              >
+                Return to Clinic Queue
+              </button>
+            </div>
+          </div>
+        )
       )}
 
       {/* Tab 4: Staff Safety & Real-Time Location Tracking */}
       {activeTab === "tracking" && (
-        <StaffSafetyMap doctor={doctor} onShowToast={showToast} />
+        userRole === "admin" ? (
+          <StaffSafetyMap doctor={doctor} onShowToast={showToast} />
+        ) : (
+          <div className="bg-surface rounded-lg border border-border p-8 text-center max-w-xl mx-auto my-12 space-y-3">
+            <div className="w-12 h-12 rounded-full bg-critical-bg text-critical flex items-center justify-center mx-auto">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
+            <h2 className="text-base font-semibold text-text-primary">
+              Staff Safety & Location Restricted
+            </h2>
+            <p className="text-xs text-text-muted leading-relaxed">
+              Viewing live staff tracking positions and hospital geofences is restricted to system administrators.
+            </p>
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setActiveTab("queue")}
+                className="px-4 py-2 rounded bg-primary text-white text-xs font-medium hover:bg-primary-hover transition"
+              >
+                Return to Clinic Queue
+              </button>
+            </div>
+          </div>
+        )
       )}
 
       {/* Modals & Sheets */}
